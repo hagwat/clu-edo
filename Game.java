@@ -77,7 +77,7 @@ public class Game {
 	public void setHands(Queue<Player> players) {
 		Collections.shuffle(deck);
 		Player firstPlayer = players.peek();
-		while(true){
+		while(deck.size() > 0){
 			if(players.peek().equals(firstPlayer) && deck.size() < players.size()){	//Left with remaining cards
 				return;
 			}
