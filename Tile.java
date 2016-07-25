@@ -15,5 +15,8 @@ public class Tile {
 	public Tile(boolean[] dirs) {
 		this.possibleDirections = dirs;
 	}
-
+	
+	public Room getRoom(){
+		return this.room;
+	}
 }
