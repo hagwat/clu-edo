@@ -1,10 +1,10 @@
-n  n  n  n  n  n  n  n  n  S1 n  n  n  n  S2 n  n  n  n  n  n  n  n  n
+n  n  n  n  n  n  n  n  n  S3 n  n  n  n  S4 n  n  n  n  n  n  n  n  n
 n  n  n  n  n  Ts n  c  c  c  n  n  n  n  c  c  c  n  n  n  n  n  n  n
 n  n  n  n  n  n  c  c  n  n  n  n  n  n  n  n  c  c  n  n  n  n  n  n
 n  n  n  n  n  n  c  c  n  n  n  n  n  n  n  n  c  c  n  n  n  n  n  n
 n  n  n  n  n  n  c  c  n  n  n  n  n  n  n  n  c  c  o  n  n  n  n  n
 n  n  n  n  n  n  c  D  b  n  n  n  n  n  n  b  D  c  D  n  n  n  Tu n
-n  n  n  n  k  n  c  c  n  n  n  n  n  n  n  n  c  c  c  c  c  c  c  S3
+n  n  n  n  k  n  c  c  n  n  n  n  n  n  n  n  c  c  c  c  c  c  c  S5
 c  c  c  c  D  c  c  c  n  b  n  n  n  n  b  n  c  c  c  c  c  c  c  n
 n  c  c  c  c  c  c  c  c  D  c  c  c  c  D  c  c  c  n  n  n  n  n  n
 n  n  n  n  n  c  c  c  c  c  c  c  c  c  c  c  c  D  i  n  n  n  n  n
@@ -14,15 +14,15 @@ n  n  n  n  n  n  n  d  D  c  n  n  n  n  n  c  c  c  n  n  n  n  i  n
 n  n  n  n  n  n  n  n  c  c  n  n  n  n  n  c  c  c  c  c  D  c  D  n
 n  n  n  n  n  n  n  n  c  c  n  n  n  n  n  c  c  c  n  n  l  n  n  n
 n  n  n  n  n  n  d  n  c  c  n  n  n  n  n  c  c  n  n  n  n  n  n  n
-n  c  c  c  c  c  D  c  c  c  n  n  n  n  n  c  D  l  n  n  n  n  n  n  
-S6 c  c  c  c  c  c  c  c  c  c  D  D  c  c  c  c  n  n  n  n  n  n  n  
+n  c  c  c  c  c  D  c  c  c  n  n  n  n  n  c  D  l  n  n  n  n  n  n
+S2 c  c  c  c  c  c  c  c  c  c  D  D  c  c  c  c  n  n  n  n  n  n  n
 n  c  c  c  c  c  D  c  c  n  n  h  h  n  n  c  c  c  n  n  n  n  n  n
-To n  n  n  n  n  u  c  c  n  n  n  n  n  n  c  c  c  c  c  c  c  c  S4
+To n  n  n  n  n  u  c  c  n  n  n  n  n  n  c  c  c  c  c  c  c  c  S6
 n  n  n  n  n  n  n  c  c  n  n  n  n  n  h  D  c  D  c  c  c  c  c  n
 n  n  n  n  n  n  n  c  c  n  n  n  n  n  n  c  c  s  n  n  n  n  n  Tk
 n  n  n  n  n  n  n  c  c  n  n  n  n  n  n  c  c  n  n  n  n  n  n  n
 n  n  n  n  n  n  n  c  c  n  n  n  n  n  n  c  c  n  n  n  n  n  n  n
-n  n  n  n  n  n  n  S5 n  n  n  n  n  n  n  n  c  n  n  n  n  n  n  n 
+n  n  n  n  n  n  n  S1 n  n  n  n  n  n  n  n  c  n  n  n  n  n  n  n
 TERMINATE
 
 
@@ -38,5 +38,6 @@ h = hall
 u = lounge
 d = dining room
 D = door
-T = teleporter
+T#= teleporter
 S#= start
+

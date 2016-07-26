@@ -6,9 +6,14 @@ public class Card {
 	private String name;
 	private Type type;
 
-	private enum Type {
+	public enum Type {
 		WEAPON,
 		CHARACTER,
 		ROOM;
+	}
+
+	public Card(String name, Type type){
+		this.name = name;
+		this.type = type;
 	}
 }
