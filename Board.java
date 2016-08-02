@@ -12,9 +12,9 @@ public class Board {
 
 	public Board() {
 
-		try {
-			loadRooms();
+		try {			
 			loadTiles();
+			loadRooms();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -25,13 +25,14 @@ public class Board {
 		Scanner sc = new Scanner(new File("src/rooms.txt"));
 		for (int i = 0; i < 9; i++) {
 			Room room = new Room(sc.nextLine());
+			room.setTileKey(sc.nextLine());
 			rooms[i] = room;
 		}
 		System.out.println("rooms created");
 	}
 
 	/**
-	 * Reads board.txt to construct the two-dimensonal array of tiles
+	 * Reads board.txt to construct the two-dimensional array of tiles
 	 *
 	 * @throws IOException
 	 */

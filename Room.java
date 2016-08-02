@@ -3,6 +3,7 @@ package game;
 public class Room implements Locatable{
 
 	private String name;
+	private String tileKey;
 	
 	public Room(String name){
 		this.name = name;
@@ -10,6 +11,14 @@ public class Room implements Locatable{
 
 	public String getName(){
 		return this.name;
+	}
+	
+	public void setTileKey(String key){
+		this.tileKey = key;
+	}
+	
+	public String getTileKey(){
+		return this.tileKey;
 	}
 	
 }

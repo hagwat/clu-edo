@@ -25,8 +25,8 @@ public class TextClient {
 		}
 
 		System.out.println();
-		System.out.print("display board? ");
-		if (sc.hasNext("y")) {
+		System.out.println("d: display board");
+		if (sc.hasNext("d")) {
 			game.getBoard().displayTiles();
 		} else {
 			System.out.println("nevermind");
