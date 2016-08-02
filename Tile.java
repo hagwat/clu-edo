@@ -26,6 +26,7 @@ public class Tile {
 
 	public void processArg(String arg, Board board) {
 		this.arg = arg;
+		// An exhaustive series of switch statements describing behaviour for each "arg".
 		if (arg.length() == 1) {
 			switch (arg) {
 			case "n":
