@@ -18,7 +18,6 @@ public class Board {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		display();
 		System.out.println("board created");
 	}
 
@@ -51,7 +50,7 @@ public class Board {
 	 * Displays a text based representation of the board by displaying all tiles
 	 * in their locations.
 	 */
-	public void display() {
+	public void displayTiles() {
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
 				tiles[i][j].display();
@@ -69,7 +68,7 @@ public class Board {
 	 */
 	public Room getRoom(String name) {
 		for (int i = 0; i < rooms.length; i++) {
-			if (rooms[i].getName() == name) {
+			if (rooms[i].getName().equals(name)) {
 				return rooms[i];
 			}
 		}

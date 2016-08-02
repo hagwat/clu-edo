@@ -4,25 +4,33 @@ import java.util.Scanner;
 
 public class TextClient {
 
-	public TextClient() {
+	private Game game;
+
+	public TextClient(Game game) {
+		this.game = game;
 		startup();
 	}
 
 	public void startup() {
-		System.out.print("create board? ");
 		Scanner sc = new Scanner(System.in);
+
+		System.out.println();
+		System.out.print("create board? ");
+		System.out.println();
 		if (sc.hasNext("y")) {
-			Board board = new Board();
+			sc.next();
+			game.createBoard();
 		} else {
 			System.out.println("nevermind");
 		}
 
-	}
-
-	// maybe we should use a listener to listen for wasd input when people move
-	// their characters
-
-	public static void main(String[] args) {
-		new TextClient();
+		System.out.println();
+		System.out.print("display board? ");
+		if (sc.hasNext("y")) {
+			game.getBoard().displayTiles();
+		} else {
+			System.out.println("nevermind");
+		}
+		sc.close();
 	}
 }

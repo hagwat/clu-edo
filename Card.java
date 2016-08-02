@@ -16,4 +16,8 @@ public class Card {
 		this.name = name;
 		this.type = type;
 	}
+
+	public Type getType() {
+		return type;
+	}
 }

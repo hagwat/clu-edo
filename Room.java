@@ -1,6 +1,6 @@
 package game;
 
-public class Room{
+public class Room implements Locatable{
 
 	private String name;
 	
