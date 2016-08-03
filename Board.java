@@ -12,7 +12,7 @@ public class Board {
 
 	public Board() {
 
-		try {	
+		try {
 			loadRooms();
 			loadTiles();
 
@@ -64,7 +64,27 @@ public class Board {
 	}
 
 	/**
+	 * Creates a token at the designated start point
+	 *
+	 * @return
+	 */
+
+	public CharacterToken spawnCharacter(int characterId, int playerId) {
+		for (int j = 0; j < tiles[0].length; j++) {
+			for (int i = 0; i < tiles.length; i++) {
+				if (tiles[i][j].getCharacterNumber() == characterId) {
+					return new CharacterToken(playerId, tiles[i][j], i, j);
+				}
+			}
+		}
+		System.out.println("No spawn found");
+		return null;
+
+	}
+
+	/**
 	 * returns a room by name
+	 *
 	 * @param name
 	 * @return
 	 */

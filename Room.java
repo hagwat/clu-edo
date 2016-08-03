@@ -1,24 +1,25 @@
+
 package game;
 
-public class Room implements Locatable{
+public class Room {
 
 	private String name;
 	private String tileKey;
-	
-	public Room(String name){
+
+	public Room(String name) {
 		this.name = name;
 	}
 
-	public String getName(){
+	public String getName() {
 		return this.name;
 	}
-	
-	public void setTileKey(String key){
+
+	public void setTileKey(String key) {
 		this.tileKey = key;
 	}
-	
-	public String getTileKey(){
+
+	public String getTileKey() {
 		return this.tileKey;
 	}
-	
+
 }
