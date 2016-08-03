@@ -15,13 +15,14 @@ public class Game {
 	private Card roomSol;
 
 	private Board board;
-	private int numPlayers;
 
-	protected List<Card> deck = new ArrayList<Card>(); // Full deck of cards
+	private Queue<Player> players = new LinkedList<Player>();
+	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
 
 	public Game() {
 		setDeck();
 		setSolution();
+		createBoard();
 		new TextClient(this);
 	}
 
@@ -100,8 +101,9 @@ public class Game {
 
 	}
 
-
-
+	public void setPlayers(Queue<Player> players){
+		this.players = players;
+	}
 	public void createBoard() {
 		this.board = new Board();
 	}
