@@ -1,6 +1,9 @@
 package game;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+
 
 public class TextClient {
 
@@ -11,26 +14,36 @@ public class TextClient {
 		startup();
 	}
 
-	public void startup() {
+	public static String readString(String msg){
+		System.out.println(msg);
 		Scanner sc = new Scanner(System.in);
-
-		System.out.println();
-		System.out.print("create board? ");
-		System.out.println();
-		if (sc.hasNext("y")) {
-			sc.next();
-			game.createBoard();
-		} else {
-			System.out.println("nevermind");
-		}
-
-		System.out.println();
-		System.out.println("d: display board");
-		if (sc.hasNext("d")) {
-			game.getBoard().displayTiles();
-		} else {
-			System.out.println("nevermind");
-		}
+		String s = sc.next();
 		sc.close();
+		return s;
+	}
+
+	public static int readInt(String msg){
+		System.out.println("");
+		System.out.println(msg);
+		Scanner sc = new Scanner(System.in);
+		try{
+			int i = sc.nextInt();
+			sc.close();
+			return i;
+		}
+		catch(InputMismatchException e){
+			System.out.println("Must be a number!");
+			return readInt(msg);
+		}
+		finally{
+			sc.close();
+		}
+	}
+
+	public void startup() {
+		System.out.println("********************************");
+		System.out.println("       Welcome to Cluedo");
+		System.out.println("********************************");
+		setPlayers();
 	}
 }

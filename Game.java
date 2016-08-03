@@ -15,15 +15,13 @@ public class Game {
 	private Card roomSol;
 
 	private Board board;
+	private int numPlayers;
 
 	protected List<Card> deck = new ArrayList<Card>(); // Full deck of cards
 
 	public Game() {
 		setDeck();
 		setSolution();
-		System.out.println(charSol + "    /  " + wepSol + "   /   " + roomSol);
-		System.out.println(deck.size());
-
 		new TextClient(this);
 	}
 
