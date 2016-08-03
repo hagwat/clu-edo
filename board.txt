@@ -40,4 +40,3 @@ d = dining room
 D = door
 T#= teleporter
 S#= start
-

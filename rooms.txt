@@ -1,9 +1,18 @@
 Kitchen
+1
 Ball Room
+2
 Conservatory
+3
 Billiard Room
+4
 Library
+5
 Study
+6
 Hall
+7
 Lounge
+8
 Dining Room
+9
