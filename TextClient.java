@@ -1,6 +1,10 @@
 package game;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -16,28 +20,39 @@ public class TextClient {
 
 	public static String readString(String msg){
 		System.out.println(msg);
+		String s;
 		Scanner sc = new Scanner(System.in);
-		String s = sc.next();
-		sc.close();
+		s = sc.next();
 		return s;
 	}
 
 	public static int readInt(String msg){
 		System.out.println("");
 		System.out.println(msg);
-		Scanner sc = new Scanner(System.in);
 		try{
+			Scanner sc = new Scanner(System.in);
 			int i = sc.nextInt();
-			sc.close();
 			return i;
+
 		}
 		catch(InputMismatchException e){
 			System.out.println("Must be a number!");
 			return readInt(msg);
 		}
-		finally{
-			sc.close();
+
+	}
+
+	public static void setPlayers(){
+		int players = readInt("How many players? (Must be between 3-6)");
+		while(players > 6 || players < 3){
+			System.out.println("Must be between 3 and 6!");
+			players = readInt("How many players? (Must be between 3-6)");
 		}
+		String[] playersNames = new String[players];
+		for(int i = 1; i <= players; i++){
+			playersNames[i - 1] = readString("Player " + i + " name?");
+		}
+
 	}
 
 	public void startup() {
