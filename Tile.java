@@ -1,11 +1,12 @@
 package game;
+
 import java.lang.Character;
 
 public class Tile {
 
 	private Room room; // what room the tile is in, if any.
 	private Room connectsTo;
-	private int playerNumber;
+	private int characterNumber;
 	private TileType type; // where the tile is located, e.g. corridor,
 							// inaccessible. Only tiles at the entrance to rooms
 							// are in a room and are of type ROOM.
@@ -13,7 +14,7 @@ public class Tile {
 						// tiles. Shown on map.
 
 	public enum TileType {
-		INACCESSABLE, CORRIDOR, ROOM, DOOR, TELEPORTER, START
+		INACCESSABLE, CORRIDOR, ROOM, DOOR, START
 	}
 
 	/**
@@ -27,7 +28,8 @@ public class Tile {
 
 	public void processArg(String arg, Board board) {
 		this.arg = arg;
-		// An exhaustive series of switch statements describing behaviour for each "arg".
+		// An exhaustive series of switch statements describing behaviour for
+		// each "arg".
 		if (arg.length() == 1) {
 			switch (arg) {
 			case "n":
@@ -41,6 +43,7 @@ public class Tile {
 			case "k":
 				type = TileType.ROOM;
 				room = board.getRoom("Kitchen");
+				connectsTo = board.getRoom("Study");
 				break;
 			case "b":
 				type = TileType.ROOM;
@@ -49,6 +52,7 @@ public class Tile {
 			case "o":
 				type = TileType.ROOM;
 				room = board.getRoom("Conservatory");
+				connectsTo = board.getRoom("Lounge");
 				break;
 			case "i":
 				type = TileType.ROOM;
@@ -61,6 +65,7 @@ public class Tile {
 			case "s":
 				type = TileType.ROOM;
 				room = board.getRoom("Study");
+				connectsTo = board.getRoom("Kitchen");
 				break;
 			case "h":
 				type = TileType.ROOM;
@@ -69,6 +74,7 @@ public class Tile {
 			case "u":
 				type = TileType.ROOM;
 				room = board.getRoom("Lounge");
+				connectsTo = board.getRoom("Conservatory");
 				break;
 			case "d":
 				type = TileType.ROOM;
@@ -76,52 +82,12 @@ public class Tile {
 				break;
 			}
 		} else if (arg.length() == 2) {
-			String secondLetter = arg.substring(1, 2);
-			switch (secondLetter) {
-			case "k":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Kitchen");
-				break;
-			case "b":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Ball Room");
-				break;
-			case "o":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Conservatory");
-				break;
-			case "i":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Billiard Room");
-				break;
-			case "l":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Library");
-				break;
-			case "s":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Study");
-				break;
-			case "h":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Hall");
-				break;
-			case "u":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Lounge");
-				break;
-			case "d":
-				type = TileType.TELEPORTER;
-				connectsTo = board.getRoom("Dining Room");
-				break;
-			}
 
-			char c = secondLetter.toCharArray()[0];
+			char c = arg.substring(1, 2).toCharArray()[0];
 			Character d = new Character(c);
-				if (c >= 48 && c <= 57) {//ascii number for digits 0 to 9.
-					playerNumber = d;
-				}
-
+			if (c >= 48 && c <= 57) {// ascii number for digits 0 to 9.
+				characterNumber = d;
+			}
 
 		} else {
 			throw new Error("Tile arg length not 1 or 2.");
@@ -132,10 +98,13 @@ public class Tile {
 		return this.room;
 	}
 
-	public int getCharacterNumber(){
-		return this.playerNumber;
+	public int getCharacterNumber() {
+		return this.characterNumber;
 	}
-	
+
+	public TileType getType() {
+		return this.type;
+	}
 
 	public void display() {
 		if (room == null) {

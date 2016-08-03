@@ -100,6 +100,8 @@ public class Game {
 
 	}
 
+
+
 	public void createBoard() {
 		this.board = new Board();
 	}
