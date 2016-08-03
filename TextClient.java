@@ -1,11 +1,8 @@
-
 package game;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -21,9 +18,8 @@ public class TextClient {
 
 	public static String readString(String msg){
 		System.out.println(msg);
-		String s;
 		Scanner sc = new Scanner(System.in);
-		s = sc.next();
+		String s = sc.next();
 		return s;
 	}
 
@@ -43,23 +39,66 @@ public class TextClient {
 
 	}
 
-	public static void setPlayers(){
+	public void setPlayers(){
+		List<String> names = getPlayerNames();
+		List<Integer> tokens = getPlayerTokens(names);
+		Queue<Player> players = new LinkedList<Player>();
+		for(String s : names){
+			for(int i : tokens){
+				players.add(new Player(i, s));
+				break;
+			}
+		}
+		game.setPlayers(players);
+
+	}
+
+	public static List<String> getPlayerNames(){
 		int players = readInt("How many players? (Must be between 3-6)");
 		while(players > 6 || players < 3){
 			System.out.println("Must be between 3 and 6!");
 			players = readInt("How many players? (Must be between 3-6)");
 		}
-		String[] playersNames = new String[players];
+		List<String> playersNames = new ArrayList<String>();
 		for(int i = 1; i <= players; i++){
-			playersNames[i - 1] = readString("Player " + i + " name?");
+			playersNames.add(readString("Player " + i + " name?"));
 		}
-
+		return playersNames;
 	}
+
+	public static List<Integer> getPlayerTokens(List<String> names){
+		try {
+			Scanner sc = new Scanner(new File("src/game/characters.txt"));
+			System.out.println("****************CHARACTERS*****************");
+			System.out.println("");
+			while(sc.hasNextLine()){
+				System.out.println(sc.nextLine());
+			}
+			System.out.println("");
+			System.out.println("*******************************************");
+			sc.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		List<Integer> tokens = new ArrayList<Integer>();
+
+		for(String s : names){
+			int number = readInt(s + ", please choose a number that refers to your character choice!");
+			while(tokens.contains(number)){
+				number = readInt("Token already chosen! Try again");
+			}
+			tokens.add(number);
+		}
+		return tokens;
+	}
+
 
 	public void startup() {
 		System.out.println("********************************");
 		System.out.println("       Welcome to Cluedo");
 		System.out.println("********************************");
 		setPlayers();
+		System.out.println("*********************************");
+		game.getBoard().displayTiles();
 	}
 }
