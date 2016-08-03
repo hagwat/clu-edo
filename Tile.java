@@ -5,6 +5,7 @@ public class Tile {
 
 	private Room room; // what room the tile is in, if any.
 	private Room connectsTo;
+	private int PlayerNumber;
 	private TileType type; // where the tile is located, e.g. corridor,
 							// inaccessible. Only tiles at the entrance to rooms
 							// are in a room and are of type ROOM.
@@ -75,7 +76,7 @@ public class Tile {
 				break;
 			}
 		} else if (arg.length() == 2) {
-			String secondLetter = arg.substring(1, 1);
+			String secondLetter = arg.substring(1, 2);
 			switch (secondLetter) {
 			case "k":
 				type = TileType.TELEPORTER;
@@ -83,46 +84,45 @@ public class Tile {
 				break;
 			case "b":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Ball Room");
+				connectsTo = board.getRoom("Ball Room");
 				break;
 			case "o":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Conservatory");
+				connectsTo = board.getRoom("Conservatory");
 				break;
 			case "i":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Billiard Room");
+				connectsTo = board.getRoom("Billiard Room");
 				break;
 			case "l":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Library");
+				connectsTo = board.getRoom("Library");
 				break;
 			case "s":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Study");
+				connectsTo = board.getRoom("Study");
 				break;
 			case "h":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Hall");
+				connectsTo = board.getRoom("Hall");
 				break;
 			case "u":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Lounge");
+				connectsTo = board.getRoom("Lounge");
 				break;
 			case "d":
 				type = TileType.TELEPORTER;
-				room = board.getRoom("Dining Room");
+				connectsTo = board.getRoom("Dining Room");
 				break;
 			}
-			
+
 			char c = secondLetter.toCharArray()[0];
-			System.out.println(c);
 			Character d = new Character(c);
-			System.out.println(d);
-				if (d >= 48 && d <= 57) {
-					System.out.println(d);
+				if (c >= 48 && c <= 57) {//ascii number for digits 0 to 9.
+					PlayerNumber = d;
 				}
-			
+
+
 		} else {
 			throw new Error("Tile arg length not 1 or 2.");
 		}
