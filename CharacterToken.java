@@ -6,11 +6,15 @@ public class CharacterToken implements Locatable {
 	private int playerId;
 	private int xPos;
 	private int yPos;
+	private Board board;
 
-	public CharacterToken(int playerId, Tile spawn, int xPos, int yPos) {
+	public CharacterToken(int playerId, Board board, int xPos, int yPos) {
 		this.playerId = playerId;
-		this.characterId = spawn.getCharacterNumber();
-		
+		this.board = board;
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.characterId = board.getTile(xPos, yPos).getCharacterNumber();
+
 	}
 
 	@Override
@@ -18,5 +22,32 @@ public class CharacterToken implements Locatable {
 		int[] xy = new int[] { xPos, yPos };
 		return xy;
 	}
+
+
+
+	public void promptMove(){
+		Tile current = board.getTile(xPos, yPos);
+		if(!current.getType().equals(Tile.TileType.ROOM)){
+			promptNormalMove();
+		}else{
+			promptRoomMove();
+		}
+
+	}
+	public void promptNormalMove(){
+
+	}
+
+	public void promptRoomMove(){
+
+	}
+	public void nextTurn(){
+		Player current = this.players.poll();
+		current.move();
+		current.suggest();
+		nextTurn();
+	}
+
+
 
 }

@@ -73,7 +73,7 @@ public class Board {
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
 				if (tiles[i][j].getCharacterNumber() == characterId) {
-					return new CharacterToken(playerId, tiles[i][j], i, j);
+					return new CharacterToken(playerId, this, i, j);
 				}
 			}
 		}
@@ -96,6 +96,10 @@ public class Board {
 			}
 		}
 		return null;
+	}
+
+	public Tile getTile(int x, int y){
+	return this.tiles[x][y];
 	}
 
 }
