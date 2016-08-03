@@ -5,7 +5,7 @@ public class Tile {
 
 	private Room room; // what room the tile is in, if any.
 	private Room connectsTo;
-	private int PlayerNumber;
+	private int playerNumber;
 	private TileType type; // where the tile is located, e.g. corridor,
 							// inaccessible. Only tiles at the entrance to rooms
 							// are in a room and are of type ROOM.
@@ -119,7 +119,7 @@ public class Tile {
 			char c = secondLetter.toCharArray()[0];
 			Character d = new Character(c);
 				if (c >= 48 && c <= 57) {//ascii number for digits 0 to 9.
-					PlayerNumber = d;
+					playerNumber = d;
 				}
 
 
@@ -131,6 +131,11 @@ public class Tile {
 	public Room getRoom() {
 		return this.room;
 	}
+
+	public int getCharacterNumber(){
+		return this.playerNumber;
+	}
+	
 
 	public void display() {
 		if (room == null) {
