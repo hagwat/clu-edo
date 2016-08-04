@@ -3,10 +3,7 @@ package game;
 import java.util.*;
 
 /**
- * Hi Shaw. I modified your stuff so it would compile. I made it so Game was the
- * main method which created a new TextClient. To make it compile I added
- * Card.getType() and made Player.addCard(Card c) into
- * Player.getHand.addCard(Card c). Just so you know what's different :)
+ * Top level class.
  */
 public class Game {
 	// The three cards that make the solution
@@ -15,6 +12,7 @@ public class Game {
 	private Card roomSol;
 
 	private Board board;
+	private TextClient client;
 
 	private Queue<Player> players = new LinkedList<Player>();
 	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
@@ -23,7 +21,15 @@ public class Game {
 		setDeck();
 		setSolution();
 		createBoard();
-		new TextClient(this);
+		createTextClient();
+		client.startup();
+	}
+	public Game(String msg){
+		setDeck();
+		setSolution();
+		createBoard();
+		System.out.println("test");
+		createTextClient();
 	}
 
 	/**
@@ -64,7 +70,8 @@ public class Game {
 		Collections.shuffle(deck);
 		for (Card c : deck) {
 			if (charSol != null && wepSol != null && roomSol != null) {
-				// Solutions have been chosen, remove solution cards from deck so
+				// Solutions have been chosen, remove solution cards from deck
+				// so
 				// they aren't dealt to players
 				deck.remove(roomSol);
 				deck.remove(charSol);
@@ -101,11 +108,11 @@ public class Game {
 
 	}
 
-	public void setPlayers(Queue<Player> players){
+	public void setPlayers(Queue<Player> players) {
 		this.players = players;
 	}
 
-	public Queue<Player> getPlayers(){
+	public Queue<Player> getPlayers() {
 		return this.players;
 	}
 
@@ -117,8 +124,15 @@ public class Game {
 		return board;
 	}
 
-	public boolean accusation(String wep, String room, String person){
-		if(wepSol.toString().equals(wep) && roomSol.toString().equals(room) && charSol.toString().equals(person)){
+	public void createTextClient() {
+		client = new TextClient(this);
+	}
+	public TextClient getTextClient(){
+		return client;
+	}
+
+	public boolean accusation(String wep, String room, String person) {
+		if (wepSol.toString().equals(wep) && roomSol.toString().equals(room) && charSol.toString().equals(person)) {
 			return true;
 		}
 		return false;

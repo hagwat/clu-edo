@@ -12,8 +12,6 @@ public class TextClient {
 
 	public TextClient(Game game) {
 		this.game = game;
-		startup();
-
 	}
 
 	public static String readString(String msg){
@@ -84,7 +82,7 @@ public class TextClient {
 
 		for(String s : names){
 			int number = readInt(s + ", please choose a number that refers to your character choice!");
-			while(tokens.contains(number)){
+			while(tokens.contains(number)||number>6||number<1){
 				number = readInt("Token already chosen! Try again");
 			}
 			tokens.add(number);
@@ -135,7 +133,7 @@ public class TextClient {
 				input = readString("Please type in a valid choice!");
 			}
 			if(input.equals("roll")){
-			//	playerRoll(p);	//Player still has options therefore loop again
+				playerRoll(p);	//Player still has options therefore loop again
 				options.remove("roll");	//Remove roll from valid choices as can only roll once a turn
 			}
 			if(input.equals("accuse")){
@@ -147,7 +145,7 @@ public class TextClient {
 
 	public static void playerRoll(Player p){
 		Random r = new Random();
-		int roll = r.nextInt(7);
+		int roll = r.nextInt(6)+1;
 		if(roll == 0) roll = r.nextInt(7);
 		System.out.println("You rolled a " + roll);
 		String moveCmd = readString("Please enter " + roll + " movement command(s), followed by enter.").toLowerCase();
@@ -155,6 +153,22 @@ public class TextClient {
 			moveCmd = readString("Invalid move! Try again");
 		}
 		System.out.println(p.toString() + " successfully moved!");
+	}
+	
+	public static boolean validMoveCmd(String cmd,int roll, Player p){
+		List<String> validChars = new ArrayList<String>();
+		validChars.add("w");
+		validChars.add("a");
+		validChars.add("s");
+		validChars.add("d");
+		String[] commands = new String[roll];
+		if(cmd.length() != roll) return false;
+		for(int i = 0; i < cmd.length(); i++){
+			String s = cmd.substring(i, i+1);
+			if(!validChars.contains(s)) return false;
+			commands[i] = s;
+		}
+		return p.validMove(commands);
 	}
 
 	public static void playerAccuse(Player p){
@@ -212,21 +226,7 @@ public class TextClient {
 		return false;
 	}
 
-	public static boolean validMoveCmd(String cmd,int roll, Player p){
-		List<String> validChars = new ArrayList<String>();
-		validChars.add("w");
-		validChars.add("a");
-		validChars.add("s");
-		validChars.add("d");
-		String[] commands = new String[roll];
-		if(cmd.length() != roll) return false;
-		for(int i = 0; i < cmd.length(); i++){
-			String s = cmd.substring(i, i+1);
-			if(!validChars.contains(s)) return false;
-			commands[i] = s;
-		}
-		return p.validMove(commands);
-	}
+	
 
 	public void startup() {
 		System.out.println("********************************");
