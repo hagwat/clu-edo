@@ -3,8 +3,6 @@ package game;
 import java.util.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 
 public class TextClient {
@@ -41,16 +39,19 @@ public class TextClient {
 
 	}
 
-
 	public void setPlayers(){
 		List<String> names = getPlayerNames();
 		List<Integer> tokens = getPlayerTokens(names);
 		Queue<Player> players = new LinkedList<Player>();
 		if(names.size()!=tokens.size()){throw new IllegalStateException("Number of players not equal to number of tokens.");}
 		for(int i=0; i<names.size();i++){
-			players.add(new Player(tokens.get(i), names.get(i), game.getBoard()));
+			players.offer(new Player(tokens.get(i), names.get(i), game.getBoard()));
+			}
+		game.setPlayers(players);
 		}
-		
+
+
+
 
 	public static List<String> getPlayerNames(){
 		int players = readInt("How many players? (Must be between 3-6)");
@@ -168,7 +169,7 @@ public class TextClient {
 		String person = readString("Finally, who do you think commited the murder?");
 		while(!personCheck(person)){
 			person = readString("Invalid person! Please enter a valid person");
-		}
+		}//WORK FROM HERE
 	}
 
 	public static boolean wepCheck(String wep){
@@ -207,7 +208,7 @@ public class TextClient {
 		validPersons.add("The Reverend Green");
 		validPersons.add("Mrs. Peacock");
 		validPersons.add("Professor Plum");
-		if(validPersons.contains(persons.toLowerCase())) return true;
+		if(validPersons.contains(person.toLowerCase())) return true;
 		return false;
 	}
 

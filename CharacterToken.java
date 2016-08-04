@@ -42,7 +42,7 @@ public class CharacterToken implements Locatable {
 					sc.nextLine();
 					String s = sc.nextLine();
 					return s;
-				} else {					
+				} else {
 					sc.nextLine();
 					sc.nextLine();
 				}
@@ -52,6 +52,10 @@ public class CharacterToken implements Locatable {
 		}
 		System.out.println("Character not found");
 		return null;
+	}
+
+	public boolean validMove(String[] moves){
+		return false; //WORK FROM HERE....TEST CASES
 	}
 
 }
