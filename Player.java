@@ -46,4 +46,9 @@ private CharacterToken token;
   public String toString(){
 	  return name;
   }
+  
+  public boolean validMove(String[] moves){
+		
+	  }
+	  
 }
