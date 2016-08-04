@@ -104,12 +104,24 @@ public class Game {
 	public void setPlayers(Queue<Player> players){
 		this.players = players;
 	}
+
+	public Queue<Player> getPlayers(){
+		return this.players;
+	}
+
 	public void createBoard() {
 		this.board = new Board();
 	}
 
 	public Board getBoard() {
 		return board;
+	}
+
+	public boolean accusation(String wep, String room, String person){
+		if(wepSol.toString().equals(wep) && roomSol.toString().equals(room) && charSol.toString().equals(person)){
+			return true;
+		}
+		return false;
 	}
 
 	public static void main(String[] args) {
