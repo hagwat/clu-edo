@@ -41,19 +41,16 @@ public class TextClient {
 
 	}
 
+
 	public void setPlayers(){
 		List<String> names = getPlayerNames();
 		List<Integer> tokens = getPlayerTokens(names);
 		Queue<Player> players = new LinkedList<Player>();
-		for(String s : names){
-			for(int i : tokens){
-				players.add(new Player(i, s));
-				break;
-			}
+		if(names.size()!=tokens.size()){throw new IllegalStateException("Number of players not equal to number of tokens.");}
+		for(int i=0; i<names.size();i++){
+			players.add(new Player(tokens.get(i), names.get(i), game.getBoard()));
 		}
-		game.setPlayers(players);
-
-	}
+		
 
 	public static List<String> getPlayerNames(){
 		int players = readInt("How many players? (Must be between 3-6)");
