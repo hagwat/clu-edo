@@ -1,19 +1,25 @@
 package game;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class CharacterToken implements Locatable {
 
-	private int characterId;
-	private int playerId;
+	private int characterId;// aka characterNum
+	private String playerName;
 	private int xPos;
 	private int yPos;
 	private Board board;
 
-	public CharacterToken(int playerId, Board board, int xPos, int yPos) {
-		this.playerId = playerId;
+	public CharacterToken(String playerName, Board board, int characterId) {
+		this.playerName = playerName;
 		this.board = board;
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.characterId = board.getTile(xPos, yPos).getCharacterNumber();
+		this.xPos = board.findSpawn(characterId)[0];
+		this.yPos = board.findSpawn(characterId)[1];
+		this.characterId = characterId;
+
+		display();
 
 	}
 
@@ -23,31 +29,29 @@ public class CharacterToken implements Locatable {
 		return xy;
 	}
 
+	public void display() {
+		System.out.println("Player " + playerName + ", Character "+characterId+": "+ getCharacterName() + ", [" + xPos + "," + yPos + "]");
+	}
 
-
-	public void promptMove(){
-		Tile current = board.getTile(xPos, yPos);
-		if(!current.getType().equals(Tile.TileType.ROOM)){
-			promptNormalMove();
-		}else{
-			promptRoomMove();
+	public String getCharacterName() {
+		try {
+			Scanner sc = new Scanner(new File("src/game/characters.txt"));
+			while (sc.hasNextLine()) {
+				int nextInt = sc.nextInt();
+				if (characterId == nextInt) {
+					sc.nextLine();
+					String s = sc.nextLine();
+					return s;
+				} else {					
+					sc.nextLine();
+					sc.nextLine();
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
-
+		System.out.println("Character not found");
+		return null;
 	}
-	public void promptNormalMove(){
-
-	}
-
-	public void promptRoomMove(){
-
-	}
-	public void nextTurn(){
-		Player current = this.players.poll();
-		current.move();
-		current.suggest();
-		nextTurn();
-	}
-
-
 
 }
