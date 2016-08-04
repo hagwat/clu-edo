@@ -55,7 +55,31 @@ public class CharacterToken implements Locatable {
 	}
 
 	public boolean validMove(String[] moves){
-		return false; //WORK FROM HERE....TEST CASES
+		int x = xPos;
+		int y = yPos;
+
+		for (int i = 0; i < moves.length; i++) {
+			if (moves[i].equals("w")) {
+				x += 1;
+			} else if (moves[i].equals("a")) {
+				y -= 1;
+			} else if (moves[i].equals("s")) {
+				x -= 1;
+			} else if (moves[i].equals("d")) {
+				y += 1;
+			}
+			try{
+			if (board.getTile(x, y).getType().equals(Tile.TileType.INACCESSABLE)) {
+				return false;
+			}
+			}catch(NullPointerException e){
+				System.out.println("working exception");
+				return false;
+			}
+
+		}
+
+		return false;
 	}
 
 }
