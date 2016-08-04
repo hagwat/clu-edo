@@ -1,6 +1,13 @@
 package game;
 
 import java.util.*;
+
+import options.Accusation;
+import options.Announcement;
+import options.Option;
+import options.Roll;
+import options.ShowHand;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
@@ -100,22 +107,35 @@ public class TextClient {
 		System.out.println("- Make an Accusation");
 		System.out.println("- Display Hand");
 		System.out.println("- Make Announcement");
+		/*
 		List<String> options = new ArrayList<String>();
 		options.add("roll");
 		options.add("accuse");
 		options.add("hand");
 		options.add("announce");
+		*/
+		List<Option> options = new ArrayList<Option>();
+		options.add(new Roll());
+		options.add(new ShowHand());
+		options.add(new Announcement());
+		options.add(new Accusation());	
+		
 		while(true){
 			System.out.println("Your options are:");
 			System.out.print("[");
 			for(int i = 0; i < options.size(); i++){
 				if(i == options.size() - 1){
-					System.out.println(" " + options.get(i) + "]");
+					System.out.print(" ");
+					options.get(i).displayOption();
+					System.out.println("]");
 				}
 				else if(i == 0){
-					System.out.print(options.get(i) + " /");
+					options.get(i).displayOption();
+					System.out.print(" /");
 				}else{
-				System.out.print(" " + options.get(i) + " /");
+				System.out.print(" ");
+				options.get(i).displayOption();
+				System.out.print(" /");
 				}
 			}
 			String input = readString("Please type in your choice!").toLowerCase();

@@ -3,10 +3,7 @@ package game;
 import java.util.*;
 
 /**
- * Hi Shaw. I modified your stuff so it would compile. I made it so Game was the
- * main method which created a new TextClient. To make it compile I added
- * Card.getType() and made Player.addCard(Card c) into
- * Player.getHand.addCard(Card c). Just so you know what's different :)
+ * Top level class.
  */
 public class Game {
 	// The three cards that make the solution
