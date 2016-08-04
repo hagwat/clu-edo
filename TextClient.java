@@ -45,10 +45,14 @@ public class TextClient {
 		List<String> names = getPlayerNames();
 		List<Integer> tokens = getPlayerTokens(names);
 		Queue<Player> players = new LinkedList<Player>();
-		if(names.size()!=tokens.size()){throw new IllegalStateException("Number of players not equal to number of tokens.");}
-		for(int i=0; i<names.size();i++){
-			players.offer(new Player(tokens.get(i), names.get(i), game.getBoard()));
+		for(String s : names){
+			for(int i : tokens){
+				players.add(new Player(i, s));
+				break;
+			}
 		}
+		game.setPlayers(players);
+
 	}
 
 	public static List<String> getPlayerNames(){
@@ -206,7 +210,7 @@ public class TextClient {
 		validPersons.add("The Reverend Green");
 		validPersons.add("Mrs. Peacock");
 		validPersons.add("Professor Plum");
-		if(validPersons.contains(person.toLowerCase())) return true;
+		if(validPersons.contains(persons.toLowerCase())) return true;
 		return false;
 	}
 
