@@ -63,23 +63,16 @@ public class Board {
 		}
 	}
 
-	/**
-	 * Creates a token at the designated start point
-	 *
-	 * @return
-	 */
-
-	public CharacterToken spawnCharacter(int characterId, int playerId) {
+	public int[] findSpawn(int characterId) {
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
 				if (tiles[i][j].getCharacterNumber() == characterId) {
-					return new CharacterToken(playerId, this, i, j);
+					return new int[] { i, j };
 				}
 			}
 		}
-		System.out.println("No spawn found");
+		System.out.println("Spawn not found.");
 		return null;
-
 	}
 
 	/**
@@ -98,8 +91,8 @@ public class Board {
 		return null;
 	}
 
-	public Tile getTile(int x, int y){
-	return this.tiles[x][y];
+	public Tile getTile(int x, int y) {
+		return this.tiles[x][y];
 	}
 
 }
