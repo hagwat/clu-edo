@@ -26,7 +26,7 @@ n  n  n  n  n  n  n  S1 n  n  n  n  n  n  n  n  c  n  n  n  n  n  n  n
 TERMINATE
 
 
-n = inaccessable
+n = inaccessible
 c = corridor
 k = kitchen
 b = ball room
@@ -38,5 +38,4 @@ h = hall
 u = lounge
 d = dining room
 D = door
-T#= teleporter
-S#= start
+s* = spawn
