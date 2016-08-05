@@ -94,8 +94,12 @@ public class Game {
 		}
 
 	}
-
-	public void setHands(Queue<Player> players) {
+	
+	/**
+	 * Takes the remaining cards in the deck, shuffles them then deals them evenly to the players, leaving
+	 * the remainder (if any) in the leftovers pile.
+	 */
+	public void setHands() {
 		Collections.shuffle(deck);
 		Player firstPlayer = players.peek();
 		while (deck.size() > 0) {
