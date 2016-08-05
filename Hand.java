@@ -1,4 +1,4 @@
-package game;
+/*package game;
 
 import java.util.List;
 
@@ -9,4 +9,4 @@ public class Hand {
 	public void addCard(Card c) {
 		cards.add(c);
 	}
-}
+}*/

@@ -19,7 +19,7 @@ public class TextClient {
 	public static String readString(String msg){
 		System.out.println(msg);
 		Scanner sc = new Scanner(System.in);
-		String s = sc.next();
+		String s = sc.nextLine();
 		return s;
 	}
 
@@ -46,9 +46,10 @@ public class TextClient {
 		if(names.size()!=tokens.size()){throw new IllegalStateException("Number of players not equal to number of tokens.");}
 		for(int i=0; i<names.size();i++){
 			players.offer(new Player(tokens.get(i), names.get(i), game.getBoard()));
-			}
-		game.setPlayers(players);
 		}
+		game.setPlayers(players);
+		game.setHands(players);
+	}
 
 
 
@@ -92,19 +93,24 @@ public class TextClient {
 		return tokens;
 	}
 
-	public static void startPlayerTurn(Player p){
+	public boolean startPlayerTurn(Player p){
+		System.out.println("");
 		System.out.println("********** " + p.toString() + "'s Turn **********");
 		System.out.println("");
 		System.out.println("Options:");
 		System.out.println("- Roll Dice & Move");
 		System.out.println("- Make an Accusation");
 		System.out.println("- Display Hand");
-		System.out.println("- Make Announcement");
+		System.out.println("- Make Suggestion");
+		System.out.println("- Show Leftover Pile");
+		System.out.println("- End Your Turn");
 		List<String> options = new ArrayList<String>();
 		options.add("roll");
 		options.add("accuse");
 		options.add("hand");
-		options.add("announce");
+		options.add("suggest");
+		options.add("leftovers");
+		options.add("end");
 		while(true){
 			System.out.println("Your options are:");
 			System.out.print("[");
@@ -115,7 +121,7 @@ public class TextClient {
 				else if(i == 0){
 					System.out.print(options.get(i) + " /");
 				}else{
-				System.out.print(" " + options.get(i) + " /");
+					System.out.print(" " + options.get(i) + " /");
 				}
 			}
 			String input = readString("Please type in your choice!").toLowerCase();
@@ -129,26 +135,103 @@ public class TextClient {
 					else if(i == 0){
 						System.out.print(options.get(i) + " /");
 					}else{
-					System.out.print(" " + options.get(i) + " /");
+						System.out.print(" " + options.get(i) + " /");
 					}
 				}
 				input = readString("Please type in a valid choice!");
 			}
 			if(input.equals("roll")){
-			//	playerRoll(p);	//Player still has options therefore loop again
+				//	playerRoll(p);	//Player still has options therefore loop again
 				options.remove("roll");	//Remove roll from valid choices as can only roll once a turn
 			}
 			if(input.equals("accuse")){
-				playerAccuse(p);
-				break;	//break from the loop as an accusation is a turn ender
+				return playerAccuse(p); //break from the loop as an accusation is a turn ender
+					
+			}
+			if(input.equals("hand")){
+				showPlayerHand(p);
+			}
+			if(input.equals("suggest")){ // && p.getRoom() != null  ========> FOR TESTING // PUT BACK IN IF CONDITION
+				return playerSuggest(p);
+			}else if(input.equals("suggest") && p.getRoom() == null){
+				System.out.println("");
+				System.out.println("Cannot suggest, you aren't in a room!");
+				System.out.println("");
+			}
+			if(input.equals("leftovers")){
+				showLeftovers();
+			}
+			if(input.equals("end")){
+				return false;
 			}
 		}
 	}
-
-	public static void playerRoll(Player p){
+	
+	public boolean playerSuggest(Player p){
+		String room = "Lounge";	//TESTING // CHANGE TO room = p.getRoom().getName();
+		System.out.println("You are currently in the " + room);
+		System.out.println("");
+		String wep = readString("What is the murder weapon?");
+		while(!wepCheck(wep)){
+			wep = readString("Invalid weapon! Please enter a valid weapon");
+		}
+		String person = readString("Finally, who commited the murder?");
+		while(!personCheck(person)){
+			person = readString("Invalid person! Please enter a valid person");
+		}
+		String finalise = readString("So you think it was " + person + " with the " + wep + 	//ADD IN CANCEL???
+				" in the " + room + "(type YES to finalise your choice or NO to re-enter)");
+		while(true){
+			if(finalise.equalsIgnoreCase("yes")){
+				if(game.accusation(wep, room, person)){
+					System.out.println("");
+					System.out.println("*******************************");
+					System.out.println("Congratulations " + p.toString() + "! You have solved the murder!");
+					System.out.println("Game over, " + p.toString() + " is the winner!");
+					System.out.println("*******************************");
+					gameIsOver = true;
+					return false;
+				}else{
+					System.out.println("");
+					System.out.println("Sorry " + p.toString() + " that is incorrect!");
+					playerRefute(wep, room, person, p);
+					return false;
+				}			
+			}else if(finalise.equalsIgnoreCase("no")){
+				return playerSuggest(p);
+			}else{
+				finalise = readString("Invalid input; please type in YES or NO!");
+			}
+		}
+	}
+	
+	public void showLeftovers(){
+		System.out.println("");
+		if(game.getDeck().size() == 0){
+			System.out.println("Leftovers pile is empty!!");
+			System.out.println("");
+		}else{
+			for(Card c : game.getDeck()){
+				System.out.println("- " + c);
+				System.out.println("");
+			}
+		}
+	}
+	public void showPlayerHand(Player p){
+		readString("Press ENTER when you would like your hand to display (keep your hand private)");
+		for(Card c : p.getHand()){
+			System.out.println("- " + c);
+			System.out.println("");
+		}
+		readString("Press ENTER when you have finished looking!!!");
+		for(int i = 0; i < 30; i++){
+			System.out.println("");	//attempt to fill console with blank space to avoid cheating
+		}
+	}
+	public void playerRoll(Player p){
 		Random r = new Random();
 		int roll = r.nextInt(7);
-		if(roll == 0) roll = r.nextInt(7);
+		while(roll == 0) roll = r.nextInt(7);
 		System.out.println("You rolled a " + roll);
 		String moveCmd = readString("Please enter " + roll + " movement command(s), followed by enter.").toLowerCase();
 		while(!validMoveCmd(moveCmd, roll, p)){
@@ -157,7 +240,8 @@ public class TextClient {
 		System.out.println(p.toString() + " successfully moved!");
 	}
 
-	public static void playerAccuse(Player p){
+	public boolean playerAccuse(Player p){
+		System.out.println(game.solutionToString());
 		String wep = readString("What do you think is the murder weapon?");
 		while(!wepCheck(wep)){
 			wep = readString("Invalid weapon! Please enter a valid weapon");
@@ -169,7 +253,20 @@ public class TextClient {
 		String person = readString("Finally, who do you think commited the murder?");
 		while(!personCheck(person)){
 			person = readString("Invalid person! Please enter a valid person");
-		}//WORK FROM HERE
+		}
+		if(game.accusation(wep, room, person)){
+			System.out.println("");
+			System.out.println("*******************************");
+			System.out.println("Congratulations " + p.toString() + "! You have solved the murder!");
+			System.out.println("Game over, " + p.toString() + " is the winner!");
+			System.out.println("*******************************");
+			gameIsOver = true;
+			return false;
+		}
+		else{
+			playerRefute(wep, room, person, p);
+			return true;
+		}
 	}
 
 	public static boolean wepCheck(String wep){
@@ -202,16 +299,51 @@ public class TextClient {
 
 	public static boolean personCheck(String person){
 		List<String> validPersons = new ArrayList<String>();
-		validPersons.add("Miss Scarlett");
-		validPersons.add("Colonel Mustard");
-		validPersons.add("Mrs. White");
-		validPersons.add("The Reverend Green");
-		validPersons.add("Mrs. Peacock");
-		validPersons.add("Professor Plum");
+		validPersons.add("miss scarlett");
+		validPersons.add("colonel mustard");
+		validPersons.add("mrs. white");
+		validPersons.add("the reverend green");
+		validPersons.add("mrs. peacock");
+		validPersons.add("professor plum");
 		if(validPersons.contains(person.toLowerCase())) return true;
 		return false;
 	}
 
+	public void playerRefute(String wep, String room, String person, Player p){
+		Card wepCard = new Card(wep, Card.Type.WEAPON);
+		Card roomCard = new Card(room, Card.Type.ROOM);
+		Card personCard = new Card(person, Card.Type.CHARACTER);
+
+		Queue<Player> players = new LinkedList<Player>(game.getPlayers());
+		System.out.println("");
+		for(Player player : players){ //Does not include current player as they have been polled off and not offered back yet
+			if(player.getHand().contains(personCard)){
+				System.out.println(player.toString() + " refutes and shows " + person + "!");
+				return;		//Card has been refuted, no need to carry on
+			}
+			if(player.getHand().contains(wepCard)){
+				System.out.println(player.toString() + " refutes and shows " + wep + "!");
+				return;		//Card has been refuted, no need to carry on
+			}
+			if(player.getHand().contains(roomCard)){
+				System.out.println(player.toString() + " refutes and shows " + room + "!");
+				return;		//Card has been refuted, no need to carry on
+			}
+		}
+		//Went through all players therefore cards must be in the deck
+		if(game.getDeck().contains(personCard)){
+			System.out.println(personCard + " is in the leftover pile.");
+			return;		//Card has been refuted, no need to carry on
+		}
+		if(game.getDeck().contains(wepCard)){
+			System.out.println(wepCard + " is in the leftover pile.");
+			return;		//Card has been refuted, no need to carry on
+		}
+		if(game.getDeck().contains(roomCard)){
+			System.out.println(roomCard + " is in the leftover pile.");
+			return;		//Card has been refuted, no need to carry on
+		}
+	}
 	public static boolean validMoveCmd(String cmd,int roll, Player p){
 		List<String> validChars = new ArrayList<String>();
 		validChars.add("w");
@@ -238,15 +370,27 @@ public class TextClient {
 		System.out.println("When prompted by the client, use w, a, s, d for forward, left, back and right respectively");
 		System.out.println("with no spaces, followed by enter.");
 		setPlayers();
-		System.out.println("*********************************");
-		System.out.println("");
-
+		
 		Queue<Player> players = game.getPlayers();
 		while(players.size() > 0 && !gameIsOver){
+			System.out.println("");
+			System.out.println("***************GAME BOARD******************");
+			System.out.println("");
 			game.getBoard().displayTiles();
 			Player currentPlayer = players.poll();
-			startPlayerTurn(currentPlayer);
-
+			boolean eliminated = startPlayerTurn(currentPlayer);
+			if(eliminated){
+				System.out.println("");
+				System.out.println(currentPlayer.toString() + " has been eliminated!!!");
+			}
+			else{
+				players.offer(currentPlayer);
+			}
+			System.out.println("");
+			System.out.println("End of " + currentPlayer.toString() + "'s turn. "
+					+ "Starting " + players.peek().toString() + "'s turn!");
+			System.out.println("");
+			readString(players.peek().toString() + "! Press ENTER when you are ready for your turn!");
 		}
 
 	}

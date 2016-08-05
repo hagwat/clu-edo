@@ -94,7 +94,7 @@ public class Game {
 			}
 			Player p = players.poll();
 			Card c = deck.get(0);
-			p.getHand().addCard(c);
+			p.addCard(c);
 			deck.remove(c);
 			players.offer(p);
 		}
@@ -118,12 +118,20 @@ public class Game {
 	}
 
 	public boolean accusation(String wep, String room, String person){
-		if(wepSol.toString().equals(wep) && roomSol.toString().equals(room) && charSol.toString().equals(person)){
+		if(wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
+				&& charSol.toString().equalsIgnoreCase(person)){
 			return true;
 		}
 		return false;
 	}
-
+	
+	public String solutionToString(){
+		return charSol + " " + roomSol + " " + wepSol;
+	}
+	
+	public List<Card> getDeck(){
+		return deck;
+	}
 	public static void main(String[] args) {
 		new Game();
 	}

@@ -2,7 +2,6 @@ package game;
 
 public class Card {
 
-	private Hand held;
 	private String name;
 	private Type type;
 
@@ -19,5 +18,21 @@ public class Card {
 
 	public Type getType() {
 		return type;
+	}
+	
+	@Override
+	public String toString(){
+		return this.name;
+	}
+	
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof Card){
+			Card c = (Card)o;
+			if(c.name.equalsIgnoreCase(this.name) && c.type == this.type){
+				return true;
+			}
+		}
+		return false;
 	}
 }

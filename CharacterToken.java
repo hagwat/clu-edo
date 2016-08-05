@@ -11,6 +11,7 @@ public class CharacterToken implements Locatable {
 	private int xPos;
 	private int yPos;
 	private Board board;
+	private Room room;
 
 	public CharacterToken(String playerName, Board board, int characterId) {
 		this.playerName = playerName;
@@ -55,31 +56,11 @@ public class CharacterToken implements Locatable {
 	}
 
 	public boolean validMove(String[] moves){
-		int x = xPos;
-		int y = yPos;
-
-		for (int i = 0; i < moves.length; i++) {
-			if (moves[i].equals("w")) {
-				x += 1;
-			} else if (moves[i].equals("a")) {
-				y -= 1;
-			} else if (moves[i].equals("s")) {
-				x -= 1;
-			} else if (moves[i].equals("d")) {
-				y += 1;
-			}
-			try{
-			if (board.getTile(x, y).getType().equals(Tile.TileType.INACCESSABLE)) {
-				return false;
-			}
-			}catch(NullPointerException e){
-				System.out.println("working exception");
-				return false;
-			}
-
-		}
-
-		return false;
+		return false; //WORK FROM HERE....TEST CASES
+	}
+	
+	public Room getRoom(){
+		return room;
 	}
 
 }
