@@ -4,10 +4,16 @@ import java.lang.Character;
 
 import game.Tile.TileType;
 
+/**
+ * A tile is what a board is made out of. Each board is a 2D array of tiles and
+ * each tile has a code determining what it represents on the board.
+ *
+ */
 public class Tile {
 
 	private Room room; // what room the tile is in, if any.
-	private Room connectsTo;
+	private Room connectsTo; // If the tile is a passage, what room the passage
+								// leads to
 	private int characterNumber = -1;
 	private TileType type; // where the tile is located, e.g. corridor,
 							// inaccessible. Only tiles at the entrance to rooms
@@ -15,19 +21,24 @@ public class Tile {
 	private String arg;// A one or two character String which is used to create
 						// tiles. Shown on map.
 
+	/**
+	 * The type of tile represented
+	 *
+	 */
 	public enum TileType {
 		INACCESSABLE, CORRIDOR, ROOM, DOOR, SPAWN
 	}
 
-	/**
-	 * Tiles Are Cool
-	 *
-	 * @param dirs
-	 */
 	public Tile(String arg, Board board) {
 		processArg(arg, board);
 	}
 
+	/**
+	 * Helps process the board.txt file and makes Board display the right thing
+	 *
+	 * @param arg
+	 * @param board
+	 */
 	public void processArg(String arg, Board board) {
 		this.arg = arg;
 		// An exhaustive series of switch statements describing behaviour for
@@ -94,19 +105,6 @@ public class Tile {
 		}
 	}
 
-	public Room getRoom() {
-		return this.room;
-	}
-
-	public int getCharacterNumber() {
-		return characterNumber;
-
-	}
-
-	public TileType getType() {
-		return this.type;
-	}
-
 	/**
 	 * Displays a single tile. Called by the board to display all tiles at once.
 	 */
@@ -124,5 +122,22 @@ public class Tile {
 				System.out.print(" ");
 			}
 		}
+	}
+
+	// *******************
+	// GETTERS & SETTERS
+	// *******************
+
+	public Room getRoom() {
+		return this.room;
+	}
+
+	public int getCharacterNumber() {
+		return characterNumber;
+
+	}
+
+	public TileType getType() {
+		return this.type;
 	}
 }

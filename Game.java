@@ -3,36 +3,34 @@ package game;
 import java.util.*;
 
 /**
- * Top level class.
+ * Keeps track of all the information of the current game of Cluedo. For example, players, solution, deck etc.
  */
 public class Game {
 	// The three cards that make the solution
 	private Card charSol;
 	private Card wepSol;
 	private Card roomSol;
-	
-	private List<WeaponToken> allWeps;
 
 	private Board board;
 	private TextClient client;
 
-	private Queue<Player> players = new LinkedList<Player>();
+	private Queue<Player> players = new LinkedList<Player>();	//Order of players
 	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
 
 	public Game() {
 		setDeck();
 		setSolution();
 		createBoard();
-		setWeapons();
 		createTextClient();
 		client.startup();
 	}
 
+	//Constructor for testing
 	public Game(String msg) {
 		setDeck();
 		setSolution();
 		createBoard();
-		System.out.println(msg);
+		System.out.println("test");
 		createTextClient();
 	}
 
@@ -94,7 +92,7 @@ public class Game {
 		}
 
 	}
-	
+
 	/**
 	 * Takes the remaining cards in the deck, shuffles them then deals them evenly to the players, leaving
 	 * the remainder (if any) in the leftovers pile.
@@ -116,22 +114,19 @@ public class Game {
 
 	}
 
-	public void setWeapons(){
-		List<String> rooms = new ArrayList<String>();
-		allWeps = new ArrayList<WeaponToken>();
-		//Input all weapon names
-		allWeps.add(new WeaponToken("Candlestick"));
-		allWeps.add(new WeaponToken("Dagger"));
-		allWeps.add(new WeaponToken("Lead Pipe"));
-		allWeps.add(new WeaponToken("Revolver"));
-		allWeps.add(new WeaponToken("Rope"));
-		allWeps.add(new WeaponToken("Spanner"));
-		//last 3 rooms will not have a weapon
-		//Input all weapons into random rooms
-		Collections.shuffle(allWeps);
-		for(int i = 0; i<allWeps.size();i++){
-			board.getRooms()[i].setWep(allWeps.get(i));
-			}
+	/**
+	 * Uses the parameters to determine whether this accusation matches the solution.
+	 * @param wep
+	 * @param room
+	 * @param person
+	 * @return
+	 */
+	public boolean accusation(String wep, String room, String person) {
+		if (wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
+				&& charSol.toString().equalsIgnoreCase(person)) {
+			return true;
+		}
+		return false;
 	}
 
 	public void swapWeaponTokens(String wep, Room room) {
@@ -154,7 +149,7 @@ public class Game {
 			System.out.println("No need to swap.");
 			return;
 		}
-		
+
 		Room[] rooms = board.getRooms();
 		for (int i = 0; i < rooms.length; i++) {
 			if (room.getWep() != null) {
@@ -170,11 +165,24 @@ public class Game {
 		}
 		System.out.println("Shouldnt be here");
 	}
-	
-	public List<WeaponToken> getWeapons(){
-		return this.allWeps;
+
+	/**
+	 * Creates a new instance of Board
+	 */
+	public void createBoard() {
+		this.board = new Board();
 	}
 
+	/**
+	 * Creates a new instance of TextClient
+	 */
+	public void createTextClient() {
+		client = new TextClient(this);
+	}
+
+	//*********************
+	//SETTERS & GETTERS
+	//*********************
 
 	public void setPlayers(Queue<Player> players) {
 		this.players = players;
@@ -184,32 +192,12 @@ public class Game {
 		return this.players;
 	}
 
-	public void createBoard() {
-		this.board = new Board();
-	}
-
-	public void createTextClient() {
-		client = new TextClient(this);
-	}
-
 	public TextClient getTextClient() {
 		return client;
 	}
 
 	public Board getBoard() {
 		return board;
-	}
-
-	public boolean accusation(String wep, String room, String person) {
-		if (wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
-				&& charSol.toString().equalsIgnoreCase(person)) {
-			return true;
-		}
-		return false;
-	}
-
-	public String solutionToString() {
-		return charSol + " " + roomSol + " " + wepSol;
 	}
 
 	public List<Card> getDeck() {

@@ -1,5 +1,8 @@
 package game;
-
+/**
+ * Represents a card in the game of Cluedo.
+ *
+ */
 public class Card {
 
 	private String name;
@@ -19,12 +22,12 @@ public class Card {
 	public Type getType() {
 		return type;
 	}
-	
+
 	@Override
 	public String toString(){
 		return this.name;
 	}
-	
+
 	@Override
 	public boolean equals(Object o){
 		if(o instanceof Card){

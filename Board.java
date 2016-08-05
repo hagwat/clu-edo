@@ -105,7 +105,7 @@ public class Board {
 		}
 		return null;
 	}
-	
+
 	public Room[] getRooms(){
 		return rooms;
 	}

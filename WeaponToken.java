@@ -1,6 +1,10 @@
 
 package game;
-
+/**
+ * A Weapon Token represents the token that sits in random rooms. These can be swapped when a player makes a
+ * suggestion.
+ *
+ */
 public class WeaponToken implements Locatable {
 
 	private String name;
