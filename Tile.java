@@ -1,7 +1,5 @@
 package game;
 
-import java.lang.Character;
-
 import game.Tile.TileType;
 
 /**
@@ -12,8 +10,6 @@ import game.Tile.TileType;
 public class Tile {
 
 	private Room room; // what room the tile is in, if any.
-	private Room connectsTo; // If the tile is a passage, what room the passage
-								// leads to
 	private int characterNumber = -1;
 	private TileType type; // where the tile is located, e.g. corridor,
 							// inaccessible. Only tiles at the entrance to rooms
@@ -99,7 +95,6 @@ public class Tile {
 			}
 		} else if (arg.length() == 2) {
 			char c = arg.substring(1, 2).toCharArray()[0];
-			java.lang.Character d = new Character(c);
 			if (c >= 48 && c <= 57) {// ascii number for digits 0 to 9.
 				type = TileType.SPAWN;
 				characterNumber = Integer.parseInt(arg.substring(1, 2));
