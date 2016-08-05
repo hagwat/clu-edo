@@ -19,7 +19,8 @@ public class Game {
 	private Queue<Player> players = new LinkedList<Player>();
 	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
 
-	public Game() {
+	public Board(Game game) {
+		this.game = game;
 		setDeck();
 		setSolution();
 		createBoard();
@@ -233,6 +234,10 @@ public class Game {
 	public List<Card> getDeck() {
 		return deck;
 	}
+	public Game getGame(){
+		return game;
+	 	}
+ 	}
 
 	public static void main(String[] args) {
 		new Game();
