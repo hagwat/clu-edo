@@ -16,7 +16,7 @@ public class Tile {
 						// tiles. Shown on map.
 
 	public enum TileType {
-		INACCESSIBLE, CORRIDOR, ROOM, DOOR, SPAWN
+		INACCESSABLE, CORRIDOR, ROOM, DOOR, SPAWN
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class Tile {
 		if (arg.length() == 1) {
 			switch (arg) {
 			case "n":
-				type = TileType.INACCESSIBLE;
+				type = TileType.INACCESSABLE;
 				break;
 			case "c":
 				type = TileType.CORRIDOR;
