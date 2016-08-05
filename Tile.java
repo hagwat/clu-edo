@@ -41,6 +41,7 @@ public class Tile {
 				type = TileType.CORRIDOR;
 				break;
 			case "D":
+				type = TileType.DOOR;
 				break;
 			case "k":
 				type = TileType.ROOM;

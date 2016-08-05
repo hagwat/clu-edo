@@ -52,7 +52,7 @@ public class TextClient {
 
 	public static List<String> getPlayerNames() {
 		int players = readInt("How many players? (Must be between 3-6)");
-		while (players > 6 || players < 3) {
+		while (players > 6 || players < 1) {//change back
 			System.out.println("Must be between 3 and 6!");
 			players = readInt("How many players? (Must be between 3-6)");
 		}
