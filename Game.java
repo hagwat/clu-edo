@@ -3,7 +3,7 @@ package game;
 import java.util.*;
 
 /**
- * Top level class.
+ * Keeps track of all the information of the current game of Cluedo. For example, players, solution, deck etc.
  */
 public class Game {
 	// The three cards that make the solution
@@ -133,7 +133,13 @@ public class Game {
 			board.getRooms()[i].setWep(allWeps.get(i));
 			}
 	}
-
+	
+	/**
+	 * When a player makes a suggestion, the suggested weapon and person are moved into the current room (weapons
+	 * swapped if there is already one in there). This method carries this action out.
+	 * @param wep
+	 * @param room
+	 */
 	public void swapWeaponTokens(String wep, Room room) {
 		if (room.getWep() == null) {//if room has no weapon
 			Room[] rooms = board.getRooms();
@@ -171,25 +177,49 @@ public class Game {
 		System.out.println("Shouldnt be here");
 	}
 	
-	public List<WeaponToken> getWeapons(){
-		return this.allWeps;
+	/**
+	 * Uses the parameters to determine whether this accusation matches the solution.
+	 * @param wep
+	 * @param room
+	 * @param person
+	 * @return
+	 */
+	public boolean accusation(String wep, String room, String person) {
+		if (wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
+				&& charSol.toString().equalsIgnoreCase(person)) {
+			return true;
+		}
+		return false;
+	}
+	
+/**
+	 * Creates a new instance of Board
+	 */
+	public void createBoard() {
+		this.board = new Board();
 	}
 
+	/**
+	 * Creates a new instance of TextClient
+	 */
+	public void createTextClient() {
+		client = new TextClient(this);
+	}
+
+	//*********************
+	//SETTERS & GETTERS
+	//*********************
 
 	public void setPlayers(Queue<Player> players) {
 		this.players = players;
 	}
 
+	public List<WeaponToken> getWeapons(){
+		return this.allWeps;
+	}
+
 	public Queue<Player> getPlayers() {
 		return this.players;
-	}
-
-	public void createBoard() {
-		this.board = new Board();
-	}
-
-	public void createTextClient() {
-		client = new TextClient(this);
 	}
 
 	public TextClient getTextClient() {
@@ -198,18 +228,6 @@ public class Game {
 
 	public Board getBoard() {
 		return board;
-	}
-
-	public boolean accusation(String wep, String room, String person) {
-		if (wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
-				&& charSol.toString().equalsIgnoreCase(person)) {
-			return true;
-		}
-		return false;
-	}
-
-	public String solutionToString() {
-		return charSol + " " + roomSol + " " + wepSol;
 	}
 
 	public List<Card> getDeck() {
