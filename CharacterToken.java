@@ -103,7 +103,13 @@ public class CharacterToken implements Locatable {
 	public Room getRoom(){
 		return board.getTile(xPos, yPos).getRoom();
 	}
-
+	
+	public void setRoom(String r){
+		int[] coordinates = board.getRoomLocation(r);
+		xPos = coordinates[0];
+		yPos = coordinates[1];
+ 	}
+ 	
 	public void setPos(int x, int y){
 		xPos = x;
 		yPos = y;
