@@ -1,5 +1,9 @@
 package game;
 
+/**
+ * Represents a card in the game of Cluedo.
+ *
+ */
 public class Card {
 
 	private String name;
