@@ -31,7 +31,8 @@ public class CharacterToken implements Locatable {
 	}
 
 	public void display() {
-		System.out.println("Player " + playerName + ", Character "+characterId+": "+ getCharacterName() + ", [" + xPos + "," + yPos + "]");
+		System.out.println("Player " + playerName + ", Character " + characterId + ": " + getCharacterName() + ", ["
+				+ xPos + "," + yPos + "]");
 	}
 
 	public String getCharacterName() {
@@ -55,10 +56,47 @@ public class CharacterToken implements Locatable {
 		return null;
 	}
 
-	public boolean validMove(String[] moves){
-		return false; //WORK FROM HERE....TEST CASES
+	public boolean validMove(String[] moves) {
+		int x = xPos;
+		int y = yPos;
+		System.out.println("before:");
+		System.out.print("[");
+		System.out.print(xPos+", ");
+		System.out.println(yPos+"]");
+
+		for (int i = 0; i < moves.length; i++) {
+			if (moves[i].equals("w")) {
+				y -= 1;
+			} else if (moves[i].equals("a")) {
+				x -= 1;
+			} else if (moves[i].equals("s")) {
+				y += 1;
+			} else if (moves[i].equals("d")) {
+				x += 1;
+			}
+			try{
+			if (board.getTile(x, y).getType().equals(Tile.TileType.INACCESSIBLE)) {
+				System.out.println("inaccessible "+x+","+y);
+				return false;
+			}
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.out.print("exception, and ");
+				return false;
+			}
+		}
+
+		xPos = x;
+		yPos = y;
+		
+		System.out.println("after:");
+		System.out.print("[");
+		System.out.print(xPos+", ");
+		System.out.println(yPos+"]");
+		
+		return true;
 	}
-	
+
+}
 	public Room getRoom(){
 		return room;
 	}
