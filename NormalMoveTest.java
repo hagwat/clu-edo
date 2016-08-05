@@ -30,9 +30,9 @@ public class NormalMoveTest {
 		Game game = new Game("test");
 		Player testGuy = new Player(2, "James", game.getBoard());
 		// --------------------------------------------------------|
-		System.out.println(testGuy.validMove(new String[] { "d", "w", "d", "a", "a" }));
+		System.out.println(testGuy.validMove(new String[] { "d", "w", "d", "s", "s"}));
 		System.out.println();
-		if (testGuy.getToken().getLocation()[0] != 2 || testGuy.getToken().getLocation()[1] != 18) {
+		if (testGuy.getToken().getLocation()[0] != 1 || testGuy.getToken().getLocation()[1] != 16) {
 			fail("incorrect position");
 		}
 	}
