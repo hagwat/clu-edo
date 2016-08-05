@@ -11,12 +11,12 @@ public class Room {
 	private String name;
 	private String tileKey;
 	private Map<String, int[]> exits;
-	private Weapon wep; 	//Weapon currently in this room
-+
-+	public Room(String name, Weapon wep) {
-+		this.name = name;
-+		this.wep = wep;
-+	}
+	private WeaponToken wep;	//Weapon currently in this room
+
+	public Room(String name, WeaponToken wep) {
+		this.name = name;
+		this.wep = wep;
+	}
 
 	public Room(String name) {
 		this.name = name;
@@ -33,15 +33,15 @@ public class Room {
 	public String getTileKey() {
 		return this.tileKey;
 	}
-	
-	public Weapon getWep(){
+
+	public WeaponToken getWep(){
 		return wep;
 	}
-	
-	public void setWep(Weapon w){
+
+	public void setWep(WeaponToken w){
 		this.wep = w;
 	}
-	
+
 	@Override
 
 	public boolean equals(Object o){

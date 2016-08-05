@@ -93,6 +93,7 @@ public class TextClient {
 		System.out.println("");
 		System.out.println("********** " + p.toString() + "'s Turn **********");
 		System.out.println("");
+		playerRoll(p);
 		System.out.println("Options:");
 		System.out.println("- Make an Accusation --- [accuse]");
 		System.out.println("- Display Hand --- [hand]");
@@ -161,8 +162,7 @@ public class TextClient {
 	}
 
 	public boolean playerSuggest(Player p) {
-		String room = "Lounge"; // TESTING // CHANGE TO room =
-								// p.getRoom().getName();
+		String room = p.getRoom().getName(); 
 		System.out.println("You are currently in the " + room);
 		System.out.println("");
 		String wep = readString("What is the murder weapon?");
@@ -232,12 +232,24 @@ public class TextClient {
 	public void playerRoll(Player p) {
 		Random r = new Random();
 		int roll = r.nextInt(6) + 1;
-		System.out.println(p.toString() + " is located at [" + p.getToken().getLocation()[0] + " ," + p.getToken().getLocation()[1] + " ]");
-		System.out.println("You rolled a " + roll);
+		int [] coords = p.getToken().getLocation(); 
+		System.out.print(p.toString() + " is located at [" + coords[0] + " ," + coords[1] + "]");
+		if(game.getBoard().getTile(coords[0], coords[1]).getRoom()!=null){
+			Room currRoom = game.getBoard().getTile(coords[0], coords[1]).getRoom();
+			System.out.print(" The "+currRoom.getName());
+			if(currRoom.getWep()!=null){
+				System.out.println(" contains the "+currRoom.getWep().getName()+".");
+			}else{
+				System.out.println("is empty.");
+			}
+		}else{
+			System.out.println();
+		}
+
+		System.out.println("You rolled a " + roll+".");
 
 		Room room = p.getToken().getRoom();
 		if (room != null) {// if player is in a room
-			System.out.println(room.getName());
 			Map<String, int[]> exits = room.getExits();
 			for (String s : exits.keySet()) {
 				System.out.print(s);
@@ -277,8 +289,8 @@ public class TextClient {
 		validChars.add("a");
 		validChars.add("s");
 		validChars.add("d");
-		String[] commands = new String[roll];
-		if (cmd.length() != roll)
+		String[] commands = new String[cmd.length()];
+		if (cmd.length() > roll)
 			return false;
 		for (int i = 0; i < cmd.length(); i++) {
 			String s = cmd.substring(i, i + 1);
@@ -317,18 +329,13 @@ public class TextClient {
 		}
 	}
 
-	public static boolean wepCheck(String wep) {
-		List<String> validWeps = new ArrayList<String>();
-		validWeps.add("candlestick");
-		validWeps.add("dagger");
-		validWeps.add("lead pipe");
-		validWeps.add("revolver");
-		validWeps.add("rope");
-		validWeps.add("spanner");
-		if (validWeps.contains(wep.toLowerCase()))
-			return true;
+	public boolean wepCheck(String wep) {
+		for (WeaponToken weapon : game.getWeapons()) {
+			if (weapon.getName().equals(wep)) {
+				return true;
+			}
+		}
 		return false;
-
 	}
 
 	public static boolean roomCheck(String room) {
