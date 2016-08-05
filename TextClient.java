@@ -94,19 +94,19 @@ public class TextClient {
 		System.out.println("********** " + p.toString() + "'s Turn **********");
 		System.out.println("");
 		System.out.println("Options:");
-		System.out.println("- Roll Dice & Move");
-		System.out.println("- Make an Accusation");
-		System.out.println("- Display Hand");
-		System.out.println("- Make Suggestion");
-		System.out.println("- Show Leftover Pile");
-		System.out.println("- End Your Turn");
+		System.out.println("- Make an Accusation --- [accuse]");
+		System.out.println("- Display Hand --- [hand]");
+		System.out.println("- Make Suggestion --- [suggest]");
+		System.out.println("- Show Leftover Pile --- [leftovers]");
+		System.out.println("- End Your Turn --- [end]");
 		List<String> options = new ArrayList<String>();
-		options.add("roll");
 		options.add("accuse");
 		options.add("hand");
-		options.add("suggest");
 		options.add("leftovers");
 		options.add("end");
+		if(p.getRoom() != null){
+			options.add("suggest");
+		}
 		while (true) {
 			System.out.println("Your options are:");
 			System.out.print("[");
@@ -133,11 +133,6 @@ public class TextClient {
 					}
 				}
 				input = readString("Please type in a valid choice!");
-			}
-			if (input.equals("roll")) {
-				playerRoll(p); // Player still has options therefore loop again
-				options.remove("roll"); // Remove roll from valid choices as can
-										// only roll once a turn
 			}
 			if (input.equals("accuse")) {
 				return playerAccuse(p); // break from the loop as an accusation
@@ -185,6 +180,7 @@ public class TextClient {
 		while (true) {
 			if (finalise.equalsIgnoreCase("yes")) {
 				if (game.accusation(wep, room, person)) {
+					game.swapWeaponTokens(wep, p.getRoom());
 					System.out.println("");
 					System.out.println("*******************************");
 					System.out.println("Congratulations " + p.toString() + "! You have solved the murder!");
@@ -193,6 +189,7 @@ public class TextClient {
 					gameIsOver = true;
 					return false;
 				} else {
+					game.swapWeaponTokens(wep, p.getRoom());
 					System.out.println("");
 					System.out.println("Sorry " + p.toString() + " that is incorrect!");
 					playerRefute(wep, room, person, p);
@@ -235,6 +232,7 @@ public class TextClient {
 	public void playerRoll(Player p) {
 		Random r = new Random();
 		int roll = r.nextInt(6) + 1;
+		System.out.println(p.toString() + " is located at [" + p.getToken().getLocation()[0] + " ," + p.getToken().getLocation()[1] + " ]");
 		System.out.println("You rolled a " + roll);
 
 		Room room = p.getToken().getRoom();
@@ -410,6 +408,32 @@ public class TextClient {
 		System.out
 				.println("When prompted by the client, use w, a, s, d for forward, left, back and right respectively");
 		System.out.println("with no spaces, followed by enter.");
+		System.out.println();
++		System.out.println("Text client:");
++		System.out.println("The text client drives the game and will ask you for inputs during your turn.");
++		System.out.println("The inputs are not case-sensitive, but they do require correct spelling.");
++		System.out.println();
++		System.out.println("Board display:");
++		System.out.println("The board display is text based. It does not update - however the client regularly reminds you of");
++		System.out.println("your location with co-ordinates.");
++		System.out.println();
++		System.out.println("Board key:");
++		System.out.println("- n = Inaccessible");
++		System.out.println("- c = Corridor");
++		System.out.println("- k = Kitchen");
++		System.out.println("- b = Ball Room");
++		System.out.println("- o = Conservatory");
++		System.out.println("- i = Billiard Room");
++		System.out.println("- l = Library");
++		System.out.println("- s = Study");
++		System.out.println("- h = Hall");
++		System.out.println("- u = Lounge");
++		System.out.println("- d = Dining Room");
++		System.out.println("- D = door");
++		System.out.println("- T# = Teleporter");
++		System.out.println("- S# = Starting point");
++		System.out.println();
++		System.out.println("Let's begin...");
 		setPlayers();
 
 		Queue<Player> players = game.getPlayers();
