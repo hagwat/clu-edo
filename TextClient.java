@@ -15,7 +15,9 @@ public class TextClient {
 
 	public TextClient(Game game) {
 		this.game = game;
-
+		setValidWeps();
+		setValidRooms();
+		setValidPersons();
 	}
 	
 	public void setValidWeps(){
