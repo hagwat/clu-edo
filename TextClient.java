@@ -374,15 +374,21 @@ public class TextClient {
 
 	public boolean playerAccuse(Player p) {
 		System.out.println(game.solutionToString());
-		String wep = readString("What do you think is the murder weapon?");
+		System.out.println("What do you think is the murder weapon?");
+		displayWeaponOptions();
+		String wep = readString("");
 		while (!wepCheck(wep)) {
 			wep = readString("Invalid weapon! Please enter a valid weapon");
 		}
-		String room = readString("What room do you think the murder occured in?");
+		System.out.println("What room do you think the murder occured in?");
+		displayRoomOptions();
+		String room = readString("");
 		while (!roomCheck(room)) {
 			room = readString("Invalid room! Please enter a valid room");
 		}
-		String person = readString("Finally, who do you think commited the murder?");
+		System.out.println("Finally, who do you think commited the murder?");
+		displayPersonOptions();
+		String person = readString("");
 		while (!personCheck(person)) {
 			person = readString("Invalid person! Please enter a valid person");
 		}
