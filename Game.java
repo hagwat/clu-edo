@@ -13,7 +13,8 @@ public class Game {
 
 	private Board board;
 	private TextClient client;
-
+	
+	private Set<Room> wepRooms = new HashSet<Room>();
 	private Queue<Player> players = new LinkedList<Player>();
 	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
 
@@ -21,6 +22,7 @@ public class Game {
 		setDeck();
 		setSolution();
 		createBoard();
+		setWeapons();
 		createTextClient();
 		client.startup();
 	}
@@ -107,6 +109,54 @@ public class Game {
 			players.offer(p);
 		}
 
+	}
+	
+	public void setWeapons(){
+		List<String> rooms = new ArrayList<String>();
+		List<Weapon> allWeps = new ArrayList<Weapon>();
+		//Input all weapon names
+		allWeps.add(new Weapon("Candlestick"));
+		allWeps.add(new Weapon("Dagger"));
+		allWeps.add(new Weapon("Lead Pipe"));
+		allWeps.add(new Weapon("Revolver"));
+		allWeps.add(new Weapon("Rope"));
+		allWeps.add(new Weapon("Spanner"));
+		allWeps.add(null);
+		allWeps.add(null);
+		allWeps.add(null);	//last 3 rooms will not have a weapon
+		//Input all rooms
+		rooms.add("Library");
+		rooms.add("Study");
+		rooms.add("Hall");
+		rooms.add("Lounge");
+		rooms.add("Dining Room");
+		rooms.add("Kitchen");
+		rooms.add("Ball Room");
+		rooms.add("Conservatory");
+		rooms.add("Billiard Room");
+		//Input all weapons into random rooms
+		Collections.shuffle(rooms);
+		for(int i = 0; i < allWeps.size(); i++){
+			wepRooms.add(new Room(rooms.get(i), allWeps.get(i)));
+		}
+	}
+
+	public void swapWeaponTokens(String wep, Room room){
+		Weapon weaponAccused = new Weapon(wep);
+		Room accusedWeaponRoom = null;
+		//Find accused weapon and weapon in current room
+		for(Room r : wepRooms){
+			if(r.equals(room) && r.getWep() != null && r.getWep().equals(weaponAccused)){
+				return;	//weapon is already in the room
+			}
+			if(r.getWep() != null && r.getWep().toString().equals(wep)){
+				accusedWeaponRoom = r;
+			}
+		}
+		//Swap the weapons
+		Weapon temp = room.getWep();
+		room.setWep(weaponAccused);
+		accusedWeaponRoom.setWep(temp);
 	}
 
 	public void setPlayers(Queue<Player> players) {
