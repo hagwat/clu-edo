@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * The board class holds the positions of each piece in the game. It also displays the board in the console.
+ *
+ */
 public class Board {
 
 	private Tile[][] tiles = new Tile[24][25]; // tiles[i][j]
@@ -22,6 +26,10 @@ public class Board {
 		System.out.println("board created");
 	}
 
+	/**
+	 * Constructs all the rooms from the txt file rooms.txt
+	 * @throws IOException
+	 */
 	public void loadRooms() throws IOException {
 		Scanner sc = new Scanner(new File("src/game/rooms.txt"));
 		for (int i = 0; i < 9; i++) {
@@ -79,6 +87,11 @@ public class Board {
 		System.out.println("");
 	}
 
+	/**
+	 * Finds the starting point of each character using their ID.
+	 * @param characterId
+	 * @return
+	 */
 	public int[] findSpawn(int characterId) {
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
@@ -105,11 +118,16 @@ public class Board {
 		}
 		return null;
 	}
-	
+
 	public Room[] getRooms(){
 		return rooms;
 	}
 
+	/**
+	 * Returns the x and y co-ordinates of the room by String.
+	 * @param name
+	 * @return
+	 */
 	public int[] getRoomLocation(String name) {
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
