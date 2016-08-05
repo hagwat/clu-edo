@@ -1,6 +1,7 @@
 package game;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -12,9 +13,10 @@ public class Board {
 
 	private Tile[][] tiles = new Tile[24][25]; // tiles[i][j]
 	private Room[] rooms = new Room[9];
+	private Game game;
 
-	public Board() {
-
+	public Board(Game game) {
+		this.game = game;
 		try {
 			loadRooms();
 			loadTiles();
@@ -22,7 +24,6 @@ public class Board {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("board created");
 	}
 
 	/**
@@ -37,7 +38,6 @@ public class Board {
 			room.setExits(sc.nextLine(), sc.nextLine());
 			rooms[i] = room;
 		}
-		System.out.println("rooms created");
 	}
 
 	/**
@@ -53,7 +53,6 @@ public class Board {
 				tiles[i][j] = tile;
 			}
 		}
-		System.out.println("tiles created");
 	}
 
 	/**
@@ -142,6 +141,11 @@ public class Board {
 
 	public Tile getTile(int x, int y) {
 		return this.tiles[x][y];
+
+	}
+
+	public Game getGame(){
+		return game;
 	}
 
 }

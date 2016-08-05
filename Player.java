@@ -7,7 +7,7 @@ import java.util.*;
  *
  */
 public class Player {
-	
+
 	private List<Card> hand;	//This player's hand
 	private int character; // Integer refers to character in Characters.txt
 	private String name;	//This player's name
@@ -18,15 +18,16 @@ public class Player {
 		this.name = playerName;
 		hand = new ArrayList<Card>();
 		token = new CharacterToken(playerName, board, characterNum);
+		board.getGame().getTokens().add(token);
 	}
-	public Player(int characterNum, String playerName, Board board, int x, int y){
+
+	public Player(int characterNum, String playerName, Board board, int x, int y) {
 		this.character = characterNum;
 		this.name = playerName;
 		hand = new ArrayList<Card>();
 		token = new CharacterToken(playerName, board, characterNum);
 		token.setPos(x, y);
 	}
-
 
 
 
@@ -37,7 +38,7 @@ public class Player {
 	public String toString() {
 		return name;
 	}
-	
+
 	/**
 	 * Returns a boolean on whether the array of moves passed is valid for this player.
 	 * @param moves
@@ -46,7 +47,7 @@ public class Player {
 	public boolean validMove(String[] moves) {
 		return token.validMove(moves);
 	}
-	
+
 	/**
 	 * Add Card c to the player's hand
 	 * @param c

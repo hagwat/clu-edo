@@ -10,8 +10,9 @@ public class Game {
 	private Card charSol;
 	private Card wepSol;
 	private Card roomSol;
-	
+
 	private List<WeaponToken> allWeps;
+	private List<CharacterToken> cTokens;
 
 	private Board board;
 	private TextClient client;
@@ -94,7 +95,7 @@ public class Game {
 		}
 
 	}
-	
+
 	/**
 	 * Takes the remaining cards in the deck, shuffles them then deals them evenly to the players, leaving
 	 * the remainder (if any) in the leftovers pile.
@@ -133,7 +134,22 @@ public class Game {
 			board.getRooms()[i].setWep(allWeps.get(i));
 			}
 	}
-	
+
+	public void setCharacters(){
+		Scanner sc = new Scanner("src/characters.txt");
+
+
+
+		while(sc.hasNext()){
+			int num = sc.nextInt();
+			String name= sc.nextLine();
+			CharacterToken hopeful = new CharacterToken(null, board, num);
+			for(CharacterToken c: cTokens){
+
+			}
+		}
+	}
+
 	/**
 	 * When a player makes a suggestion, the suggested weapon and person are moved into the current room (weapons
 	 * swapped if there is already one in there). This method carries this action out.
@@ -160,7 +176,7 @@ public class Game {
 			System.out.println("No need to swap.");
 			return;
 		}
-		
+
 		Room[] rooms = board.getRooms();
 		for (int i = 0; i < rooms.length; i++) {
 			if (room.getWep() != null) {
@@ -176,7 +192,17 @@ public class Game {
 		}
 		System.out.println("Shouldnt be here");
 	}
-	
+
+	public void bringCharacterToken(String name, String roomName){
+		for(Player p: players){
+			CharacterToken brought = p.getToken();
+			if(brought.getCharacterName().equals(name)){
+				brought.setPos(board.getRoomLocation(roomName)[0],board.getRoomLocation(roomName)[0]);
+				System.out.println(brought.getLocation()[0]+", "+brought.getLocation()[1]);
+			}
+		}
+	}
+
 	/**
 	 * Uses the parameters to determine whether this accusation matches the solution.
 	 * @param wep
@@ -191,12 +217,12 @@ public class Game {
 		}
 		return false;
 	}
-	
+
 /**
 	 * Creates a new instance of Board
 	 */
 	public void createBoard() {
-		this.board = new Board();
+		this.board = new Board(this);
 	}
 
 	/**
@@ -232,6 +258,10 @@ public class Game {
 
 	public List<Card> getDeck() {
 		return deck;
+	}
+
+	public List<CharacterToken> getTokens(){
+		return cTokens;
 	}
 
 	public static void main(String[] args) {

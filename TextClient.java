@@ -189,12 +189,15 @@ public class TextClient {
 		while (!personCheck(person)) {
 			person = readString("Invalid person! Please enter a valid person");
 		}
-		String finalise = readString("So you think it was " + person + " with the " + wep +
+		String finalise = readString("So you think it was " + person + " with the " + wep + // ADD
+																							// IN
+																							// CANCEL???
 				" in the " + room + "(type YES to finalise your choice or NO to re-enter)");
 		while (true) {
 			if (finalise.equalsIgnoreCase("yes")) {
 				if (game.accusation(wep, room, person)) {
 					game.swapWeaponTokens(wep, p.getRoom());
+					game.bringCharacterToken(person,room);
 					System.out.println();
 					System.out.println("Nobody can refute...");
 					System.out.println();
@@ -314,6 +317,7 @@ public class TextClient {
 			players.offer(new Player(tokens.get(i), names.get(i), game.getBoard()));
 		}
 		game.setPlayers(players);
+		game.setCharacters();
 		game.setHands();
 	}
 
@@ -362,7 +366,7 @@ public class TextClient {
 	 */
 	public static List<String> getPlayerNames() {
 		int players = readInt("How many players? (Must be between 3-6)");
-		while (players > 6 || players < 3) {
+		while (players > 6 || players < 2) {
 			System.out.println("Must be between 3 and 6!");
 			players = readInt("How many players? (Must be between 3-6)");
 		}
@@ -596,7 +600,9 @@ public class TextClient {
 			if (input.equals("hand")) {
 				showPlayerHand(p);
 			}
-			if (input.equals("suggest") && p.getRoom() != null){
+			if (input.equals("suggest")) { // && p.getRoom() != null ========>
+											// FOR TESTING // PUT BACK IN IF
+											// CONDITION
 				return playerSuggest(p);
 			} else if (input.equals("suggest") && p.getRoom() == null) {
 				System.out.println("");
@@ -619,7 +625,8 @@ public class TextClient {
 		System.out.println("");
 		System.out.println("Rules of movement:");
 		System.out.println("When you roll the dice, you will have a certain number of moves.");
-		System.out.println("When prompted by the client, use w, a, s, d for forward, left, back and right respectively");
+		System.out
+				.println("When prompted by the client, use w, a, s, d for forward, left, back and right respectively");
 		System.out.println("with no spaces, followed by enter.");
 		System.out.println();
 		System.out.println("Text client:");
@@ -627,7 +634,8 @@ public class TextClient {
 		System.out.println("The inputs are not case-sensitive, but they do require correct spelling.");
 		System.out.println();
 		System.out.println("Board display:");
-		System.out.println("The board display is text based. It does not update - however the client regularly reminds you of");
+		System.out.println(
+				"The board display is text based. It does not update - however the client regularly reminds you of");
 		System.out.println("your location with co-ordinates.");
 		System.out.println();
 		System.out.println("Board key:");
@@ -647,8 +655,8 @@ public class TextClient {
 		System.out.println("- S# = Starting point");
 		System.out.println();
 		System.out.println("Let's begin...");
-
 		setPlayers();
+
 		Queue<Player> players = game.getPlayers();
 		while (players.size() > 0 && !gameIsOver) {
 			System.out.println("");
