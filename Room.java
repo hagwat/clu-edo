@@ -1,21 +1,15 @@
 package game;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-/**
- * Represents a room in the game of Cluedo.
- *
- */
 public class Room {
 
-	private String name;	//Name of room
-	private String tileKey;	//The key of the room
-	private Map<String, int[]> exits;	//The co-ordinates of the exit(s)
-	private WeaponToken wep; 	//Weapon currently in this room
+	private String name;
+	private String tileKey;
+	private Map<String, int[]> exits;
+	private WeaponToken wep;	//Weapon currently in this room
 
 	public Room(String name, WeaponToken wep) {
 		this.name = name;

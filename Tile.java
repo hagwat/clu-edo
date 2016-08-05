@@ -1,50 +1,28 @@
 package game;
 
-import java.lang.Character;
-
-import game.Tile.TileType;
-
-/**
- * A tile is what a board is made out of. Each board is a 2D array of tiles and
- * each tile has a code determining what it represents on the board.
- *
- */
 public class Tile {
 
 	private Room room; // what room the tile is in, if any.
-	private Room connectsTo; // If the tile is a passage, what room the passage
-								// leads to
 	private int characterNumber = -1;
 	private TileType type; // where the tile is located, e.g. corridor,
 							// inaccessible. Only tiles at the entrance to rooms
 							// are in a room and are of type ROOM.
 	private String arg;// A one or two character String which is used to create
 						// tiles. Shown on map.
-	
-	/**
-	 * The type of tile represented
-	 *
-	 */
+
 	public enum TileType {
 		INACCESSABLE, CORRIDOR, ROOM, DOOR, SPAWN
 	}
 
 	/**
-	 * Helps process the board.txt file and makes Board display the right thing
+	 * Tiles Are Cool
 	 *
-	 * @param arg
-	 * @param board
+	 * @param dirs
 	 */
 	public Tile(String arg, Board board) {
 		processArg(arg, board);
 	}
 
-	/**
-	 * Helps process the board.txt file and makes Board display the right thing
-	 *
-	 * @param arg
-	 * @param board
-	 */
 	public void processArg(String arg, Board board) {
 		this.arg = arg;
 		// An exhaustive series of switch statements describing behaviour for
@@ -99,7 +77,6 @@ public class Tile {
 			}
 		} else if (arg.length() == 2) {
 			char c = arg.substring(1, 2).toCharArray()[0];
-			java.lang.Character d = new Character(c);
 			if (c >= 48 && c <= 57) {// ascii number for digits 0 to 9.
 				type = TileType.SPAWN;
 				characterNumber = Integer.parseInt(arg.substring(1, 2));
@@ -109,6 +86,19 @@ public class Tile {
 		} else {
 			throw new Error("Tile arg length not 1 or 2.");
 		}
+	}
+
+	public Room getRoom() {
+		return this.room;
+	}
+
+	public int getCharacterNumber() {
+		return characterNumber;
+
+	}
+
+	public TileType getType() {
+		return this.type;
 	}
 
 	/**
@@ -128,21 +118,5 @@ public class Tile {
 				System.out.print(" ");
 			}
 		}
-	}
-	// *******************
-	// GETTERS & SETTERS
-	// *******************
-
-	public Room getRoom() {
-		return this.room;
-	}
-
-	public int getCharacterNumber() {
-		return characterNumber;
-
-	}
-	
-	public TileType getType() {
-		return this.type;
 	}
 }

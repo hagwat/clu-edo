@@ -4,10 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-/**
- * Represents a Player's Character token in the game of Cluedo.
- *
- */
 public class CharacterToken implements Locatable {
 
 	private int characterId;// aka characterNum
@@ -33,18 +29,11 @@ public class CharacterToken implements Locatable {
 		return xy;
 	}
 
-	/**
-	 * Displays the CharacterToken's current co-ordinates to the console
-	 */
 	public void display() {
 		System.out.println("Player " + playerName + ", Character " + characterId + ": " + getCharacterName() + ", ["
 				+ xPos + "," + yPos + "]");
 	}
 
-	/**
-	 * Uses the character ID to determine what character it is from the text file
-	 * @return
-	 */
 	public String getCharacterName() {
 		try {
 			Scanner sc = new Scanner(new File("src/game/characters.txt"));
@@ -66,11 +55,6 @@ public class CharacterToken implements Locatable {
 		return null;
 	}
 
-	/**
-	 * Returns a boolean on whether the array of moves passed is valid for this player.
-	 * @param moves
-	 * @return
-	 */
 	public boolean validMove(String[] moves) {
 		int x = xPos;
 		int y = yPos;
@@ -124,10 +108,6 @@ public class CharacterToken implements Locatable {
 		return true;
 	}
 
-	/**
-	 * Moves this CharacterToken to a room's co-ordinates
-	 * @param coords
-	 */
 	public void roomMove(int[] coords) {
 		setPos(coords[0], coords[1]);
 	}
