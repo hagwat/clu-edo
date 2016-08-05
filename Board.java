@@ -105,10 +105,6 @@ public class Board {
 		}
 		return null;
 	}
-	
-	public Room[] getRooms(){
-		return rooms;
-	}
 
 	public int[] getRoomLocation(String name) {
 		for (int j = 0; j < tiles[0].length; j++) {

@@ -11,7 +11,7 @@ public class Room {
 	private String name;
 	private String tileKey;
 	private Map<String, int[]> exits;
-	private WeaponToken wep;	//Weapon currently in this room
+	private WeaponToken wep; 	//Weapon currently in this room
 
 	public Room(String name, WeaponToken wep) {
 		this.name = name;

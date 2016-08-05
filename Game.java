@@ -10,29 +10,27 @@ public class Game {
 	private Card charSol;
 	private Card wepSol;
 	private Card roomSol;
-	
-	private List<WeaponToken> allWeps;
 
 	private Board board;
 	private TextClient client;
 
-	private Queue<Player> players = new LinkedList<Player>();
+	private Queue<Player> players = new LinkedList<Player>();	//Order of players
 	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
 
 	public Game() {
 		setDeck();
 		setSolution();
 		createBoard();
-		setWeapons();
 		createTextClient();
 		client.startup();
 	}
 
+	//Constructor for testing
 	public Game(String msg) {
 		setDeck();
 		setSolution();
 		createBoard();
-		System.out.println(msg);
+		System.out.println("test");
 		createTextClient();
 	}
 
@@ -95,7 +93,11 @@ public class Game {
 
 	}
 
-	public void setHands(Queue<Player> players) {
+	/**
+	 * Takes the remaining cards in the deck, shuffles them then deals them evenly to the players, leaving
+	 * the remainder (if any) in the leftovers pile.
+	 */
+	public void setHands() {
 		Collections.shuffle(deck);
 		Player firstPlayer = players.peek();
 		while (deck.size() > 0) {
@@ -111,66 +113,6 @@ public class Game {
 		}
 
 	}
-
-	public void setWeapons(){
-		List<String> rooms = new ArrayList<String>();
-		allWeps = new ArrayList<WeaponToken>();
-		//Input all weapon names
-		allWeps.add(new WeaponToken("Candlestick"));
-		allWeps.add(new WeaponToken("Dagger"));
-		allWeps.add(new WeaponToken("Lead Pipe"));
-		allWeps.add(new WeaponToken("Revolver"));
-		allWeps.add(new WeaponToken("Rope"));
-		allWeps.add(new WeaponToken("Spanner"));
-		//last 3 rooms will not have a weapon
-		//Input all weapons into random rooms
-		Collections.shuffle(allWeps);
-		for(int i = 0; i<allWeps.size();i++){
-			board.getRooms()[i].setWep(allWeps.get(i));
-			}
-	}
-
-	public void swapWeaponTokens(String wep, Room room) {
-		if (room.getWep() == null) {//if room has no weapon
-			Room[] rooms = board.getRooms();
-			for (int i = 0; i < rooms.length; i++) {//for each room
-				if (rooms[i].getWep() != null) {
-					if (rooms[i].getWep().getName().equals(wep)) {//if room has the needed weapon
-						room.setWep(rooms[i].getWep());
-						rooms[i].setWep(null);
-						System.out.println("Empty room nabbed the wep");
-						System.out.println(room.getWep().getName());
-						return;
-					}
-				}
-			}
-		}
-
-		if (room.getWep().getName().equals(wep)) {
-			System.out.println("No need to swap.");
-			return;
-		}
-		
-		Room[] rooms = board.getRooms();
-		for (int i = 0; i < rooms.length; i++) {
-			if (room.getWep() != null) {
-				if (rooms[i].getWep().getName().equals(wep)) {
-					WeaponToken wrongWep = room.getWep();
-					room.setWep(rooms[i].getWep());
-					rooms[i].setWep(wrongWep);
-					System.out.println("Swapped.");
-					return;
-				}
-
-			}
-		}
-		System.out.println("Shouldnt be here");
-	}
-	
-	public List<WeaponToken> getWeapons(){
-		return this.allWeps;
-	}
-
 
 	public void setPlayers(Queue<Player> players) {
 		this.players = players;
