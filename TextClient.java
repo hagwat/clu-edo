@@ -8,12 +8,47 @@ public class TextClient {
 
 	private Game game;
 	private boolean gameIsOver = false;
+	
+	private List<String> validWeps = new ArrayList<String>();
+	private List<String> validRooms = new ArrayList<String>();
+	private List<String> validPersons = new ArrayList<String>();
 
 	public TextClient(Game game) {
 		this.game = game;
 
 	}
+	
+	public void setValidWeps(){
+		validWeps.add("Candlestick");
+		validWeps.add("Dagger");
+		validWeps.add("Lead Pipe");
+		validWeps.add("Revolver");
+		validWeps.add("Rope");
+		validWeps.add("Spanner");
+	}
 
+
+	public void setValidRooms(){
+		validRooms.add("Kitchen");
+		validRooms.add("Dining Room");
+		validRooms.add("Lounge");
+		validRooms.add("Hall");
+		validRooms.add("Study");
+		validRooms.add("Billiard Room");
+		validRooms.add("Conservatory");
+		validRooms.add("Ball Room");
+		validRooms.add("Library");
+	}
+
+	public void setValidPersons(){
+		validPersons.add("Miss Scarlett");
+		validPersons.add("Colonel Mustard");
+		validPersons.add("Mrs. White");
+		validPersons.add("The Reverend Green");
+		validPersons.add("Mrs. Peacock");
+		validPersons.add("Professor Plum");
+ 	}
+ 	
 	public static String readString(String msg) {
 		System.out.println(msg);
 		Scanner sc = new Scanner(System.in);
@@ -47,7 +82,7 @@ public class TextClient {
 			players.offer(new Player(tokens.get(i), names.get(i), game.getBoard()));
 		}
 		game.setPlayers(players);
-		game.setHands(players);
+		game.setHands();
 	}
 
 	public static List<String> getPlayerNames() {
@@ -165,11 +200,15 @@ public class TextClient {
 		String room = p.getRoom().getName(); 
 		System.out.println("You are currently in the " + room);
 		System.out.println("");
-		String wep = readString("What is the murder weapon?");
+		System.out.println("What is the murder weapon?");
+		displayWeaponOptions();
+		String wep = readString("");
 		while (!wepCheck(wep)) {
 			wep = readString("Invalid weapon! Please enter a valid weapon");
 		}
-		String person = readString("Finally, who commited the murder?");
+		System.out.println("Finally, who commited the murder?");
+		displayPersonOptions();
+		String person = readString("");
 		while (!personCheck(person)) {
 			person = readString("Invalid person! Please enter a valid person");
 		}
@@ -181,12 +220,9 @@ public class TextClient {
 			if (finalise.equalsIgnoreCase("yes")) {
 				if (game.accusation(wep, room, person)) {
 					game.swapWeaponTokens(wep, p.getRoom());
-					System.out.println("");
-					System.out.println("*******************************");
-					System.out.println("Congratulations " + p.toString() + "! You have solved the murder!");
-					System.out.println("Game over, " + p.toString() + " is the winner!");
-					System.out.println("*******************************");
-					gameIsOver = true;
+					System.out.println();
+					System.out.println("Nobody can refute...");
+					System.out.println();
 					return false;
 				} else {
 					game.swapWeaponTokens(wep, p.getRoom());
@@ -203,6 +239,39 @@ public class TextClient {
 		}
 	}
 
+	public void displayWeaponOptions(){
+		System.out.print("[");
+		for(int i = 0; i < validWeps.size(); i++){
+			if( i < validWeps.size() - 1){
+			System.out.print(validWeps.get(i) + " / ");
+			}else{
+				System.out.print(validWeps.get(i) + "]");
+			}
+		}
+	}
+
+	public void displayPersonOptions(){
+		System.out.print("[");
+		for(int i = 0; i < validPersons.size(); i++){
+			if( i < validPersons.size() - 1){
+			System.out.print(validPersons.get(i) + " / ");
+			}else{
+				System.out.print(validPersons.get(i) + "]");
+			}
+		}
+	}
+
+	public void displayRoomOptions(){
+		System.out.print("[");
+		for(int i = 0; i < validRooms.size(); i++){
+			if( i < validRooms.size() - 1){
+			System.out.print(validRooms.get(i) + " / ");
+			}else{
+				System.out.print(validRooms.get(i) + "]");
+			}
+		}
+	}
+	
 	public void showLeftovers() {
 		System.out.println("");
 		if (game.getDeck().size() == 0) {
@@ -329,40 +398,28 @@ public class TextClient {
 		}
 	}
 
-	public boolean wepCheck(String wep) {
-		for (WeaponToken weapon : game.getWeapons()) {
-			if (weapon.getName().equals(wep)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static boolean roomCheck(String room) {
-		List<String> validRooms = new ArrayList<String>();
-		validRooms.add("kitchen");
-		validRooms.add("dining room");
-		validRooms.add("lounge");
-		validRooms.add("hall");
-		validRooms.add("study");
-		validRooms.add("billiard room");
-		validRooms.add("conservatory");
-		validRooms.add("ball room");
-		validRooms.add("library");
-		if (validRooms.contains(room.toLowerCase()))
+		public boolean wepCheck(String wep) {
+		List<String> wepsLowerCase = new ArrayList<String>();
+		for(String s : validWeps) wepsLowerCase.add(s.toLowerCase());
+		if (wepsLowerCase.contains(wep.toLowerCase()))
 			return true;
 		return false;
+
 	}
 
-	public static boolean personCheck(String person) {
-		List<String> validPersons = new ArrayList<String>();
-		validPersons.add("miss scarlett");
-		validPersons.add("colonel mustard");
-		validPersons.add("mrs. white");
-		validPersons.add("the reverend green");
-		validPersons.add("mrs. peacock");
-		validPersons.add("professor plum");
-		if (validPersons.contains(person.toLowerCase()))
+	public boolean roomCheck(String room) {
+		List<String> roomsLowerCase = new ArrayList<String>();
+		for(String s : validRooms) roomsLowerCase.add(s.toLowerCase());
+		if (roomsLowerCase.contains(room.toLowerCase()))
+			return true;
+		return false;
+
+	}
+
+	public boolean personCheck(String person) {
+		List<String> personsLowerCase = new ArrayList<String>();
+		for(String s : validPersons) personsLowerCase.add(s.toLowerCase());
+		if (personsLowerCase.contains(person.toLowerCase()))
 			return true;
 		return false;
 	}
