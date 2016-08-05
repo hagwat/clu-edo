@@ -27,7 +27,6 @@ public class Board {
 		for (int i = 0; i < 9; i++) {
 			Room room = new Room(sc.nextLine());
 			room.setTileKey(sc.nextLine());
-			room.setExits(sc.nextLine(), sc.nextLine());
 			rooms[i] = room;
 		}
 		System.out.println("rooms created");
@@ -56,12 +55,27 @@ public class Board {
 	public void displayTiles() {
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
+				if(i == 0 && j < 10){
+					System.out.print(j + "  ");
+				}else if(i == 0 && j >= 10){
+					System.out.print(j + " ");
+				}
 				tiles[i][j].display();
 				if (i == tiles.length - 1) {
 					System.out.println("|");
 				}
 			}
 		}
+		System.out.print("   ");
+		for(int i = 0; i < tiles.length; i++){
+			if(i < 10){
+			System.out.print(" " + i + " ");
+			if(i == 9) System.out.print(" ");
+			}else{
+				System.out.print(i + " ");
+			}
+		}
+		System.out.println("");
 	}
 
 	public int[] findSpawn(int characterId) {
@@ -84,11 +98,16 @@ public class Board {
 	 */
 	public Room getRoom(String name) {
 		for (int i = 0; i < rooms.length; i++) {
+
 			if (rooms[i].getName().equals(name)) {
 				return rooms[i];
 			}
 		}
 		return null;
+	}
+
+	public Tile getTile(int x, int y) {
+		return this.tiles[x][y];
 	}
 
 	public int[] getRoomLocation(String name) {
@@ -102,10 +121,6 @@ public class Board {
 			}
 		}
 		return null;
-	}
-
-	public Tile getTile(int x, int y) {
-		return this.tiles[x][y];
 	}
 
 }

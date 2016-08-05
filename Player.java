@@ -14,15 +14,6 @@ public class Player {
 		hand = new ArrayList<Card>();
 		token = new CharacterToken(playerName, board, characterNum);
 	}
-	public Player(int characterNum, String playerName, Board board, int x, int y){
-		this.character = characterNum;
-		this.name = playerName;
-		hand = new ArrayList<Card>();
-		token = new CharacterToken(playerName, board, characterNum);
-		token.setPos(x, y);
-	}
-
-
 
 
 	public List<Card> getHand() {
