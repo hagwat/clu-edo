@@ -14,23 +14,7 @@ public class Player {
 		hand = new ArrayList<Card>();
 		token = new CharacterToken(playerName, board, characterNum);
 	}
-	/*
-	 * public void promptMove(){
-	 *
-	 *
-	 * Tile current = board.getTile(xPos, yPos);
-	 * if(!current.getType().equals(Tile.TileType.ROOM)){ promptNormalMove();
-	 * }else{ promptRoomMove(); }
-	 *
-	 * } public void promptNormalMove(){
-	 *
-	 * }
-	 *
-	 * public void promptRoomMove(){
-	 *
-	 * } public void nextTurn(){ Player current = this.players.poll();
-	 * current.move(); current.suggest(); nextTurn(); }
-	 */
+
 
 	public List<Card> getHand() {
 		return hand;
