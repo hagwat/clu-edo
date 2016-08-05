@@ -3,10 +3,7 @@ package game;
 import java.util.*;
 
 /**
- * Hi Shaw. I modified your stuff so it would compile. I made it so Game was the
- * main method which created a new TextClient. To make it compile I added
- * Card.getType() and made Player.addCard(Card c) into
- * Player.getHand.addCard(Card c). Just so you know what's different :)
+* Top level class.
  */
 public class Game {
 	// The three cards that make the solution
@@ -23,8 +20,16 @@ public class Game {
 		setDeck();
 		setSolution();
 		createBoard();
-		new TextClient(this);
-	}
+		createTextClient();
+-		client.startup();
+-	}
+-	public Game(String msg){
+-		setDeck();
+-		setSolution();
+-		createBoard();
+-		System.out.println("test");
+-		createTextClient();
+ 	}
 
 	/**
 	 * Populates the deck field with each card in the game
@@ -112,6 +117,16 @@ public class Game {
 	public void createBoard() {
 		this.board = new Board();
 	}
+	
+	public void createTextClient() {
++	public boolean accusation(String wep, String room, String person){
+-		client = new TextClient(this);
++		if(wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
+-	}
++				&& charSol.toString().equalsIgnoreCase(person)){
+-	public TextClient getTextClient(){
+-		return client;
+-	}
 
 	public Board getBoard() {
 		return board;
