@@ -38,5 +38,4 @@ h = hall
 u = lounge
 d = dining room
 D = door
-T#= teleporter
-S#= start
+S#= spawn

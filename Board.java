@@ -27,6 +27,7 @@ public class Board {
 		for (int i = 0; i < 9; i++) {
 			Room room = new Room(sc.nextLine());
 			room.setTileKey(sc.nextLine());
+			room.setExits(sc.nextLine(), sc.nextLine());
 			rooms[i] = room;
 		}
 		System.out.println("rooms created");
@@ -83,9 +84,21 @@ public class Board {
 	 */
 	public Room getRoom(String name) {
 		for (int i = 0; i < rooms.length; i++) {
-
 			if (rooms[i].getName().equals(name)) {
 				return rooms[i];
+			}
+		}
+		return null;
+	}
+
+	public int[] getRoomLocation(String name) {
+		for (int j = 0; j < tiles[0].length; j++) {
+			for (int i = 0; i < tiles.length; i++) {
+				if (tiles[i][j].getType().equals(Tile.TileType.ROOM)) {
+					if (tiles[i][j].getRoom().getName().equals(name)) {
+						return new int[] { i, j };
+					}
+				}
 			}
 		}
 		return null;

@@ -11,7 +11,6 @@ public class CharacterToken implements Locatable {
 	private int xPos;
 	private int yPos;
 	private Board board;
-	private Room room;
 
 	public CharacterToken(String playerName, Board board, int characterId) {
 		this.playerName = playerName;
@@ -95,10 +94,21 @@ public class CharacterToken implements Locatable {
 
 		return true;
 	}
+	
+	public void roomMove(int[] coords){
+		setPos(coords[0], coords[1]);
+	}
 
 
 	public Room getRoom(){
-		return room;
+		return board.getTile(xPos, yPos).getRoom();
 	}
+
+	public void setPos(int x, int y){
+		xPos = x;
+		yPos = y;
+		System.out.println("Change to ["+xPos+","+yPos+"]");
+	}
+
 
 }
