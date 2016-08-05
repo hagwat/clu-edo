@@ -141,7 +141,7 @@ public class TextClient {
 				input = readString("Please type in a valid choice!");
 			}
 			if(input.equals("roll")){
-				//	playerRoll(p);	//Player still has options therefore loop again
+					playerRoll(p);	//Player still has options therefore loop again
 				options.remove("roll");	//Remove roll from valid choices as can only roll once a turn
 			}
 			if(input.equals("accuse")){

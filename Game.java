@@ -3,7 +3,7 @@ package game;
 import java.util.*;
 
 /**
-* Top level class.
+ * Top level class.
  */
 public class Game {
 	// The three cards that make the solution
@@ -12,6 +12,7 @@ public class Game {
 	private Card roomSol;
 
 	private Board board;
+	private TextClient client;
 
 	private Queue<Player> players = new LinkedList<Player>();
 	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
@@ -21,15 +22,16 @@ public class Game {
 		setSolution();
 		createBoard();
 		createTextClient();
--		client.startup();
--	}
--	public Game(String msg){
--		setDeck();
--		setSolution();
--		createBoard();
--		System.out.println("test");
--		createTextClient();
- 	}
+		client.startup();
+	}
+
+	public Game(String msg) {
+		setDeck();
+		setSolution();
+		createBoard();
+		System.out.println("test");
+		createTextClient();
+	}
 
 	/**
 	 * Populates the deck field with each card in the game
@@ -69,7 +71,8 @@ public class Game {
 		Collections.shuffle(deck);
 		for (Card c : deck) {
 			if (charSol != null && wepSol != null && roomSol != null) {
-				// Solutions have been chosen, remove solution cards from deck so
+				// Solutions have been chosen, remove solution cards from deck
+				// so
 				// they aren't dealt to players
 				deck.remove(roomSol);
 				deck.remove(charSol);
@@ -106,47 +109,46 @@ public class Game {
 
 	}
 
-	public void setPlayers(Queue<Player> players){
+	public void setPlayers(Queue<Player> players) {
 		this.players = players;
 	}
 
-	public Queue<Player> getPlayers(){
+	public Queue<Player> getPlayers() {
 		return this.players;
 	}
 
 	public void createBoard() {
 		this.board = new Board();
 	}
-	
+
 	public void createTextClient() {
-+	public boolean accusation(String wep, String room, String person){
--		client = new TextClient(this);
-+		if(wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
--	}
-+				&& charSol.toString().equalsIgnoreCase(person)){
--	public TextClient getTextClient(){
--		return client;
--	}
+		client = new TextClient(this);
+	}
+
+	public TextClient getTextClient() {
+		return client;
+	}
 
 	public Board getBoard() {
 		return board;
 	}
 
-	public boolean accusation(String wep, String room, String person){
-		if(wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
-				&& charSol.toString().equalsIgnoreCase(person)){
+	public boolean accusation(String wep, String room, String person) {
+		if (wepSol.toString().equalsIgnoreCase(wep) && roomSol.toString().equalsIgnoreCase(room)
+				&& charSol.toString().equalsIgnoreCase(person)) {
 			return true;
 		}
 		return false;
 	}
-	
-	public String solutionToString(){
+
+	public String solutionToString() {
 		return charSol + " " + roomSol + " " + wepSol;
 	}
-	
-	public List<Card> getDeck(){
+
+	public List<Card> getDeck() {
 		return deck;
 	}
+
 	public static void main(String[] args) {
 		new Game();
 	}
