@@ -11,6 +11,7 @@ public class CharacterToken implements Locatable {
 	private int xPos;
 	private int yPos;
 	private Board board;
+	private Room room;
 
 	public CharacterToken(String playerName, Board board, int characterId) {
 		this.playerName = playerName;
@@ -74,7 +75,7 @@ public class CharacterToken implements Locatable {
 				x += 1;
 			}
 			try{
-			if (board.getTile(x, y).getType().equals(Tile.TileType.INACCESSIBLE)) {
+			if (board.getTile(x, y).getType().equals(Tile.TileType.INACCESSABLE)) {
 				System.out.println("inaccessible "+x+","+y);
 				return false;
 			}
@@ -86,13 +87,18 @@ public class CharacterToken implements Locatable {
 
 		xPos = x;
 		yPos = y;
-		
+
 		System.out.println("after:");
 		System.out.print("[");
 		System.out.print(xPos+", ");
 		System.out.println(yPos+"]");
-		
+
 		return true;
+	}
+
+
+	public Room getRoom(){
+		return room;
 	}
 
 }
