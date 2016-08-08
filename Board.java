@@ -37,7 +37,6 @@ public class Board {
 			room.setExits(sc.nextLine(), sc.nextLine());
 			rooms[i] = room;
 		}
-		System.out.println("rooms created");
 	}
 
 	/**
@@ -53,7 +52,6 @@ public class Board {
 				tiles[i][j] = tile;
 			}
 		}
-		System.out.println("tiles created");
 	}
 
 	/**

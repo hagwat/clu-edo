@@ -158,7 +158,7 @@ public class TextClient {
 			roll = roll - 1;
 		}
 
-		String moveCmd = readString("Please enter " + roll + " movement command(s), followed by enter.").toLowerCase();
+		String moveCmd = readString("Please enter up to " + roll + " movement command(s) (w, a, s, d), followed by enter.").toLowerCase();
 		while (!normalMoveCmd(moveCmd, roll, p)) {
 			moveCmd = readString("Invalid move! Try again");
 		}
@@ -394,21 +394,34 @@ public class TextClient {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
 		List<Integer> tokens = new ArrayList<Integer>();
 
 		for (String s : names) {
 			int number = readInt(s + ", please choose a number that refers to your character choice!");
-			while (tokens.contains(number)) {
-				number = readInt("Token already chosen! Try again");
+			while (tokens.contains(number) || !checkTokenNum(number)) {
+				if (tokens.contains(number)) {
+					number = readInt("Token already chosen! Try again");
+				}else if(!checkTokenNum(number)){
+					number = readInt("Invalid selection! Try again");				
+				}
 			}
 			tokens.add(number);
 		}
+		
 		return tokens;
 	}
 
 	// ************************
 	// CHECK METHODS
 	// ************************
+	
+	/**
+	 * Check that the chosen character number is valid.
+	 */
+	public static boolean checkTokenNum (int num){
+		return (num<=6&&num>=1);
+	}
 
 	/**
 	 * Check that the given move is valid.

@@ -29,10 +29,9 @@ public class Game {
 	}
 
 	public Game(String msg) {
-		setDeck();
-		setSolution();
-		createBoard();
 		System.out.println(msg);
+		createBoard();
+		setWeapons();
 		createTextClient();
 	}
 
