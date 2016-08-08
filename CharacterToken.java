@@ -24,7 +24,14 @@ public class CharacterToken implements Locatable {
 		this.characterId = characterId;
 
 		display();
-
+	}
+	
+	public CharacterToken(Board board, int characterId){
+		System.out.println("Filling in character "+characterId);
+		this.board = board;
+		this.xPos = board.findSpawn(characterId)[0];
+		this.yPos = board.findSpawn(characterId)[1];
+		this.characterId = characterId;
 	}
 
 	@Override
@@ -158,6 +165,10 @@ public class CharacterToken implements Locatable {
 		} else {
 			System.out.println();
 		}
+	}
+	
+	public int getId(){
+		return this.characterId;
 	}
 
 }

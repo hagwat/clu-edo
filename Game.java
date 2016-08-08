@@ -1,5 +1,7 @@
 package game;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -10,7 +12,7 @@ public class Game {
 	private Card charSol;
 	private Card wepSol;
 	private Card roomSol;
-	
+
 	private List<WeaponToken> allWeps;
 
 	private Board board;
@@ -93,7 +95,7 @@ public class Game {
 		}
 
 	}
-	
+
 	/**
 	 * Takes the remaining cards in the deck, shuffles them then deals them evenly to the players, leaving
 	 * the remainder (if any) in the leftovers pile.
@@ -133,6 +135,24 @@ public class Game {
 			}
 	}
 	
+	public void setSpareTokens(){
+		for(int i = 1; i<=6; i++){
+			boolean found = false;
+			for(CharacterToken t: board.getCharacterTokens()){
+				if(t.getId()==i){
+					found = true;
+				}
+			}
+			if(found == false){
+			 board.getCharacterTokens().add(new CharacterToken(board, i));
+			}
+		}
+		for(CharacterToken t: board.getCharacterTokens()){
+			System.out.println(t.getCharacterName() +": "+t.getId());
+		}
+		
+	}
+
 	/**
 	 * When a player makes a suggestion, the suggested weapon and person are moved into the current room (weapons
 	 * swapped if there is already one in there). This method carries this action out.
@@ -140,42 +160,57 @@ public class Game {
 	 * @param room
 	 */
 	public void swapWeaponTokens(String wep, Room room) {
-		if (room.getWep() == null) {//if room has no weapon
+		if (room.getWep() == null) {// if room has no weapon
 			Room[] rooms = board.getRooms();
-			for (int i = 0; i < rooms.length; i++) {//for each room
+			for (int i = 0; i < rooms.length; i++) {// for each room
 				if (rooms[i].getWep() != null) {
-					if (rooms[i].getWep().getName().equals(wep)) {//if room has the needed weapon
+					if (rooms[i].getWep().getName().equalsIgnoreCase(wep)) {
+						// if that room has the needed weapon
 						room.setWep(rooms[i].getWep());
 						rooms[i].setWep(null);
-						System.out.println("Empty room nabbed the wep");
+						System.out.println("Moved weapon to this empty room.");
 						System.out.println(room.getWep().getName());
 						return;
 					}
 				}
 			}
-		}
-
-		if (room.getWep().getName().equals(wep)) {
+		} else if (room.getWep().getName().equalsIgnoreCase(wep)) {
 			System.out.println("No need to swap.");
 			return;
-		}
-		
-		Room[] rooms = board.getRooms();
-		for (int i = 0; i < rooms.length; i++) {
-			if (room.getWep() != null) {
-				if (rooms[i].getWep().getName().equals(wep)) {
-					WeaponToken wrongWep = room.getWep();
-					room.setWep(rooms[i].getWep());
-					rooms[i].setWep(wrongWep);
-					System.out.println("Swapped.");
-					return;
-				}
+		} else {
 
+			Room[] rooms = board.getRooms();
+			for (int i = 0; i < rooms.length; i++) {
+				if (room.getWep() != null) {
+					if (rooms[i].getWep().getName().equalsIgnoreCase(wep)) {
+						WeaponToken wrongWep = room.getWep();
+						room.setWep(rooms[i].getWep());
+						rooms[i].setWep(wrongWep);
+						System.out.println("Swapped.");
+						return;
+					}
+
+				}
 			}
 		}
 		System.out.println("Shouldnt be here");
 	}
-	
+
+	public void characterToRoom(Room here, String tokenName) {
+		CharacterToken person = null;
+		tokenName = tokenName.toLowerCase();
+		for (CharacterToken t : board.getCharacterTokens()) {
+			if (t.getCharacterName().equalsIgnoreCase(tokenName)) {
+				person = t;
+			}
+		}
+		if(person == null){
+			System.out.println("person shouldnt be null.");
+		}
+		person.roomMove(board.getRoomLocation(here.getName()));
+		System.out.println(person.getCharacterName() + " moved to " + here.getName());
+	}
+
 	/**
 	 * Uses the parameters to determine whether this accusation matches the solution.
 	 * @param wep
@@ -190,7 +225,7 @@ public class Game {
 		}
 		return false;
 	}
-	
+
 /**
 	 * Creates a new instance of Board
 	 */

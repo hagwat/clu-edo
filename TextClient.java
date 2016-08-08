@@ -122,7 +122,7 @@ public class TextClient {
 	 */
 	public void playerRoll(Player p) {
 		Random r = new Random();
-		int roll = r.nextInt(6) + 1;
+		int roll = r.nextInt(6) + r.nextInt(6) + 2;
 		int[] coords = p.getToken().getLocation();
 		System.out.print(p.toString() + " is located at [" + coords[0] + " ," + coords[1] + "]");
 		if (game.getBoard().getTile(coords[0], coords[1]).getRoom() != null) {
@@ -191,16 +191,20 @@ public class TextClient {
 		}
 		String finalise = readString("So you think it was " + person + " with the " + wep +
 				" in the " + room + "(type YES to finalise your choice or NO to re-enter)");
+
+
 		while (true) {
 			if (finalise.equalsIgnoreCase("yes")) {
 				if (game.accusation(wep, room, person)) {
 					game.swapWeaponTokens(wep, p.getRoom());
+					game.characterToRoom(p.getRoom(), person);
 					System.out.println();
 					System.out.println("Nobody can refute...");
 					System.out.println();
 					return false;
 				} else {
 					game.swapWeaponTokens(wep, p.getRoom());
+					game.characterToRoom(p.getRoom(), person);
 					System.out.println("");
 					System.out.println("Sorry " + p.toString() + " that is incorrect!");
 					playerRefute(wep, room, person, p);
@@ -394,7 +398,7 @@ public class TextClient {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		List<Integer> tokens = new ArrayList<Integer>();
 
 		for (String s : names) {
@@ -403,19 +407,19 @@ public class TextClient {
 				if (tokens.contains(number)) {
 					number = readInt("Token already chosen! Try again");
 				}else if(!checkTokenNum(number)){
-					number = readInt("Invalid selection! Try again");				
+					number = readInt("Invalid selection! Try again");
 				}
 			}
 			tokens.add(number);
 		}
-		
+
 		return tokens;
 	}
 
 	// ************************
 	// CHECK METHODS
 	// ************************
-	
+
 	/**
 	 * Check that the chosen character number is valid.
 	 */
@@ -662,6 +666,7 @@ public class TextClient {
 		System.out.println("Let's begin...");
 
 		setPlayers();
+		game.setSpareTokens();
 		Queue<Player> players = game.getPlayers();
 		while (players.size() > 0 && !gameIsOver) {
 			System.out.println("");

@@ -2,6 +2,8 @@ package game;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -12,6 +14,7 @@ public class Board {
 
 	private Tile[][] tiles = new Tile[24][25]; // tiles[i][j]
 	private Room[] rooms = new Room[9];
+	private List<CharacterToken> tokens = new ArrayList<CharacterToken>() ;
 
 	public Board() {
 
@@ -22,7 +25,6 @@ public class Board {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("board created");
 	}
 
 	/**
@@ -129,7 +131,7 @@ public class Board {
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
 				if (tiles[i][j].getType().equals(Tile.TileType.ROOM)) {
-					if (tiles[i][j].getRoom().getName().equals(name)) {
+					if (tiles[i][j].getRoom().getName().equalsIgnoreCase(name)) {
 						return new int[] { i, j };
 					}
 				}
@@ -140,6 +142,10 @@ public class Board {
 
 	public Tile getTile(int x, int y) {
 		return this.tiles[x][y];
+	}
+
+	public List<CharacterToken> getCharacterTokens(){
+		return this.tokens;
 	}
 
 }

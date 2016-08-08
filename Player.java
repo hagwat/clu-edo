@@ -18,7 +18,13 @@ public class Player {
 		this.name = playerName;
 		hand = new ArrayList<Card>();
 		token = new CharacterToken(playerName, board, characterNum);
+		board.getCharacterTokens().add(token);
 	}
+	
+	/**
+	 * for testing.
+	 * 
+	 */
 	public Player(int characterNum, String playerName, Board board, int x, int y){
 		this.character = characterNum;
 		this.name = playerName;
