@@ -13,7 +13,7 @@ public class Room {
 	private String name;	//Name of room
 	private String tileKey;	//The key of the room
 	private Map<String, int[]> exits;	//The co-ordinates of the exit(s)
-	private WeaponToken wep; 	//Weapon currently in this room
+	private WeaponToken wep = null; 	//Weapon currently in this room
 
 	public Room(String name, WeaponToken wep) {
 		this.name = name;
@@ -55,7 +55,18 @@ public class Room {
 		}
 		return false;
 	}
-
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((exits == null) ? 0 : exits.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((tileKey == null) ? 0 : tileKey.hashCode());
+		result = prime * result + ((wep == null) ? 0 : wep.hashCode());
+		return result;
+	}
+	
 	public void setExits(String exitLine, String exitCoords) {
 		exits = new HashMap<String, int[]>();
 		Scanner ex = new Scanner(exitLine);
