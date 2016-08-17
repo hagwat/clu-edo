@@ -27,7 +27,7 @@ public class Game {
 		createBoard();
 		setWeapons();
 		createTextClient();
-		client.startup();
+		client.startScreen();
 	}
 
 	public Game(String msg) {
@@ -134,7 +134,7 @@ public class Game {
 			board.getRooms()[i].setWep(allWeps.get(i));
 			}
 	}
-	
+
 	public void setSpareTokens(){
 		for(int i = 1; i<=6; i++){
 			boolean found = false;
@@ -150,7 +150,7 @@ public class Game {
 		for(CharacterToken t: board.getCharacterTokens()){
 			System.out.println(t.getCharacterName() +": "+t.getId());
 		}
-		
+
 	}
 
 	/**
