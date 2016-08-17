@@ -27,7 +27,6 @@ public class Game {
 		createBoard();
 		setWeapons();
 		createTextClient();
-		client.startScreen();
 	}
 
 	public Game(String msg) {

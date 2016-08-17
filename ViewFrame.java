@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 public class ViewFrame extends JFrame implements MouseListener {
 
-	ViewCanvas canvas;
+	private ViewCanvas canvas;
 
 	public ViewFrame() {
 		super("View");
@@ -24,7 +24,41 @@ public class ViewFrame extends JFrame implements MouseListener {
 		addMouseListener(this);
 		canvas.addMouseListener(this);
 	}
+	
+	public void setView(String action){
+		if(action.equals("start")){
+			canvas.setStartingScreen();
+		}
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();

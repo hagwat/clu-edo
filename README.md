@@ -1,8 +1,2 @@
-# clu-edo
-
-TODO
-
-DISPLAY BOARD
-SWING INPUTS
-
-
+# model-view-controller
+Readme

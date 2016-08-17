@@ -1,12 +1,17 @@
 package game;
 
 import java.util.*;
+
+import ui.Controller;
+import ui.EEvent;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class TextClient {
 
 	private Game game;
+	private Controller control;
 	private boolean gameIsOver = false;
 
 	private List<String> validWeps = new ArrayList<String>();
@@ -695,7 +700,11 @@ public class TextClient {
 	}
 	*/
 
-	public void startScreen(){
-
+	public void startScreen() {
+		control.handle(this, "start");
+	}
+	
+	public void addController(Controller c){
+		this.control = c;
 	}
 }

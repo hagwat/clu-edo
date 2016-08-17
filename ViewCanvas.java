@@ -21,12 +21,11 @@ public class ViewCanvas extends JPanel {
 	public ViewCanvas() {
 		super();
 		setLayout(new BorderLayout());
-		button = new JButton("Button1");
-		add(button);
-		button.setBounds(0, 0, 10, 10);
-		add(new JButton("Button2"), BorderLayout.SOUTH);
-		add(new JMenuBar(), BorderLayout.EAST);
-		remove(button);
+		button = new JButton("Alternate button for hipstr");
+		add(button, BorderLayout.EAST);
+
+		startButton = new JButton("Start Game");
+		add(startButton, BorderLayout.CENTER);
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -38,7 +37,9 @@ public class ViewCanvas extends JPanel {
 		return new Dimension(600, 400);
 	}
 
-	public void startScreen() {
+	public void setStartingScreen() {
+		
+		System.out.println("start");
 		startButton = new JButton("Start Game");
 		add(startButton, BorderLayout.CENTER);
 	}
