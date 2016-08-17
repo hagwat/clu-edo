@@ -628,7 +628,7 @@ public class TextClient {
 			}
 		}
 	}
-
+/**
 	public void startup() {
 		System.out.println("********************************");
 		System.out.println("       Welcome to Cluedo");
@@ -692,6 +692,10 @@ public class TextClient {
 			System.out.println("");
 			readString(players.peek().toString() + "! Press ENTER when you are ready for your turn!");
 		}
+	}
+	*/
+
+	public void startScreen(){
 
 	}
 }
