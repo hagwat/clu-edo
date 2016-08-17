@@ -19,46 +19,54 @@ public class ViewFrame extends JFrame implements MouseListener {
 		add(canvas, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
-		setResizable(false);
+		setResizable(true);
 		setVisible(true);
 		addMouseListener(this);
 		canvas.addMouseListener(this);
 	}
-	
-	public void setView(String action){
+
+	public void setView(String action, Object arg){
 		if(action.equals("start")){
 			canvas.setStartingScreen();
+			pack();
+		}
+		else if(action.equals("display board")){
+			if(arg!=null){
+				System.out.println("this is a board");
+			}
+		}else if(action.equals("player setup")){
+
 		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
@@ -82,6 +90,10 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+	}
+
+	public ViewCanvas getCanvas(){
+		return canvas;
 	}
 
 }

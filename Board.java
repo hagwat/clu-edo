@@ -147,5 +147,9 @@ public class Board {
 	public List<CharacterToken> getCharacterTokens(){
 		return this.tokens;
 	}
+	
+	public Tile[][] getTiles(){
+		return this.tiles;
+	}
 
 }

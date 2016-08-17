@@ -29,12 +29,7 @@ public class Game {
 		createTextClient();
 	}
 
-	public Game(String msg) {
-		System.out.println(msg);
-		createBoard();
-		setWeapons();
-		createTextClient();
-	}
+	
 
 	/**
 	 * Populates the deck field with each card in the game

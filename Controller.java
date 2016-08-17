@@ -1,10 +1,6 @@
 package ui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import game.Game;
-import game.TextClient;
 
 public class Controller {
 
@@ -16,23 +12,29 @@ public class Controller {
 	}
 
 	public Controller() {
-
 		view = new ViewFrame();
+		view.getCanvas().addController(this);
+		view.setView("start", null);
+	}
+
+	public void startGame(){
 		game = new Game();
 		game.getTextClient().addController(this);
-		game.getTextClient().startScreen();
-
 	}
 
 
-	
-	
-	public void handle(Object source, String action){
-		if(source instanceof TextClient){
-			if(action.equals("start")){
-				view.setView("start");
-			}
+
+	public void handle(Object source, String action) {
+
+		if (action.equals("display board")) {
+			view.setView(action, game.getBoard().getTiles());
+			return;
+		}
+
+		if (action.equals("pressed start button")) {
+			startGame();
+			view.setView("player setup", null);
+			return;
 		}
 	}
-
 }
