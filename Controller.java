@@ -13,8 +13,7 @@ public class Controller {
 
 	public Controller() {
 		view = new ViewFrame();
-		view.getCanvas().addController(this);
-		view.setView("start", null);
+		view.setView("start", null, this);
 	}
 
 	public void startGame(){
@@ -27,13 +26,13 @@ public class Controller {
 	public void handle(Object source, String action) {
 
 		if (action.equals("display board")) {
-			view.setView(action, game.getBoard().getTiles());
+			view.setView(action, game.getBoard().getTiles(), this);
 			return;
 		}
 
 		if (action.equals("pressed start button")) {
 			startGame();
-			view.setView("player setup", null);
+			view.setView("player setup", null, this);
 			return;
 		}
 	}

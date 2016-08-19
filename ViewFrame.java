@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 
 public class ViewFrame extends JFrame implements MouseListener {
 
@@ -14,20 +16,33 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 	public ViewFrame() {
 		super("View");
-		canvas = new ViewCanvas();
+
+		// JFrame stuff
 		setLayout(new BorderLayout());
-		add(canvas, BorderLayout.CENTER);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+		// add canvas
+		canvas = new ViewCanvas();
+		add(canvas, BorderLayout.CENTER);
+
+		// MouseListeners
+		addMouseListener(this);
+		canvas.addMouseListener(this);
+
+		// add menu bar
+		createMenuBar();
+
+		// visibility
 		pack();
 		setResizable(true);
 		setVisible(true);
-		addMouseListener(this);
-		canvas.addMouseListener(this);
+
 	}
 
-	public void setView(String action, Object arg){
+	public void setView(String action, Object arg, Controller ctrl){
 		if(action.equals("start")){
-			canvas.setStartingScreen();
+			canvas.setStartingScreen(ctrl);
 			pack();
 		}
 		else if(action.equals("display board")){
@@ -35,9 +50,24 @@ public class ViewFrame extends JFrame implements MouseListener {
 				System.out.println("this is a board");
 			}
 		}else if(action.equals("player setup")){
-
+			playerSetup();
 		}
 	}
+
+
+	/**
+	 * Called after the "Start" button is pressed.
+	 */
+	public void playerSetup(){
+
+	}
+
+	public void createMenuBar(){
+		JMenuBar menuBar = new JMenuBar();
+		JMenu menu, submenu;
+	}
+
+
 
 
 

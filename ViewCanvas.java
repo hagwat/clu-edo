@@ -22,12 +22,11 @@ public class ViewCanvas extends JPanel {
 	private static final long serialVersionUID = 401385718012180046L;
 	private JComponent button;
 	private JButton startButton;
-	private Controller control;
 
 	public ViewCanvas() {
 		super();
 		setLayout(new BorderLayout());
-		button = new JButton("Alternate button for hipstr");
+		button = new JButton("Alternate button for hipster");
 		add(button, BorderLayout.EAST);
 	}
 
@@ -40,19 +39,25 @@ public class ViewCanvas extends JPanel {
 		return new Dimension(600, 400);
 	}
 
-	public void addController(Controller c){
-		this.control = c;
-	}
+	
 
-	public void setStartingScreen() {
+	public void setStartingScreen(Controller ctrl) {
 		startButton = new JButton("Start Game");
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				control.handle(this, "pressed start button");
-
+				remove(startButton);
+				remove(button);
+				System.out.println("hobag");
+				ctrl.handle(this, "pressed start button");
 			}
-		});
+															});
 		add(startButton, BorderLayout.CENTER);
 		startButton.setVisible(true);
 	}
 }
+
+
+
+
+
+
