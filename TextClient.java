@@ -3,7 +3,6 @@ package game;
 import java.util.*;
 
 import ui.Controller;
-import ui.EEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -703,7 +702,7 @@ public class TextClient {
 	public void startScreen() {
 		control.handle(this, "start");
 	}
-	
+
 	public void addController(Controller c){
 		this.control = c;
 	}
