@@ -1,21 +1,15 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
 
 public class ViewFrame extends JFrame implements MouseListener {
 
-	private ViewCanvas canvas;
+	private JPanel canvas;
 
-	public ViewFrame() {
-		super("View");
+	public ViewFrame(Controller ctrl) {
+		super("Cluedo");
 
 		// JFrame stuff
 		setLayout(new BorderLayout());
@@ -23,13 +17,13 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 
 		// add canvas
-		canvas = new ViewCanvas();
+		canvas = new StartCanvas(ctrl);
 		add(canvas, BorderLayout.CENTER);
 
 		// MouseListeners
 		addMouseListener(this);
-		canvas.addMouseListener(this);
-
+		//canvas.addMouseListener(this);
+		
 		// add menu bar
 		createMenuBar();
 
@@ -38,11 +32,13 @@ public class ViewFrame extends JFrame implements MouseListener {
 		setResizable(true);
 		setVisible(true);
 
+		//sets the view to the starting screen
+		setView("start", null, ctrl);
 	}
 
 	public void setView(String action, Object arg, Controller ctrl){
 		if(action.equals("start")){
-			canvas.setStartingScreen(ctrl);
+			StartCanvas vc = (StartCanvas)canvas;
 			pack();
 		}
 		else if(action.equals("display board")){
@@ -50,53 +46,28 @@ public class ViewFrame extends JFrame implements MouseListener {
 				System.out.println("this is a board");
 			}
 		}else if(action.equals("player setup")){
-			playerSetupCanvas = new PlayerSetupCanvas();
-			this.add(playerSetupCanvas, BorderLayout.CENTER);
+			remove(canvas);
+			canvas = new PlayerSetupCanvas();
+			this.add(canvas, BorderLayout.CENTER);
+			canvas.addMouseListener(this);
 			this.validate();
 		}
 	}
 
 
-	/**
-	 * Called after the "Start" button is pressed.
-	 */
-	public void playerSetup(){
 
-	}
 
 	public void createMenuBar(){
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menu, submenu;
+
+		menu = new JMenu("A Menu");
+		menu.getAccessibleContext().setAccessibleDescription(
+		        "Bar");
+		menuBar.add(menu);
+
+		setJMenuBar(menuBar);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	@Override
@@ -124,7 +95,7 @@ public class ViewFrame extends JFrame implements MouseListener {
 	public void mouseExited(MouseEvent e) {
 	}
 
-	public ViewCanvas getCanvas(){
+	public JPanel getCanvas(){
 		return canvas;
 	}
 

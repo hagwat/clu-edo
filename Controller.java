@@ -12,8 +12,7 @@ public class Controller {
 	}
 
 	public Controller() {
-		view = new ViewFrame();
-		view.setView("start", null, this);
+		view = new ViewFrame(this);
 	}
 
 	public void startGame(){
