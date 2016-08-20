@@ -8,11 +8,13 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 	private JPanel canvas, previousCanvas;
 	private JComponent menuBar;
+	private Controller ctrl;
 	
 
 	public ViewFrame(Controller ctrl) {
 		super("Cluedo");
-
+		this.ctrl = ctrl;
+		
 		// JFrame stuff
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +52,7 @@ public class ViewFrame extends JFrame implements MouseListener {
 		}else if(action.equals("player setup")){
 			previousCanvas = canvas;
 			remove(canvas);
-			canvas = new PlayerSetupCanvas();
+			canvas = new PlayerNumberCanvas(ctrl, previousCanvas);
 			this.add(canvas, BorderLayout.CENTER);
 			canvas.addMouseListener(this);
 			this.validate();
@@ -106,6 +108,19 @@ public class ViewFrame extends JFrame implements MouseListener {
 		return menuBar;
 	}
 	
+	public void setCanvas(JPanel j){
+		JPanel newCanvas = null;
+		Container contain = this.getContentPane();
+		previousCanvas = canvas;
+
+		if(j instanceof StartCanvas){
+			newCanvas = new StartCanvas(ctrl);
+		}
+
+		if(j instanceof PlayerSetupCanvas){
+			newCanvas = (PlayerSetupCanvas)j;
+		}
+
 
 	public JPanel getCanvas(){
 		return canvas;
