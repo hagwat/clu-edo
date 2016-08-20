@@ -50,7 +50,9 @@ public class ViewFrame extends JFrame implements MouseListener {
 				System.out.println("this is a board");
 			}
 		}else if(action.equals("player setup")){
-			playerSetup();
+			playerSetupCanvas = new PlayerSetupCanvas();
+			this.add(playerSetupCanvas, BorderLayout.CENTER);
+			this.validate();
 		}
 	}
 
