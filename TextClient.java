@@ -390,7 +390,7 @@ public class TextClient {
 	 */
 	public static List<Integer> getPlayerTokens(List<String> names) {
 		try {
-			Scanner sc = new Scanner(new File("src/game/characters.txt"));
+			Scanner sc = new Scanner(new File("src/resources/characters.txt"));
 			System.out.println("****************CHARACTERS*****************");
 			System.out.println("");
 			while (sc.hasNextLine()) {
@@ -700,7 +700,7 @@ public class TextClient {
 	*/
 
 	public void startScreen() {
-		control.handle(this, "start");
+		control.handle("start");
 	}
 
 	public void addController(Controller c){

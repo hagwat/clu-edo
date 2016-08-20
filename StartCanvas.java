@@ -6,14 +6,10 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
-import actions.StartAction;
 
 public class StartCanvas extends JPanel {
 	/**
@@ -25,19 +21,15 @@ public class StartCanvas extends JPanel {
 
 	public StartCanvas(Controller ctrl) {
 		super();
-		
-		setLayout(new BorderLayout());
-		button = new JButton("Alternate button for hipster");
-		add(button, BorderLayout.EAST);
-		
+		setLayout(new BorderLayout());	
+
+		//Big start button
 		startButton = new JButton("Start Game");
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				remove(startButton);
-				remove(button);
-				ctrl.handle(this, "pressed start button");
-			}
-															});
+				ctrl.handle("pressed start button");
+			}});															
 		add(startButton, BorderLayout.CENTER);
 		startButton.setVisible(true);
 	}
@@ -46,14 +38,6 @@ public class StartCanvas extends JPanel {
 		super.paintComponent(g);
 	}
 
-	@Override
-	public Dimension getPreferredSize() {
-		return new Dimension(600, 400);
-	}
-
-	
-
-	
 }
 
 

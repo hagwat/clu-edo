@@ -1,5 +1,8 @@
 package ui;
 
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+
 import game.Game;
 
 public class Controller {
@@ -12,6 +15,14 @@ public class Controller {
 	}
 
 	public Controller() {
+		// sets look and feel
+				try {
+					UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					JFrame.setDefaultLookAndFeelDecorated(false);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 		view = new ViewFrame(this);
 	}
 
@@ -22,7 +33,7 @@ public class Controller {
 
 
 
-	public void handle(Object source, String action) {
+	public void handle(String action) {
 
 		if (action.equals("display board")) {
 			view.setView(action, game.getBoard().getTiles(), this);
@@ -35,4 +46,6 @@ public class Controller {
 			return;
 		}
 	}
+
+
 }

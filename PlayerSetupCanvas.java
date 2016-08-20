@@ -1,26 +1,11 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.Composite;
 import java.awt.Dimension;
-import java.awt.Graphics;
-
-import javax.annotation.PostConstruct;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextPane;
 import javax.swing.JTextField;
-import javax.swing.JSplitPane;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JTextArea;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 
