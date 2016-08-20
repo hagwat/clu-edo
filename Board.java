@@ -32,7 +32,7 @@ public class Board {
 	 * @throws IOException
 	 */
 	public void loadRooms() throws IOException {
-		Scanner sc = new Scanner(new File("src/resources/rooms.txt"));
+		Scanner sc = new Scanner(new File("src/game/rooms.txt"));
 		for (int i = 0; i < 9; i++) {
 			Room room = new Room(sc.nextLine());
 			room.setTileKey(sc.nextLine());
@@ -47,7 +47,7 @@ public class Board {
 	 * @throws IOException
 	 */
 	public void loadTiles() throws IOException {
-		Scanner sc = new Scanner(new File("src/resources/board.txt"));
+		Scanner sc = new Scanner(new File("src/game/board.txt"));
 		for (int j = 0; j < tiles[0].length; j++) {
 			for (int i = 0; i < tiles.length; i++) {
 				Tile tile = new Tile(sc.next(), this);

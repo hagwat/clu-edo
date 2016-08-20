@@ -13,6 +13,8 @@ public class TextClient {
 	private Controller control;
 	private boolean gameIsOver = false;
 
+	private int numOfPlayers;
+
 	private List<String> validWeps = new ArrayList<String>();
 	private List<String> validRooms = new ArrayList<String>();
 	private List<String> validPersons = new ArrayList<String>();
@@ -390,7 +392,7 @@ public class TextClient {
 	 */
 	public static List<Integer> getPlayerTokens(List<String> names) {
 		try {
-			Scanner sc = new Scanner(new File("src/resources/characters.txt"));
+			Scanner sc = new Scanner(new File("src/game/characters.txt"));
 			System.out.println("****************CHARACTERS*****************");
 			System.out.println("");
 			while (sc.hasNextLine()) {
@@ -418,6 +420,11 @@ public class TextClient {
 		}
 
 		return tokens;
+	}
+
+
+	public void setNumPlayers(int i){
+		this.numOfPlayers = i;
 	}
 
 	// ************************
@@ -700,7 +707,7 @@ public class TextClient {
 	*/
 
 	public void startScreen() {
-		control.handle("start");
+		control.handle(this, "start");
 	}
 
 	public void addController(Controller c){
