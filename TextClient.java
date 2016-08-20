@@ -12,6 +12,7 @@ public class TextClient {
 	private Game game;
 	private Controller control;
 	private boolean gameIsOver = false;
+	private int numOfPlayers;
 
 	private List<String> validWeps = new ArrayList<String>();
 	private List<String> validRooms = new ArrayList<String>();
@@ -418,6 +419,10 @@ public class TextClient {
 		}
 
 		return tokens;
+	}
+	
+	public void setNumPlayers(int i){
+		this.numOfPlayers = i;
 	}
 
 	// ************************
