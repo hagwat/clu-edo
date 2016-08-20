@@ -3,12 +3,13 @@ package ui;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import game.Game;
+import game.*;
 
 public class Controller {
 
 	private Game game;
 	private ViewFrame view;
+	private TextClient textClient;
 
 	public static void main(String[] args) {
 		new Controller();
@@ -24,6 +25,7 @@ public class Controller {
 				}
 
 		view = new ViewFrame(this);
+		textClient = game.getTextClient();
 	}
 
 	public void startGame(){
@@ -46,6 +48,9 @@ public class Controller {
 			return;
 		}
 	}
-
+	
+	public ViewFrame getViewFrame(){
+		return this.view;
+	}
 
 }
