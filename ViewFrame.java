@@ -9,24 +9,37 @@ public class ViewFrame extends JFrame implements MouseListener {
 	private JPanel canvas, previousCanvas;
 	private JComponent menuBar;
 	private Controller ctrl;
-	
+
 
 	public ViewFrame(Controller ctrl) {
 		super("Cluedo");
 		this.ctrl = ctrl;
-		
-		// JFrame stuff
+
+		// sets border layout
 		setLayout(new BorderLayout());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
+		// what to do on close
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we) {
+				Object[] options = { "Yes", "No" };
+				int r = JOptionPane.showOptionDialog(new JOptionPane(), "Are you sure you want to quit Cluedo?", "",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				if (r == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+
 		// centre window on screen
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((dim.width/2)-(this.getPreferredSize().width/2), (dim.height/2)-(this.getPreferredSize().height/2));
-		
+
 		// add menu bar
 		menuBar = createMenuBar(ctrl);
 
-		
+
 		// MouseListener
 		addMouseListener(this);
 
@@ -61,11 +74,11 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 
 	public JMenuBar createMenuBar(Controller ctrl){
-		
+
 		JMenuBar menuBar = new JMenuBar();
 		JMenu file, game;
 		JMenuItem a, b, c, d;
-		
+
 		// two menus
 		file = new JMenu("File");
 		menuBar.add(file);
@@ -76,38 +89,35 @@ public class ViewFrame extends JFrame implements MouseListener {
 		a = new JMenuItem("New Game");
 		file.add(a);
 		b = new JMenuItem("Quit");
-		file.add(b);		
+		file.add(b);
 		c = new JMenuItem("menu item");
 		game.add(c);
 		//a submenu
 		d = new JMenuItem("menu item");
 		c.add(d);
-		
+
 		// start a new game
 		a.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
+			public void actionPerformed(ActionEvent e) {
 				setView("start", null, ctrl); //sets the view to the starting screen
 			}});
-		
-		// should open a dialog
-		b.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane box = new JOptionPane("bing");	
-				
-				Object[] options = {"Yes", "No"};
-				int n = JOptionPane.showOptionDialog(new JOptionPane(), "Are you sure you want to quit Cluedo?", 
-						"unknown text", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-				
 
-				//JOptionPane.showMessageDialog(new JOptionPane(), "Are you sure you want to quit Cluedo?");	//basic dialog box
-				
-			}});
+		// do you really want to exit?
+				b.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						Object[] options = {"Yes", "No"};
+						int r = JOptionPane.showOptionDialog(new JOptionPane()	, "Are you sure you want to quit Cluedo?", "",
+								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+						if (r == JOptionPane.YES_OPTION) {
+							System.exit(0);
+						}
+					}});
 
 		// finally set the menu
-		setJMenuBar(menuBar);		
+		setJMenuBar(menuBar);
 		return menuBar;
 	}
-	
+
 	public void setCanvas(JPanel j){
 		JPanel newCanvas = null;
 		Container contain = this.getContentPane();
@@ -120,20 +130,23 @@ public class ViewFrame extends JFrame implements MouseListener {
 		if(j instanceof PlayerSetupCanvas){
 			newCanvas = (PlayerSetupCanvas)j;
 		}
+		contain.removeAll();
+		canvas = newCanvas;
+		contain.add(canvas);
+		contain.validate();
+		contain.repaint();
+	}
 
 
 	public JPanel getCanvas(){
 		return canvas;
 	}
-	
+
 	@Override
 	public Dimension getPreferredSize() {
 		return new Dimension(600, 400);
 	}
-	
-	public void changeSize(){
-		
-	}
+
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -153,10 +166,10 @@ public class ViewFrame extends JFrame implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }
