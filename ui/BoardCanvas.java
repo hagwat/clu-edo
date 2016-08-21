@@ -10,8 +10,8 @@ import game.Tile.TileType;
 public class BoardCanvas extends JPanel {
 
 	Tile[][] tiles;
-	private static final int TILE_WIDTH = 10;
-	private static final int TILE_HEIGHT = 10;
+	private static final int TILE_WIDTH = 20;
+	private static final int TILE_HEIGHT = 15;
 	
 	public BoardCanvas(Object arg){
 		//if arg is null or not a 2D array of Tiles
@@ -22,7 +22,7 @@ public class BoardCanvas extends JPanel {
 			throw new IllegalArgumentException("Invalid argument to construct board.");
 		}
 
-		setPreferredSize(new Dimension(600, 600));
+		setPreferredSize(new Dimension(1000, 600));
 		tiles = (Tile[][])arg;
 
 	}
@@ -37,9 +37,6 @@ public class BoardCanvas extends JPanel {
 
 	public void paintTiles(Graphics g){
 		
-		//g.setColor(Color.BLACK);		
-		//g.fillRect(0, 0, getWidth(), getHeight());
-		
 		// paint each tile
 		for(int j = 0; j< tiles[0].length; j++){
 			for(int i = 0; i< tiles.length; i++){
@@ -50,8 +47,16 @@ public class BoardCanvas extends JPanel {
 	}
 	
 	public void paintTile(Graphics g, Tile tile, int xPos, int yPos){
+		System.out.println(xPos + " " + yPos);
+		System.out.println((xPos+1)*TILE_WIDTH +" "+(yPos+1)*TILE_HEIGHT);
+		System.out.println();
+	
 		g.setColor(getTileColor(tile));		
-		g.fillRect(xPos*TILE_WIDTH, yPos*TILE_HEIGHT, (xPos+1)*TILE_WIDTH, (yPos+1)*TILE_HEIGHT);		
+		g.fillRect(xPos*TILE_WIDTH, yPos*TILE_HEIGHT, (xPos+1)*TILE_WIDTH, (yPos+1)*TILE_HEIGHT);
+
+		g.setColor(Color.BLACK);		
+		g.drawRect(xPos*TILE_WIDTH, yPos*TILE_HEIGHT, (xPos+1)*TILE_WIDTH, (yPos+1)*TILE_HEIGHT);
+	
 	}
 	
 
