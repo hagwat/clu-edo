@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import java.awt.Font;
+import javax.swing.JButton;
 
 public class PlayerSetupCanvas extends JPanel {
 
@@ -27,16 +28,19 @@ public class PlayerSetupCanvas extends JPanel {
 	private int numPlayers;
 	private int playerNumber;
 	private ArrayList<Integer> chosen;
+	private JPanel previous;
 
-	public PlayerSetupCanvas(Controller ctrl, int numPlayers, int playerNumber, ArrayList<Integer> chosen) {
+	public PlayerSetupCanvas(Controller ctrl, JPanel previous, int numPlayers, int playerNumber, ArrayList<Integer> chosen) {
 		setLayout(null);
 		this.ctrl = ctrl;
 		this.chosen = chosen;
 		this.numPlayers = numPlayers;
 		this.playerNumber = playerNumber;
+		this.previous = previous;
 
 		textField = new JTextField();
-		textField.setBounds(84, 53, 114, 19);
+		textField.setFont(new Font("Dialog", Font.PLAIN, 18));
+		textField.setBounds(147, 66, 154, 36);
 		add(textField);
 		textField.setColumns(10);
 
@@ -45,65 +49,75 @@ public class PlayerSetupCanvas extends JPanel {
 		txtrPlayer.setBackground(UIManager.getColor("Button.background"));
 		txtrPlayer.setEditable(false);
 		txtrPlayer.setText("Player " + playerNumber + ":");
-		txtrPlayer.setBounds(12, 12, 174, 29);
+		txtrPlayer.setBounds(426, 12, 174, 29);
 		add(txtrPlayer);
 
 		JTextArea txtrName = new JTextArea();
-		txtrName.setFont(new Font("Dialog", Font.PLAIN, 16));
+		txtrName.setFont(new Font("Dialog", Font.BOLD, 24));
 		txtrName.setBackground(UIManager.getColor("Button.background"));
 		txtrName.setEditable(false);
 		txtrName.setText("Name:");
-		txtrName.setBounds(12, 53, 60, 19);
+		txtrName.setBounds(51, 67, 114, 45);
 		add(txtrName);
 
 		// Mrs. Peacock button
 		JRadioButton peacockRadioButton = new JRadioButton(peacock);
 		peacockRadioButton.setBackground(UIManager.getColor("Button.foreground"));
 		peacockRadioButton.addActionListener(new SetupActionListener(this, 3, "Miss Peacock"));
-		peacockRadioButton.setBounds(188, 114, 80, 100);
+		peacockRadioButton.setBounds(552, 181, 120, 160);
 		add(peacockRadioButton);
 
 		// The Reverend Green button
 		JRadioButton greenRadioButton = new JRadioButton(green);
 		greenRadioButton.setBackground(UIManager.getColor("Button.foreground"));
 		greenRadioButton.addActionListener(new SetupActionListener(this, 2, "The Reverend Green"));
-		greenRadioButton.setBounds(320, 114, 80, 100);
+		greenRadioButton.setBounds(329, 375, 120, 160);
 		add(greenRadioButton);
 
 		// Colonel Mustard button
 		JRadioButton mustardRadioButton = new JRadioButton(mustard);
 		mustardRadioButton.setBackground(UIManager.getColor("Button.foreground"));
 		mustardRadioButton.addActionListener(new SetupActionListener(this, 6, "Colonel Mustard"));
-		mustardRadioButton.setBounds(450, 114, 80, 100);
+		mustardRadioButton.setBounds(776, 181, 120, 160);
 		add(mustardRadioButton);
 
 		// Mrs. White button
 		JRadioButton whiteRadioButton = new JRadioButton(white);
 		whiteRadioButton.setBackground(UIManager.getColor("Button.foreground"));
 		whiteRadioButton.addActionListener(new SetupActionListener(this, 1, "Mrs. White"));
-		whiteRadioButton.setBounds(53, 237, 80, 100);
+		whiteRadioButton.setBounds(123, 375, 120, 160);
 		add(whiteRadioButton);
 
 		// Miss Scarlett button
 		JRadioButton scarlettRadioButton = new JRadioButton(scarlett);
 		scarlettRadioButton.setBackground(UIManager.getColor("Button.foreground"));
 		scarlettRadioButton.addActionListener(new SetupActionListener(this, 5, "Miss Scarlett"));
-		scarlettRadioButton.setBounds(188, 237, 80, 100);
+		scarlettRadioButton.setBounds(329, 181, 120, 160);
 		add(scarlettRadioButton);
 
 		// Professor Plum button
 		JRadioButton plumRadioButton = new JRadioButton(plum);
 		plumRadioButton.setBackground(UIManager.getColor("Button.foreground"));
 		plumRadioButton.addActionListener(new SetupActionListener(this, 4, "Professor Plum"));
-		plumRadioButton.setBounds(53, 114, 80, 100);
+		plumRadioButton.setBounds(123, 181, 120, 160);
 		add(plumRadioButton);
 
 		JTextArea txtrCharacterTokenSelection = new JTextArea();
-		txtrCharacterTokenSelection.setFont(new Font("Dialog", Font.PLAIN, 16));
+		txtrCharacterTokenSelection.setFont(new Font("Dialog", Font.BOLD, 24));
 		txtrCharacterTokenSelection.setBackground(UIManager.getColor("Button.background"));
 		txtrCharacterTokenSelection.setText("Character Token Selection:");
-		txtrCharacterTokenSelection.setBounds(188, 84, 224, 37);
+		txtrCharacterTokenSelection.setBounds(294, 126, 396, 37);
 		add(txtrCharacterTokenSelection);
+
+		JButton btnNewButton = new JButton("Back");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ctrl.getViewFrame().setCanvas(previous);
+			}
+		});
+		btnNewButton.setBounds(653, 460, 230, 75);
+		add(btnNewButton);
+
 	}
 
 	public void buttonAction(int i, String name) {
@@ -120,11 +134,12 @@ public class PlayerSetupCanvas extends JPanel {
 				ctrl.addPlayer(i, textField.getText());
 				chosen.add(i);
 				if (playerNumber >= numPlayers) {
-					System.exit(0);	//SET NEXT CANVAS
+					ctrl.getClient().setPlayers();
+					ctrl.handle("display board");
 					return;
 				}
 				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Next player!");
-				ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, numPlayers, playerNumber + 1, chosen));
+				ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, previous, numPlayers, playerNumber + 1, chosen));
 			} else {
 				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Name cannot be left blank!");
 			}
@@ -155,7 +170,7 @@ public class PlayerSetupCanvas extends JPanel {
 	public ImageIcon scaleImage(String s) {
 		ImageIcon imageIcon = new ImageIcon(s);
 		Image image = imageIcon.getImage();
-		Image newimg = image.getScaledInstance(80, 100, java.awt.Image.SCALE_SMOOTH);
+		Image newimg = image.getScaledInstance(120, 160, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(newimg);
 	}
 }
