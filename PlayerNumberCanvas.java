@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JSplitPane;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
@@ -91,7 +92,7 @@ public class PlayerNumberCanvas extends JPanel {
 
 	public void setPlayers(int i){
 		ctrl.setPlayers(i);
-		ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, i, 1));
+		ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, i, 1, new ArrayList<Integer>()));
 	}
 
 	@Override

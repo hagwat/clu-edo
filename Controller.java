@@ -25,11 +25,12 @@ public class Controller {
 				}
 
 		view = new ViewFrame(this);
-		textClient = game.getTextClient();
+
 	}
 
 	public void startGame(){
 		game = new Game();
+		textClient = game.getTextClient();
 		game.getTextClient().addController(this);
 	}
 
@@ -48,9 +49,22 @@ public class Controller {
 			return;
 		}
 	}
-	
+
+	public void setPlayers(int i){
+		textClient.setNumPlayers(i);
+	}
+
+	public void addPlayer(int i, String name){
+		Player p = new Player(i, name, game.getBoard());
+		textClient.addPlayer(p);
+	}
+
 	public ViewFrame getViewFrame(){
 		return this.view;
+	}
+
+	public TextClient getTextClient(){
+		return this.textClient;
 	}
 
 }
