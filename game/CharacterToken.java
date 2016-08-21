@@ -25,7 +25,7 @@ public class CharacterToken implements Locatable {
 
 		display();
 	}
-	
+
 	public CharacterToken(Board board, int characterId){
 		System.out.println("Filling in character "+characterId);
 		this.board = board;
@@ -54,7 +54,7 @@ public class CharacterToken implements Locatable {
 	 */
 	public String getCharacterName() {
 		try {
-			Scanner sc = new Scanner(new File("src/game/characters.txt"));
+			Scanner sc = new Scanner(new File("src/resources/characters.txt"));
 			while (sc.hasNextLine()) {
 				int nextInt = sc.nextInt();
 				if (characterId == nextInt) {
@@ -166,7 +166,7 @@ public class CharacterToken implements Locatable {
 			System.out.println();
 		}
 	}
-	
+
 	public int getId(){
 		return this.characterId;
 	}
