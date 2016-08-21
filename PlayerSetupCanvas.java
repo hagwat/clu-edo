@@ -5,6 +5,7 @@ import java.awt.Image;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -12,6 +13,7 @@ import game.*;
 
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Queue;
 import java.awt.event.ActionEvent;
 import javax.swing.JRadioButton;
@@ -21,24 +23,20 @@ import java.awt.Font;
 public class PlayerSetupCanvas extends JPanel {
 
 	private JTextField textField;
-	private int playerNumber;		//refers to which player we are up to
+	private Controller ctrl;
 	private int numPlayers;
-	private String name;
-	private int characterToken;		//int refers to the character in characters.txt
-	private Queue<Player> players;
+	private int playerNumber;
+	private ArrayList<Integer> chosen;
 
-	public PlayerSetupCanvas(Controller ctrl, int numPlayers, int playerNumber) {
+	public PlayerSetupCanvas(Controller ctrl, int numPlayers, int playerNumber, ArrayList<Integer> chosen) {
 		setLayout(null);
+		this.ctrl = ctrl;
+		this.chosen = chosen;
 		this.numPlayers = numPlayers;
 		this.playerNumber = playerNumber;
 
 		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String name = textField.getText();
-			}
-		});
-		textField.setBounds(84, 79, 114, 19);
+		textField.setBounds(84, 53, 114, 19);
 		add(textField);
 		textField.setColumns(10);
 
@@ -55,80 +53,82 @@ public class PlayerSetupCanvas extends JPanel {
 		txtrName.setBackground(UIManager.getColor("Button.background"));
 		txtrName.setEditable(false);
 		txtrName.setText("Name:");
-		txtrName.setBounds(12, 79, 60, 19);
+		txtrName.setBounds(12, 53, 60, 19);
 		add(txtrName);
 
+		// Mrs. Peacock button
 		JRadioButton peacockRadioButton = new JRadioButton(peacock);
 		peacockRadioButton.setBackground(UIManager.getColor("Button.foreground"));
-		peacockRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				characterToken = 3;
-
-			}
-		});
-		peacockRadioButton.setBounds(188, 165, 80, 100);
+		peacockRadioButton.addActionListener(new SetupActionListener(this, 3, "Miss Peacock"));
+		peacockRadioButton.setBounds(188, 114, 80, 100);
 		add(peacockRadioButton);
 
+		// The Reverend Green button
 		JRadioButton greenRadioButton = new JRadioButton(green);
 		greenRadioButton.setBackground(UIManager.getColor("Button.foreground"));
-		peacockRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				characterToken = 2;
-			}
-		});
-		greenRadioButton.setBounds(328, 165, 80, 100);
+		greenRadioButton.addActionListener(new SetupActionListener(this, 2, "The Reverend Green"));
+		greenRadioButton.setBounds(320, 114, 80, 100);
 		add(greenRadioButton);
 
+		// Colonel Mustard button
 		JRadioButton mustardRadioButton = new JRadioButton(mustard);
 		mustardRadioButton.setBackground(UIManager.getColor("Button.foreground"));
-		peacockRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				characterToken = 6;
-			}
-		});
-		mustardRadioButton.setBounds(467, 165, 80, 100);
+		mustardRadioButton.addActionListener(new SetupActionListener(this, 6, "Colonel Mustard"));
+		mustardRadioButton.setBounds(450, 114, 80, 100);
 		add(mustardRadioButton);
 
+		// Mrs. White button
 		JRadioButton whiteRadioButton = new JRadioButton(white);
 		whiteRadioButton.setBackground(UIManager.getColor("Button.foreground"));
-		peacockRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				characterToken = 1;
-			}
-		});
-		whiteRadioButton.setBounds(53, 293, 80, 100);
+		whiteRadioButton.addActionListener(new SetupActionListener(this, 1, "Mrs. White"));
+		whiteRadioButton.setBounds(53, 237, 80, 100);
 		add(whiteRadioButton);
 
+		// Miss Scarlett button
 		JRadioButton scarlettRadioButton = new JRadioButton(scarlett);
 		scarlettRadioButton.setBackground(UIManager.getColor("Button.foreground"));
-		peacockRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				characterToken = 5;
-			}
-		});
-		scarlettRadioButton.setBounds(188, 293, 80, 100);
+		scarlettRadioButton.addActionListener(new SetupActionListener(this, 5, "Miss Scarlett"));
+		scarlettRadioButton.setBounds(188, 237, 80, 100);
 		add(scarlettRadioButton);
 
+		// Professor Plum button
 		JRadioButton plumRadioButton = new JRadioButton(plum);
 		plumRadioButton.setBackground(UIManager.getColor("Button.foreground"));
-		peacockRadioButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				characterToken = 4;
-			}
-		});
-		plumRadioButton.setBounds(53, 165, 80, 100);
+		plumRadioButton.addActionListener(new SetupActionListener(this, 4, "Professor Plum"));
+		plumRadioButton.setBounds(53, 114, 80, 100);
 		add(plumRadioButton);
 
 		JTextArea txtrCharacterTokenSelection = new JTextArea();
 		txtrCharacterTokenSelection.setFont(new Font("Dialog", Font.PLAIN, 16));
 		txtrCharacterTokenSelection.setBackground(UIManager.getColor("Button.background"));
 		txtrCharacterTokenSelection.setText("Character Token Selection:");
-		txtrCharacterTokenSelection.setBounds(188, 120, 224, 37);
+		txtrCharacterTokenSelection.setBounds(188, 84, 224, 37);
 		add(txtrCharacterTokenSelection);
 	}
 
-
-	public void setupPlayer(String name, String icon){
+	public void buttonAction(int i, String name) {
+		int r = JOptionPane.showConfirmDialog(new JOptionPane(), "Are you sure you want to select " + name + "?", null,
+				JOptionPane.YES_NO_OPTION);
+		if (r == JOptionPane.YES_OPTION) {
+			for (int j : chosen) {
+				if (j == i) {
+					JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Character already taken!");
+					return;
+				}
+			}
+			if (!textField.getText().equals("")) {
+				ctrl.addPlayer(i, textField.getText());
+				chosen.add(i);
+				if (playerNumber >= numPlayers) {
+					System.exit(0);	//SET NEXT CANVAS
+					return;
+				}
+				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Next player!");
+				ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, numPlayers, playerNumber + 1, chosen));
+			} else {
+				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Name cannot be left blank!");
+			}
+		}
 
 	}
 
@@ -137,23 +137,25 @@ public class PlayerSetupCanvas extends JPanel {
 		return new Dimension(600, 400);
 	}
 
-	//Icons for the character token selection
-	Icon peacock = scaleImage("src/peacock.jpg");
-	Icon green = scaleImage("src/green.jpg");
-	Icon mustard = scaleImage("src/mustard.jpg");
-	Icon white = scaleImage("src/white.jpg");
-	Icon scarlett = scaleImage("src/scarlett.jpg");
-	Icon plum = scaleImage("src/plum.jpg");
+	// Icons for the character token selection
+	Icon peacock = scaleImage("src/resources/peacock.jpg");
+	Icon green = scaleImage("src/resources/green.jpg");
+	Icon mustard = scaleImage("src/resources/mustard.jpg");
+	Icon white = scaleImage("src/resources/white.jpg");
+	Icon scarlett = scaleImage("src/resources/scarlett.jpg");
+	Icon plum = scaleImage("src/resources/plum.jpg");
 
 	/**
-	 * Takes an image filename and scales it to a fixed size 80px width and 100px height image icon.
+	 * Takes an image filename and scales it to a fixed size 80px width and
+	 * 100px height image icon.
+	 *
 	 * @param s
 	 * @return
 	 */
-	public ImageIcon scaleImage(String s){
+	public ImageIcon scaleImage(String s) {
 		ImageIcon imageIcon = new ImageIcon(s);
 		Image image = imageIcon.getImage();
-		Image newimg = image.getScaledInstance(80, 100,  java.awt.Image.SCALE_SMOOTH);
+		Image newimg = image.getScaledInstance(80, 100, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(newimg);
 	}
 }
