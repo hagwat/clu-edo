@@ -16,7 +16,7 @@ public class Game {
 	private List<WeaponToken> allWeps;
 
 	private Board board;
-	private TextClient client;
+	private Client client;
 
 	private Queue<Player> players = new LinkedList<Player>();
 	private List<Card> deck = new ArrayList<Card>(); // Full deck of cards
@@ -26,10 +26,10 @@ public class Game {
 		setSolution();
 		createBoard();
 		setWeapons();
-		createTextClient();
+		createClient();
 	}
 
-	
+
 
 	/**
 	 * Populates the deck field with each card in the game
@@ -228,10 +228,10 @@ public class Game {
 	}
 
 	/**
-	 * Creates a new instance of TextClient
+	 * Creates a new instance of Client
 	 */
-	public void createTextClient() {
-		client = new TextClient(this);
+	public void createClient() {
+		client = new Client(this);
 	}
 
 	//*********************
@@ -250,7 +250,7 @@ public class Game {
 		return this.players;
 	}
 
-	public TextClient getTextClient() {
+	public Client getClient() {
 		return client;
 	}
 
