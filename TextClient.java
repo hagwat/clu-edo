@@ -13,6 +13,7 @@ public class TextClient {
 	private Controller control;
 	private boolean gameIsOver = false;
 	private int numOfPlayers;
+	private Queue<Player> players = new LinkedList<Player>();
 
 	private List<String> validWeps = new ArrayList<String>();
 	private List<String> validRooms = new ArrayList<String>();
@@ -420,9 +421,13 @@ public class TextClient {
 
 		return tokens;
 	}
-	
+
 	public void setNumPlayers(int i){
 		this.numOfPlayers = i;
+	}
+
+	public void addPlayer(Player p){
+		players.offer(p);
 	}
 
 	// ************************
@@ -710,5 +715,9 @@ public class TextClient {
 
 	public void addController(Controller c){
 		this.control = c;
+	}
+
+	public Queue<Player> getPlayers(){
+		return this.players;
 	}
 }
