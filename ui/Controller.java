@@ -1,5 +1,7 @@
 package ui;
 
+import java.util.Queue;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -9,7 +11,7 @@ public class Controller {
 
 	private Game game;
 	private ViewFrame view;
-	private TextClient textClient;
+	private Client client;
 
 	public static void main(String[] args) {
 		new Controller();
@@ -30,8 +32,8 @@ public class Controller {
 
 	public void startGame(){
 		game = new Game();
-		textClient = game.getTextClient();
-		game.getTextClient().addController(this);
+		client = game.getClient();
+		game.getClient().addController(this);
 	}
 
 
@@ -50,21 +52,21 @@ public class Controller {
 		}
 	}
 
-	public void setPlayers(int i){
-		textClient.setNumPlayers(i);
+	public void setNumPlayers(int i){
+		client.setNumPlayers(i);
 	}
 
 	public void addPlayer(int i, String name){
 		Player p = new Player(i, name, game.getBoard());
-		textClient.addPlayer(p);
+		client.addPlayer(p);
 	}
 
 	public ViewFrame getViewFrame(){
 		return this.view;
 	}
 
-	public TextClient getTextClient(){
-		return this.textClient;
+	public Client getClient(){
+		return this.client;
 	}
 
 }

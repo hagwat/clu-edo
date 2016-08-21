@@ -42,7 +42,7 @@ public class PlayerNumberCanvas extends JPanel {
 				setPlayers(3);
 			}
 		});
-		button3.setBounds(51, 152, 68, 25);
+		button3.setBounds(69, 229, 154, 54);
 		add(button3);
 
 		JButton button4 = new JButton("4");
@@ -51,7 +51,7 @@ public class PlayerNumberCanvas extends JPanel {
 				setPlayers(4);
 			}
 		});
-		button4.setBounds(187, 152, 68, 25);
+		button4.setBounds(304, 229, 154, 54);
 		add(button4);
 
 		JButton button5 = new JButton("5");
@@ -60,7 +60,7 @@ public class PlayerNumberCanvas extends JPanel {
 				setPlayers(5);
 			}
 		});
-		button5.setBounds(329, 152, 68, 25);
+		button5.setBounds(537, 229, 154, 54);
 		add(button5);
 
 		JButton button6 = new JButton("6");
@@ -69,7 +69,7 @@ public class PlayerNumberCanvas extends JPanel {
 				setPlayers(6);
 			}
 		});
-		button6.setBounds(465, 152, 68, 25);
+		button6.setBounds(760, 229, 154, 54);
 		add(button6);
 
 		JButton btnBack = new JButton("Back");
@@ -78,21 +78,21 @@ public class PlayerNumberCanvas extends JPanel {
 				ctrl.getViewFrame().setCanvas(previousCanvas);
 			}
 		});
-		btnBack.setBounds(249, 315, 117, 25);
+		btnBack.setBounds(370, 423, 243, 70);
 		add(btnBack);
 
 		JTextArea txtrHowManyPlayers = new JTextArea();
 		txtrHowManyPlayers.setBackground(UIManager.getColor("Button.background"));
-		txtrHowManyPlayers.setFont(new Font("Dialog", Font.PLAIN, 22));
+		txtrHowManyPlayers.setFont(new Font("Dialog", Font.BOLD, 30));
 		txtrHowManyPlayers.setText("How Many Players? (3 - 6)");
-		txtrHowManyPlayers.setBounds(160, 44, 297, 33);
+		txtrHowManyPlayers.setBounds(260, 70, 679, 70);
 		add(txtrHowManyPlayers);
 	}
 
 
 	public void setPlayers(int i){
-		ctrl.setPlayers(i);
-		ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, i, 1, new ArrayList<Integer>()));
+		ctrl.setNumPlayers(i);
+		ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, this, i, 1, new ArrayList<Integer>()));
 	}
 
 	@Override
