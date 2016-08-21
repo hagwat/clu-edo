@@ -7,7 +7,7 @@ import ui.Controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class TextClient {
+public class Client {
 
 	private Game game;
 	private Controller control;
@@ -19,7 +19,7 @@ public class TextClient {
 	private List<String> validRooms = new ArrayList<String>();
 	private List<String> validPersons = new ArrayList<String>();
 
-	public TextClient(Game game) {
+	public Client(Game game) {
 		this.game = game;
 		setValidWeps();
 		setValidRooms();
@@ -314,15 +314,6 @@ public class TextClient {
 	 * Game.
 	 */
 	public void setPlayers() {
-		List<String> names = getPlayerNames();
-		List<Integer> tokens = getPlayerTokens(names);
-		Queue<Player> players = new LinkedList<Player>();
-		if (names.size() != tokens.size()) {
-			throw new IllegalStateException("Number of players not equal to number of tokens.");
-		}
-		for (int i = 0; i < names.size(); i++) {
-			players.offer(new Player(tokens.get(i), names.get(i), game.getBoard()));
-		}
 		game.setPlayers(players);
 		game.setHands();
 	}
