@@ -16,7 +16,7 @@ public class Tile {
 							// are in a room and are of type ROOM.
 	private String arg;// A one or two character String which is used to create
 						// tiles. Shown on map.
-	
+
 	/**
 	 * The type of tile represented
 	 *
@@ -116,14 +116,10 @@ public class Tile {
 		if (room == null) {
 		}
 		if (type == TileType.ROOM) {
-			System.out.print("|" + arg);
 			if (arg.length() == 1) {
-				System.out.print(" ");
 			}
 		} else {
-			System.out.print("|" + arg);
 			if (arg.length() == 1) {
-				System.out.print(" ");
 			}
 		}
 	}
@@ -139,7 +135,7 @@ public class Tile {
 		return characterNumber;
 
 	}
-	
+
 	public TileType getType() {
 		return this.type;
 	}

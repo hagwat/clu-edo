@@ -23,11 +23,9 @@ public class CharacterToken implements Locatable {
 		this.yPos = board.findSpawn(characterId)[1];
 		this.characterId = characterId;
 
-		display();
 	}
 
 	public CharacterToken(Board board, int characterId){
-		System.out.println("Filling in character "+characterId);
 		this.board = board;
 		this.xPos = board.findSpawn(characterId)[0];
 		this.yPos = board.findSpawn(characterId)[1];
@@ -38,14 +36,6 @@ public class CharacterToken implements Locatable {
 	public int[] getLocation() {
 		int[] xy = new int[] { xPos, yPos };
 		return xy;
-	}
-
-	/**
-	 * Displays the CharacterToken's current co-ordinates to the console
-	 */
-	public void display() {
-		System.out.println("Player " + playerName + ", Character " + characterId + ": " + getCharacterName() + ", ["
-				+ xPos + "," + yPos + "]");
 	}
 
 	/**
@@ -69,7 +59,6 @@ public class CharacterToken implements Locatable {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Character not found");
 		return null;
 	}
 
@@ -94,11 +83,9 @@ public class CharacterToken implements Locatable {
 			}
 			try {
 				if (board.getTile(x, y).getType().equals(Tile.TileType.INACCESSABLE)) {
-					System.out.println("inaccessible " + x + "," + y);
 					return false;
 				}
 			} catch (ArrayIndexOutOfBoundsException e) {
-				System.out.print("exception, and ");
 				return false;
 			}
 		}
@@ -108,17 +95,6 @@ public class CharacterToken implements Locatable {
 		yPos = y;
 
 		tile = board.getTile(xPos, yPos);
-		if (tile.getType().equals(Tile.TileType.ROOM)) {
-			System.out.print("The " + tile.getRoom().getName());
-			if (tile.getRoom().getWep() != null) {
-				System.out.println(" contains the " + tile.getRoom().getWep().getName() + ".");
-			} else {
-				System.out.println(" is empty.");
-			}
-
-		} else {
-			System.out.println();
-		}
 
 		return true;
 	}
@@ -144,19 +120,6 @@ public class CharacterToken implements Locatable {
 	public void setPos(int x, int y) {
 		xPos = x;
 		yPos = y;
-		System.out.println("Change to [" + xPos + "," + yPos + "]");
-		Tile tile = board.getTile(xPos, yPos);
-		if (tile.getType().equals(Tile.TileType.ROOM)) {
-			System.out.print("The " + tile.getRoom().getName());
-			if (tile.getRoom().getWep() != null) {
-				System.out.println(" contains the " + tile.getRoom().getWep().getName() + ".");
-			} else {
-				System.out.println(" is empty.");
-			}
-
-		} else {
-			System.out.println();
-		}
 	}
 
 	public int getId(){

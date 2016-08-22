@@ -63,29 +63,6 @@ public class Board {
 	 * in their locations.
 	 */
 	public void displayTiles() {
-		for (int j = 0; j < tiles[0].length; j++) {
-			for (int i = 0; i < tiles.length; i++) {
-				if(i == 0 && j < 10){
-					System.out.print(j + "  ");
-				}else if(i == 0 && j >= 10){
-					System.out.print(j + " ");
-				}
-				tiles[i][j].display();
-				if (i == tiles.length - 1) {
-					System.out.println("|");
-				}
-			}
-		}
-		System.out.print("   ");
-		for(int i = 0; i < tiles.length; i++){
-			if(i < 10){
-			System.out.print(" " + i + " ");
-			if(i == 9) System.out.print(" ");
-			}else{
-				System.out.print(i + " ");
-			}
-		}
-		System.out.println("");
 	}
 
 	/**
@@ -101,7 +78,6 @@ public class Board {
 				}
 			}
 		}
-		System.out.println("Spawn not found.");
 		return null;
 	}
 
@@ -149,7 +125,7 @@ public class Board {
 	public List<CharacterToken> getCharacterTokens(){
 		return this.tokens;
 	}
-	
+
 	public Tile[][] getTiles(){
 		return this.tiles;
 	}

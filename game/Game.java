@@ -114,11 +114,11 @@ public class Game {
 	public void setWeapons(){
 		Room[] rooms = board.getRooms();
 		List<Room> roomList = new ArrayList<Room>();
-		
+
 		for(int i = 0; i< rooms.length; i++){
-			roomList.add(rooms[i]);			
+			roomList.add(rooms[i]);
 		}
-		
+
 		allWeps = new ArrayList<WeaponToken>();
 		//Input all weapon names
 		allWeps.add(new WeaponToken("Candlestick"));
@@ -148,7 +148,6 @@ public class Game {
 			}
 		}
 		for(CharacterToken t: board.getCharacterTokens()){
-			System.out.println(t.getCharacterName() +": "+t.getId());
 		}
 
 	}
@@ -168,14 +167,11 @@ public class Game {
 						// if that room has the needed weapon
 						room.setWep(rooms[i].getWep());
 						rooms[i].setWep(null);
-						System.out.println("Moved weapon to this empty room.");
-						System.out.println(room.getWep().getName());
 						return;
 					}
 				}
 			}
 		} else if (room.getWep().getName().equalsIgnoreCase(wep)) {
-			System.out.println("No need to swap.");
 			return;
 		} else {
 
@@ -186,14 +182,12 @@ public class Game {
 						WeaponToken wrongWep = room.getWep();
 						room.setWep(rooms[i].getWep());
 						rooms[i].setWep(wrongWep);
-						System.out.println("Swapped.");
 						return;
 					}
 
 				}
 			}
 		}
-		System.out.println("Shouldnt be here");
 	}
 
 	public void characterToRoom(Room here, String tokenName) {
@@ -205,10 +199,8 @@ public class Game {
 			}
 		}
 		if(person == null){
-			System.out.println("person shouldnt be null.");
 		}
 		person.roomMove(board.getRoomLocation(here.getName()));
-		System.out.println(person.getCharacterName() + " moved to " + here.getName());
 	}
 
 	/**
@@ -246,7 +238,7 @@ public class Game {
 
 	public void setPlayers(Queue<Player> players) {
 		this.players = players;
-		
+
 		//make sure we have all the tokens
 		setSpareTokens();
 	}
