@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class ViewFrame extends JFrame implements MouseListener {
 
-	private JPanel canvas, previousCanvas;
+	private JPanel canvas, previousCanvas, optionCanvas;
 	private JComponent menuBar;
 	private Controller ctrl;
 
@@ -123,6 +123,14 @@ public class ViewFrame extends JFrame implements MouseListener {
 			canvas = new BoardCanvas(arg);
 			this.add(canvas, BorderLayout.CENTER);
 			this.add(new PlayerOptionCanvas(ctrl), BorderLayout.EAST);
+			pack();
+			validate();
+			repaint();
+		}
+		else if(action.equals("next turn")){
+			remove(optionCanvas);
+			optionCanvas = new PlayerOptionCanvas(ctrl);
+			this.add(optionCanvas, BorderLayout.EAST);
 			pack();
 			validate();
 			repaint();
