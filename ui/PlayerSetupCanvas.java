@@ -130,7 +130,9 @@ public class PlayerSetupCanvas extends JPanel {
 					return;
 				}
 			}
+			/*
 			if (!textField.getText().equals("")) {
+			 */
 				ctrl.addPlayer(i, textField.getText());
 				chosen.add(i);
 				if (playerNumber >= numPlayers) {
@@ -140,9 +142,11 @@ public class PlayerSetupCanvas extends JPanel {
 				}
 				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Next player!");
 				ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, previous, numPlayers, playerNumber + 1, chosen));
+			/*
 			} else {
 				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Name cannot be left blank!");
 			}
+			*/
 		}
 
 	}

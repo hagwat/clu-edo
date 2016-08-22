@@ -47,15 +47,13 @@ public class BoardCanvas extends JPanel {
 	}
 	
 	public void paintTile(Graphics g, Tile tile, int xPos, int yPos){
-		System.out.println(xPos + " " + yPos);
-		System.out.println((xPos+1)*TILE_WIDTH +" "+(yPos+1)*TILE_HEIGHT);
-		System.out.println();
+
 	
 		g.setColor(getTileColor(tile));		
-		g.fillRect(xPos*TILE_WIDTH, yPos*TILE_HEIGHT, (xPos+1)*TILE_WIDTH, (yPos+1)*TILE_HEIGHT);
+		g.fillRect(xPos*TILE_WIDTH, yPos*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 
 		g.setColor(Color.BLACK);		
-		g.drawRect(xPos*TILE_WIDTH, yPos*TILE_HEIGHT, (xPos+1)*TILE_WIDTH, (yPos+1)*TILE_HEIGHT);
+		g.drawRect(xPos*TILE_WIDTH, yPos*TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 	
 	}
 	
