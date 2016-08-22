@@ -108,6 +108,8 @@ public class CharacterToken implements Locatable {
 		}
 
 		Tile tile = board.getTile(xPos, yPos);
+		
+		// updates the position on the board
 		xPos = x;
 		yPos = y;
 
