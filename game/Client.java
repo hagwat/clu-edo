@@ -102,7 +102,7 @@ public class Client {
 		}
 		// Went through all players therefore cards must be in the deck
 		if (game.getDeck().contains(personCard)) {
-			return new Object[]{player.toString(), roomCard}; // Card has been refuted, no need to carry on
+			return new Object[]{"Leftover Pile", personCard}; // Card has been refuted, no need to carry on
 		}
 		if (game.getDeck().contains(wepCard)) {
 		return new Object[]{"Leftover Pile", wepCard}; // Card has been refuted, no need to carry on

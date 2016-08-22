@@ -60,7 +60,13 @@ public class Controller {
 			return;
 		}
 		if(action.equals("next turn")){
-			view.setView(action, null, this);
+			view.setView(action,  new Object[]{
+					game.getBoard().getTiles(),
+					game.getBoard().getCharacterTokens(),
+					game.getWeapons(),
+					game.getBoard().getRooms()
+					}, this);
+			}
 		}
 
 	public void setNumPlayers(int i){
@@ -79,7 +85,7 @@ public class Controller {
 	public Client getClient(){
 		return this.client;
 	}
-	
+
 	public Game getGame(){
 		return game;
 	}
