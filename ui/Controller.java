@@ -50,6 +50,10 @@ public class Controller {
 			view.setView("player setup", null, this);
 			return;
 		}
+
+		if(action.equals("next turn")){
+			view.setView(action, null, this);
+		}
 	}
 
 	public void setNumPlayers(int i){
@@ -67,6 +71,10 @@ public class Controller {
 
 	public Client getClient(){
 		return this.client;
+	}
+
+	public Game getGame(){
+		return game;
 	}
 
 }

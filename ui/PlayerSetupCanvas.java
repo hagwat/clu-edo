@@ -30,7 +30,8 @@ public class PlayerSetupCanvas extends JPanel {
 	private ArrayList<Integer> chosen;
 	private JPanel previous;
 
-	public PlayerSetupCanvas(Controller ctrl, JPanel previous, int numPlayers, int playerNumber, ArrayList<Integer> chosen) {
+	public PlayerSetupCanvas(Controller ctrl, JPanel previous, int numPlayers, int playerNumber,
+			ArrayList<Integer> chosen) {
 		setLayout(null);
 		this.ctrl = ctrl;
 		this.chosen = chosen;
@@ -112,6 +113,7 @@ public class PlayerSetupCanvas extends JPanel {
 		JButton btnNewButton = new JButton("Back");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ctrl.getClient().getPlayers().clear();
 				ctrl.getViewFrame().setCanvas(previous);
 			}
 		});
@@ -131,22 +133,21 @@ public class PlayerSetupCanvas extends JPanel {
 				}
 			}
 			/*
-			if (!textField.getText().equals("")) {
+			 * if (!textField.getText().equals("")) {
 			 */
-				ctrl.addPlayer(i, textField.getText());
-				chosen.add(i);
-				if (playerNumber >= numPlayers) {
-					ctrl.getClient().setPlayers();
-					ctrl.handle("display board");
-					return;
-				}
-				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Next player!");
-				ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, previous, numPlayers, playerNumber + 1, chosen));
-			/*
-			} else {
-				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Name cannot be left blank!");
+			ctrl.addPlayer(i, textField.getText());
+			chosen.add(i);
+			if (playerNumber >= numPlayers) {
+				ctrl.getClient().setPlayers();
+				ctrl.handle("display board");
+				return;
 			}
-			*/
+			JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Next player!");
+			ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, previous, numPlayers, playerNumber + 1, chosen));
+			/*
+			 * } else { JOptionPane.showMessageDialog(ctrl.getViewFrame(),
+			 * "Name cannot be left blank!"); }
+			 */
 		}
 
 	}
