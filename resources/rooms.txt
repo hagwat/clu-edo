@@ -2,35 +2,44 @@ Kitchen
 1
 south passage
 4 7  17 21
+1 4
 Ball Room
 2
 west southwest southeast east
 7 5  9 8  14 8  16 5
+11 3
 Conservatory
 3
 southwest passage
 18 5  6 19
+22 0
 Billiard Room
 4
 west south
 17 9  22 12
+22 9
 Library
 5
 north west
 20 13  17 16
+22 16
 Study
 6
 northwest passage
 17 20  4 6
+18 23
 Hall
 7
 northleftdoor northrightdoor east
 11 17  12 17  15 20
+11 23
 Lounge
 8
 northeast passage
 6 18  18 4
+4 23
 Dining Room
 9
 east south
 8 12  6 16
+1 12
