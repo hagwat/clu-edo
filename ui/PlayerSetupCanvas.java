@@ -21,6 +21,11 @@ import javax.swing.UIManager;
 import java.awt.Font;
 import javax.swing.JButton;
 
+/**
+ * 
+ * A setup canvas that asks the players their name and which character token they wish to use.
+ *
+ */
 public class PlayerSetupCanvas extends JPanel {
 
 	private JTextField textField;
@@ -178,4 +183,26 @@ public class PlayerSetupCanvas extends JPanel {
 		Image newimg = image.getScaledInstance(120, 160, java.awt.Image.SCALE_SMOOTH);
 		return new ImageIcon(newimg);
 	}
+
+	class SetupActionListener implements ActionListener {
+
+		private PlayerSetupCanvas canvas;
+		private int characterToken;
+		private String playerName;
+
+		public SetupActionListener(PlayerSetupCanvas j, int i, String name){
+			super();
+			this.characterToken = i;
+			this.playerName = name;
+			this.canvas = j;
+		}
+
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			canvas.buttonAction(characterToken, playerName);
+		}
+
+	}
+
 }

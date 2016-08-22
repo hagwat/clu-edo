@@ -10,7 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-
+/**
+ * 
+ * The starting screen of the game
+ *
+ */
 public class StartCanvas extends JPanel {
 	/**
 	 *

@@ -4,6 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ *
+ * The main frame that displays different canvases depending on the state of the game.
+ *
+ */
 public class ViewFrame extends JFrame implements MouseListener {
 
 	private JPanel canvas, previousCanvas, optionCanvas;
@@ -44,6 +49,8 @@ public class ViewFrame extends JFrame implements MouseListener {
 		// MouseListener
 		addMouseListener(this);
 
+
+
 		// visibility
 		pack();
 		setResizable(false);
@@ -60,7 +67,7 @@ public class ViewFrame extends JFrame implements MouseListener {
 		// two menus
 		file = new JMenu("File");
 		menuBar.add(file);
-		game = new JMenu("Game");
+		game = new JMenu("Help");
 		menuBar.add(game);
 
 		// populate the menus
@@ -68,11 +75,8 @@ public class ViewFrame extends JFrame implements MouseListener {
 		file.add(a);
 		b = new JMenuItem("Quit");
 		file.add(b);
-		c = new JMenuItem("menu item");
+		c = new JMenuItem("Key bindings");
 		game.add(c);
-		//a submenu
-		d = new JMenuItem("menu item");
-		c.add(d);
 
 		// start a new game
 		a.addActionListener(new ActionListener() {
@@ -91,11 +95,25 @@ public class ViewFrame extends JFrame implements MouseListener {
 				}
 			}
 		});
-		
+
+		//Key bindings help
+		c.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JOptionPane.showMessageDialog(new JOptionPane(), "Key Bindings:\n"
+											+ "h - Show Hand\n"
+											+ "l - Show Leftovers"
+											+ "s - Make Suggestion\n"
+											+ "Arrow Keys - Move in that direction\n"
+											+ "a - make accusation\n"
+											+ "e - end turn\n");
+
+			}
+		});
+
 		// finally set the menu
 		setJMenuBar(menuBar);
 		return menuBar;
-	}	
+	}
 
 	/**
 	 * The next two methods deal with changing to the next view on the UI.
@@ -117,38 +135,32 @@ public class ViewFrame extends JFrame implements MouseListener {
 			canvas.addMouseListener(this);
 			validate();
 		}
-		else if (action.equals("display board")) {// setup mode
-			
+		else if (action.equals("display board")) {
 			previousCanvas = canvas;
+			optionCanvas = new PlayerOptionCanvas(ctrl);
 			remove(canvas);
-			
 			canvas = new BoardCanvas(arg);
 			this.add(canvas, BorderLayout.CENTER);
-			canvas.addMouseListener(this);
-
-			optionCanvas = new PlayerOptionCanvas(ctrl);
 			this.add(optionCanvas, BorderLayout.EAST);
-			
 			pack();
 			validate();
 			repaint();
 		}
-		else if(action.equals("next turn")){// cyclic mode
-			
-			previousCanvas = canvas;
-			remove(canvas);
-			
-			canvas = new BoardCanvas(arg);
-			this.add(canvas, BorderLayout.CENTER);	
-					
+		else if(action.equals("next turn")){
 			remove(optionCanvas);
 			optionCanvas = new PlayerOptionCanvas(ctrl);
 			this.add(optionCanvas, BorderLayout.EAST);
-			
 			pack();
 			validate();
 			repaint();
-			
+		}
+		else if(action.equals("next move")){
+			remove(canvas);
+			canvas = new BoardCanvas(arg);
+			this.add(canvas, BorderLayout.CENTER);
+			pack();
+			validate();
+			repaint();
 		}
 	}
 
@@ -193,9 +205,6 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("heard a squeaky mouse");
-		System.out.println(e.getX()+", "+e.getY());
-		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {

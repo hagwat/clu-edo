@@ -10,6 +10,11 @@ import game.Player;
 
 import java.awt.Font;
 
+/**
+ * 
+ * A very simple canvas that lets the players know the game is over
+ *
+ */
 public class GameOverCanvas extends JPanel {
 
 	public GameOverCanvas(Player p){

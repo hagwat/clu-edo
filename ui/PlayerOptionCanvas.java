@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
@@ -16,12 +18,21 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
+
 import java.awt.Font;
 
+/**
+ *
+ * Canvas that displays the player's options. For example, suggesting, accusing, rolling and moving.
+ *
+ */
 public class PlayerOptionCanvas extends JPanel {
 
 	private Controller ctrl;
 	private Player player;
+	private int roll;		//Number of moves the player has
+	private int numMoves = 0;	//Number of moves player has taken so far
 
 	public PlayerOptionCanvas(Controller ctrl) {
 		this.ctrl = ctrl;
@@ -30,7 +41,12 @@ public class PlayerOptionCanvas extends JPanel {
 		setBackground(Color.DARK_GRAY);
 		setLayout(null);
 
+		//Key Listener
+		addKeyListener(new CustomKeyListener(ctrl, player, this));
+		setFocusable(true);
+
 		JButton btnShow = new JButton("Show Cards");
+		btnShow.setFocusable(false);
 		btnShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cards = "";
@@ -40,25 +56,33 @@ public class PlayerOptionCanvas extends JPanel {
 				JOptionPane.showMessageDialog(ctrl.getViewFrame(), cards, "Cards", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
-		btnShow.setBounds(103, 180, 173, 42);
+		btnShow.setBounds(216, 100, 118, 42);
 		add(btnShow);
 
+		//Suggest button
 		JButton btnSuggest = new JButton("Suggest");
+		btnSuggest.setFocusable(false);
 		btnSuggest.addActionListener(new suggestAction());
-		btnSuggest.setBounds(103, 336, 173, 42);
+		btnSuggest.setBounds(216, 163, 118, 42);
 		add(btnSuggest);
 
+		//Accuse button
 		JButton btnAccuse = new JButton("Accuse");
+		btnAccuse.setFocusable(false);
 		btnAccuse.addActionListener(new accuseAction());
-		btnAccuse.setBounds(103, 412, 173, 42);
+		btnAccuse.setBounds(147, 224, 118, 42);
 		add(btnAccuse);
 
+		//Roll button
 		JButton btnRoll = new JButton("Roll");
+		btnRoll.setFocusable(false);
 		btnRoll.addActionListener(new rollAction());
-		btnRoll.setBounds(103, 99, 173, 42);
+		btnRoll.setBounds(72, 100, 112, 42);
 		add(btnRoll);
 
+		//End button
 		JButton btnEnd = new JButton("End");
+		btnEnd.setFocusable(false);
 		btnEnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int r = JOptionPane.showConfirmDialog(ctrl.getViewFrame(), "Are you sure you want to end your turn?",
@@ -69,10 +93,12 @@ public class PlayerOptionCanvas extends JPanel {
 				}
 			}
 		});
-		btnEnd.setBounds(103, 486, 173, 42);
+		btnEnd.setBounds(72, 284, 268, 42);
 		add(btnEnd);
 
-		JButton btnLeftoverButton = new JButton("Show Leftovers");
+		//Leftovers Button
+		JButton btnLeftoverButton = new JButton("Leftovers");
+		btnLeftoverButton.setFocusable(false);
 		btnLeftoverButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (ctrl.getGame().getDeck().size() == 0) {
@@ -86,19 +112,49 @@ public class PlayerOptionCanvas extends JPanel {
 				}
 			}
 		});
-		btnLeftoverButton.setBounds(103, 259, 173, 42);
+		btnLeftoverButton.setBounds(72, 163, 118, 42);
 		add(btnLeftoverButton);
 
+		//Title text area
 		JTextArea txtrPlayerName = new JTextArea();
 		txtrPlayerName.setForeground(Color.WHITE);
 		txtrPlayerName.setFont(new Font("Dialog", Font.PLAIN, 26));
 		txtrPlayerName.setBackground(Color.DARK_GRAY);
 		txtrPlayerName.setEditable(false);
-		txtrPlayerName.setText(player.toString() + "'s Turn!\n"+player.getToken().getCharacterName());
-		txtrPlayerName.setBounds(72, 12, 270, 62);
+		txtrPlayerName.setText(player.toString() + "'s Turn!");
+		txtrPlayerName.setBounds(72, 12, 262, 32);
 		add(txtrPlayerName);
 
+		//Movement button - up
+		JButton btnUp = new JButton("UP");
+		btnUp.setFocusable(false);
+		btnUp.setBounds(167, 383, 79, 65);
+		btnUp.addActionListener(new moveAction("w"));
+		add(btnUp);
+
+		//Movement button - down
+		JButton btnDown = new JButton("DOWN");
+		btnDown.setFocusable(false);
+		btnDown.setBounds(167, 460, 79, 65);
+		btnDown.addActionListener(new moveAction("s"));
+		add(btnDown);
+
+		//Movement button - left
+		JButton btnLeft = new JButton("LEFT");
+		btnLeft.setFocusable(false);
+		btnLeft.setBounds(76, 460, 79, 65);
+		btnLeft.addActionListener(new moveAction("a"));
+		add(btnLeft);
+
+		//Movement button - right
+		JButton btnRight = new JButton("RIGHT");
+		btnRight.setFocusable(false);
+		btnRight.setBounds(258, 460, 79, 65);
+		btnRight.addActionListener(new moveAction("d"));
+		add(btnRight);
+
 	}
+
 
 	/**
 	 *
@@ -109,7 +165,7 @@ public class PlayerOptionCanvas extends JPanel {
 
 		public void actionPerformed(ActionEvent e) {
 			Random r = new Random();
-			int roll = r.nextInt(6) + 1;
+			roll = r.nextInt(6) + 1;
 
 			if (roll == 1) {
 				displayRoll(one, 1);
@@ -133,8 +189,9 @@ public class PlayerOptionCanvas extends JPanel {
 
 		public void displayRoll(Icon icon, int i) {
 			JOptionPane.showMessageDialog(ctrl.getViewFrame(),
-					"You rolled a " + i + "!\nClick a valid place on the board to move there", "Roll",
+					"You rolled a " + i + "!\nUse the dirrection buttons to move there!", "Roll",
 					JOptionPane.INFORMATION_MESSAGE, icon);
+
 		}
 
 		public ImageIcon scaleImage(String s) {
@@ -149,8 +206,8 @@ public class PlayerOptionCanvas extends JPanel {
 		Icon three = scaleImage("src/resources/3.jpg");
 		Icon four = scaleImage("src/resources/4.jpg");
 		Icon five = scaleImage("src/resources/5.jpg");
-		Icon six = scaleImage("src/resources/6.jpg");
-	}
+		Icon six = scaleImage("src/resources/6.jpg");}
+
 
 	@Override
 	public Dimension getPreferredSize() {
@@ -187,7 +244,7 @@ public class PlayerOptionCanvas extends JPanel {
 				return;
 			}
 
-			String roomName = "Study";
+			String roomName = room.getName();
 			Object[] wepChoices = ctrl.getClient().getValidWeps().toArray();
 			Object[] characterChoices = ctrl.getClient().getValidCharacters().toArray();
 
@@ -213,9 +270,13 @@ public class PlayerOptionCanvas extends JPanel {
 				if (n == JOptionPane.NO_OPTION) {
 					//Loop again so user can re-pick their choices
 				} else {
+					System.out.println(wepName + roomName + characterName);
+					ctrl.getGame().swapWeaponTokens(wepName, room);
+					ctrl.getGame().characterToRoom(room, characterName);
 					Object[] refuter = ctrl.getClient().playerRefute(wepName, roomName, characterName);
 					if(refuter == null){	//Suggested card in own hand
 						JOptionPane.showMessageDialog(ctrl.getViewFrame(), "You suggested your own card..");
+						endTurn();
 					}
 					else if (ctrl.getGame().accusation(wepName, roomName, characterName)) {
 						JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Nobody can refute...");
@@ -297,5 +358,51 @@ public class PlayerOptionCanvas extends JPanel {
 				}
 			}
 		}
+	}
+
+
+	class moveAction implements ActionListener{
+
+		private String[] move;
+
+		public moveAction(String s){
+			move = new String[]{s};
+		}
+
+		public void actionPerformed(ActionEvent e){
+			if(roll == 0){
+				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Roll the dice first!");
+				return;
+			}
+			if(numMoves < roll){
+				if(player.validMove(move)){
+					numMoves++;
+					ctrl.handle("next move");
+				}else{
+					JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Can't move there!");
+				}
+			}else{
+				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "No moves left!");
+			}
+		}
+	}
+
+	//**************************
+	//GETTERS AND SETTERS
+	//**************************
+	public void setRoll(int r){
+		this.roll = r;
+	}
+
+	public int getRoll(){
+		return this.roll;
+	}
+
+	public int getNumMoves(){
+		return this.numMoves;
+	}
+
+	public void setNumMoves(int i){
+		this.numMoves = i;
 	}
 }
