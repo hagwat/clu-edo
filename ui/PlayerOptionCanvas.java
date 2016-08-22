@@ -166,7 +166,11 @@ public class PlayerOptionCanvas extends JPanel {
 	public void eliminate(){
 		JOptionPane.showMessageDialog(ctrl.getViewFrame(), player.toString() + " has been eliminated!\n" +
 				ctrl.getClient().getPlayers().peek().toString() + "'s Turn!");
+		if(ctrl.getClient().getPlayers().size() == 1){
+			ctrl.getViewFrame().setCanvas(new GameOverCanvas(player));
+		}else{
 		ctrl.handle("next turn");
+		}
 	}
 
 	public Player getPlayer(){

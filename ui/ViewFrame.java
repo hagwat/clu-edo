@@ -152,6 +152,10 @@ public class ViewFrame extends JFrame implements MouseListener {
 			newCanvas = (PlayerNumberCanvas)j;
 		}
 
+		if(j instanceof GameOverCanvas){
+			newCanvas = (GameOverCanvas)j;
+		}
+
 		//Remove old canvas and repaint new canvas
 		contain.removeAll();
 		canvas = newCanvas;
