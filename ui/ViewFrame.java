@@ -61,7 +61,7 @@ public class ViewFrame extends JFrame implements MouseListener {
 		else if(action.equals("display board")){
 		previousCanvas = canvas;
 		remove(canvas);
-		canvas = new BoardCanvas(arg);
+		canvas = new BoardCanvas(arg, ctrl);
 		this.add(canvas, BorderLayout.CENTER);
 		canvas.addMouseListener(this);
 		pack();

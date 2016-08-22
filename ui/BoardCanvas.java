@@ -1,19 +1,26 @@
 package ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
+
+import game.Card;
+import game.Player;
 import game.Tile;
 import game.Tile.TileType;
 
 public class BoardCanvas extends JPanel {
-
-	Tile[][] tiles;
-	private static final int TILE_WIDTH = 20;
-	private static final int TILE_HEIGHT = 15;
 	
-	public BoardCanvas(Object arg){
+	private Controller ctrl;
+	Tile[][] tiles;
+	private static final int TILE_WIDTH = 30;
+	private static final int TILE_HEIGHT = 20;
+	
+	public BoardCanvas(Object arg, Controller ctrl){
+		this.ctrl = ctrl;
+		
 		//if arg is null or not a 2D array of Tiles
 		if (arg == null) {
 			throw new IllegalArgumentException("No argument to construct board.");
@@ -21,10 +28,11 @@ public class BoardCanvas extends JPanel {
 		if (!(arg instanceof Tile[][])) {
 			throw new IllegalArgumentException("Invalid argument to construct board.");
 		}
-
+		JPanel playerOptions = new PlayerOptionCanvas(ctrl);
+		ctrl.getViewFrame().add(this, BorderLayout.WEST);
+		ctrl.getViewFrame().add(playerOptions, BorderLayout.EAST);
 		setPreferredSize(new Dimension(1000, 600));
 		tiles = (Tile[][])arg;
-
 	}
 
 	protected void paintComponent(Graphics g) {
