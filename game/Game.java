@@ -112,7 +112,13 @@ public class Game {
 	}
 
 	public void setWeapons(){
-		List<String> rooms = new ArrayList<String>();
+		Room[] rooms = board.getRooms();
+		List<Room> roomList = new ArrayList<Room>();
+		
+		for(int i = 0; i< rooms.length; i++){
+			roomList.add(rooms[i]);			
+		}
+		
 		allWeps = new ArrayList<WeaponToken>();
 		//Input all weapon names
 		allWeps.add(new WeaponToken("Candlestick"));
@@ -123,9 +129,9 @@ public class Game {
 		allWeps.add(new WeaponToken("Spanner"));
 		//last 3 rooms will not have a weapon
 		//Input all weapons into random rooms
-		Collections.shuffle(allWeps);
+		Collections.shuffle(roomList);
 		for(int i = 0; i<allWeps.size();i++){
-			board.getRooms()[i].setWep(allWeps.get(i));
+			roomList.get(i).setWep(allWeps.get(i));
 			}
 	}
 
@@ -240,6 +246,9 @@ public class Game {
 
 	public void setPlayers(Queue<Player> players) {
 		this.players = players;
+		
+		//make sure we have all the tokens
+		setSpareTokens();
 	}
 
 	public List<WeaponToken> getWeapons(){

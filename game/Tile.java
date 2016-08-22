@@ -22,7 +22,7 @@ public class Tile {
 	 *
 	 */
 	public enum TileType {
-		INACCESSABLE, CORRIDOR, ROOM, DOOR, SPAWN
+		INACCESSABLE, CORRIDOR, ROOM, DOOR, SPAWN, PASSAGE
 	}
 
 	/**
@@ -56,6 +56,9 @@ public class Tile {
 			case "D":
 				type = TileType.DOOR;
 				break;
+			case "p":
+			type = TileType.PASSAGE;
+			break;
 			case "k":
 				type = TileType.ROOM;
 				room = board.getRoom("Kitchen");

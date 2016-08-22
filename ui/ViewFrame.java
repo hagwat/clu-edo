@@ -10,7 +10,9 @@ public class ViewFrame extends JFrame implements MouseListener {
 	private JComponent menuBar;
 	private Controller ctrl;
 
-
+/**
+ * The top level container for the UI.
+ */
 	public ViewFrame(Controller ctrl) {
 		super("Cluedo");
 		this.ctrl = ctrl;
@@ -39,7 +41,6 @@ public class ViewFrame extends JFrame implements MouseListener {
 		// add menu bar
 		menuBar = createMenuBar(ctrl);
 
-
 		// MouseListener
 		addMouseListener(this);
 
@@ -49,46 +50,6 @@ public class ViewFrame extends JFrame implements MouseListener {
 		setVisible(true);
 
 	}
-
-	public void setView(String action, Object arg, Controller ctrl){
-		if(action.equals("start")){
-			// add canvas
-			canvas = new StartCanvas(ctrl);
-			add(canvas, BorderLayout.CENTER);
-			StartCanvas vc = (StartCanvas)canvas;
-			pack();
-		}
-		else if(action.equals("display board")){
-		previousCanvas = canvas;
-		optionCanvas = new PlayerOptionCanvas(ctrl);
-		remove(canvas);
-		canvas = new BoardCanvas(arg);
-		this.add(canvas, BorderLayout.CENTER);
-		this.add(optionCanvas, BorderLayout.EAST);
-		canvas.addMouseListener(this);
-		pack();
-		validate();
-		repaint();
-
-		}
-		else if(action.equals("next turn")){
-			remove(optionCanvas);
-			optionCanvas = new PlayerOptionCanvas(ctrl);
-			this.add(optionCanvas, BorderLayout.EAST);
-			pack();
-			validate();
-			repaint();
-		}
-		else if(action.equals("player setup")){
-			previousCanvas = canvas;
-			remove(canvas);
-			canvas = new PlayerNumberCanvas(ctrl, previousCanvas);
-			this.add(canvas, BorderLayout.CENTER);
-			canvas.addMouseListener(this);
-			validate();
-		}
-	}
-
 
 	public JMenuBar createMenuBar(Controller ctrl){
 
@@ -119,20 +80,61 @@ public class ViewFrame extends JFrame implements MouseListener {
 				setView("start", null, ctrl); //sets the view to the starting screen
 			}});
 
-	// do you really want to exit?
-				b.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						Object[] options = {"Yes", "No"};
-						int r = JOptionPane.showOptionDialog(new JOptionPane()	, "Are you sure you want to quit Cluedo?", "",
-								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-						if (r == JOptionPane.YES_OPTION) {
-							System.exit(0);
-						}
-					}});
-
+		// do you really want to exit?
+		b.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object[] options = { "Yes", "No" };
+				int r = JOptionPane.showOptionDialog(new JOptionPane(), "Are you sure you want to quit Cluedo?", "",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				if (r == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
+		});
+		
 		// finally set the menu
 		setJMenuBar(menuBar);
 		return menuBar;
+	}	
+
+	/**
+	 * The next two methods deal with changing to the next view on the UI.
+	 */
+	public void setView(String action, Object[] arg, Controller ctrl) {
+
+		if (action.equals("start")) {
+			// add canvas
+			canvas = new StartCanvas(ctrl);
+			add(canvas, BorderLayout.CENTER);
+			StartCanvas vc = (StartCanvas) canvas;
+			pack();
+		}
+		else if (action.equals("player setup")) {
+			previousCanvas = canvas;
+			remove(canvas);
+			canvas = new PlayerNumberCanvas(ctrl, previousCanvas);
+			this.add(canvas, BorderLayout.CENTER);
+			canvas.addMouseListener(this);
+			validate();
+		}
+		else if (action.equals("display board")) {
+			previousCanvas = canvas;
+			remove(canvas);
+			canvas = new BoardCanvas(arg);
+			this.add(canvas, BorderLayout.CENTER);
+			this.add(new PlayerOptionCanvas(ctrl), BorderLayout.EAST);
+			pack();
+			validate();
+			repaint();
+		}
+		else if(action.equals("next turn")){
+			remove(optionCanvas);
+			optionCanvas = new PlayerOptionCanvas(ctrl);
+			this.add(optionCanvas, BorderLayout.EAST);
+			pack();
+			validate();
+			repaint();
+		}
 	}
 
 	public void setCanvas(JPanel j){
@@ -150,10 +152,6 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 		if(j instanceof PlayerNumberCanvas){
 			newCanvas = (PlayerNumberCanvas)j;
-		}
-
-		if(j instanceof GameOverCanvas){
-			newCanvas = (GameOverCanvas)j;
 		}
 
 		//Remove old canvas and repaint new canvas

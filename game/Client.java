@@ -94,7 +94,7 @@ public class Client {
 				return new Object[]{player.toString(), personCard}; // Card has been refuted, no need to carry on
 			}
 			if (player.getHand().contains(wepCard)) {
-				return new Object[]{player.toString(), wepCard}; // Card has been refuted, no need to carry on
+			return new Object[]{player.toString(), wepCard}; // Card has been refuted, no need to carry on
 			}
 			if (player.getHand().contains(roomCard)) {
 				return new Object[]{player.toString(), roomCard}; // Card has been refuted, no need to carry on
@@ -102,17 +102,17 @@ public class Client {
 		}
 		// Went through all players therefore cards must be in the deck
 		if (game.getDeck().contains(personCard)) {
-			return new Object[]{"Leftover Pile", personCard}; // Card has been refuted, no need to carry on
+			return new Object[]{player.toString(), roomCard}; // Card has been refuted, no need to carry on
 		}
 		if (game.getDeck().contains(wepCard)) {
-			return new Object[]{"Leftover Pile", wepCard}; // Card has been refuted, no need to carry on
+		return new Object[]{"Leftover Pile", wepCard}; // Card has been refuted, no need to carry on
 		}
 		if (game.getDeck().contains(roomCard)) {
-			System.out.println(roomCard + " is in the leftover pile.");
-			return new Object[]{"Leftover Pile", roomCard}; // Card has been refuted, no need to carry on
+		return new Object[]{"Leftover Pile", roomCard}; // Card has been refuted, no need to carry on
 		}
 		return null;	//Has checked all other players hands, deck and solution,
-						//must be in accusing player's hand
+		//must be in accusing player's hand
+																				//must be in accusing player's hand
 	}
 
 	/**
@@ -678,7 +678,6 @@ public class Client {
 		System.out.println("Let's begin...");
 
 		setPlayers();
-		game.setSpareTokens();
 		Queue<Player> players = game.getPlayers();
 		while (players.size() > 0 && !gameIsOver) {
 			System.out.println("");

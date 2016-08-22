@@ -7,6 +7,10 @@ import javax.swing.UIManager;
 
 import game.*;
 
+/**
+ * The controller is a bridging class between the UI and the game. It handles
+ * actions that go between the two halves of the program.
+ */
 public class Controller {
 
 	private Game game;
@@ -25,9 +29,7 @@ public class Controller {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 		view = new ViewFrame(this);
-
 	}
 
 	public void startGame(){
@@ -37,24 +39,29 @@ public class Controller {
 	}
 
 
-
+	/**
+	 * The controller handles actions by first checking what action it is, then
+	 * doing the behaviour for that action.
+	 */
 	public void handle(String action) {
-
-		if (action.equals("display board")) {
-			view.setView(action, game.getBoard().getTiles(), this);
-			return;
-		}
 
 		if (action.equals("pressed start button")) {
 			startGame();
 			view.setView("player setup", null, this);
 			return;
 		}
-
+		if (action.equals("display board")) {
+			view.setView(action, new Object[]{
+					game.getBoard().getTiles(),
+					game.getBoard().getCharacterTokens(),
+					game.getWeapons(),
+					game.getBoard().getRooms()
+					}, this);
+			return;
+		}
 		if(action.equals("next turn")){
 			view.setView(action, null, this);
 		}
-	}
 
 	public void setNumPlayers(int i){
 		client.setNumPlayers(i);
@@ -72,7 +79,7 @@ public class Controller {
 	public Client getClient(){
 		return this.client;
 	}
-
+	
 	public Game getGame(){
 		return game;
 	}
