@@ -17,7 +17,7 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 		// sets border layout
 		setLayout(new BorderLayout());
-	
+
 		// what to do on close
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -61,13 +61,14 @@ public class ViewFrame extends JFrame implements MouseListener {
 		else if(action.equals("display board")){
 		previousCanvas = canvas;
 		remove(canvas);
-		canvas = new BoardCanvas(arg, ctrl);
+		canvas = new BoardCanvas(arg);
 		this.add(canvas, BorderLayout.CENTER);
+		this.add(new PlayerOptionCanvas(ctrl), BorderLayout.EAST);
 		canvas.addMouseListener(this);
 		pack();
 		validate();
 		repaint();
-		
+
 		}else if(action.equals("player setup")){
 			previousCanvas = canvas;
 			remove(canvas);
