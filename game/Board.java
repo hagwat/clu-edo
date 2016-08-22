@@ -37,6 +37,8 @@ public class Board {
 			Room room = new Room(sc.nextLine());
 			room.setTileKey(sc.nextLine());
 			room.setExits(sc.nextLine(), sc.nextLine());
+			room.setWeaponLoc(sc.nextInt(), sc.nextInt());
+			sc.nextLine();// so that the next iteration starts at the right place.
 			rooms[i] = room;
 		}
 	}

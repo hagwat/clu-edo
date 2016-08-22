@@ -13,7 +13,8 @@ public class Room {
 	private String name;	//Name of room
 	private String tileKey;	//The key of the room
 	private Map<String, int[]> exits;	//The co-ordinates of the exit(s)
-	private WeaponToken wep=null; 	//Weapon currently in this room
+	private WeaponToken wep = null; 	//Weapon currently in this room
+	private int[] weaponLoc; 			//Where a weapon would be placed in the room
 
 	public Room(String name, WeaponToken wep) {
 		this.name = name;
@@ -42,6 +43,14 @@ public class Room {
 
 	public void setWep(WeaponToken w){
 		this.wep = w;
+	}
+
+	public void setWeaponLoc(int xPos, int yPos){
+		this.weaponLoc = new int[]{xPos, yPos};
+	}
+	
+	public int[] getWeaponLoc(){
+		return this.weaponLoc;
 	}
 
 	@Override

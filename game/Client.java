@@ -65,7 +65,7 @@ public class Client {
 			gameIsOver = true;
 			return false;
 		} else {
-			playerRefute(wep, room, person);
+			playerRefute(wep, room, person, p);
 			return true;
 		}
 	}
@@ -80,7 +80,7 @@ public class Client {
 	 * @param person
 	 * @param p
 	 */
-	public Object[] playerRefute(String wep, String room, String person) {
+	public void playerRefute(String wep, String room, String person, Player p) {
 		Card wepCard = new Card(wep, Card.Type.WEAPON);
 		Card roomCard = new Card(room, Card.Type.ROOM);
 		Card personCard = new Card(person, Card.Type.CHARACTER);
@@ -91,28 +91,33 @@ public class Client {
 										// they have been polled off and not
 										// offered back yet
 			if (player.getHand().contains(personCard)) {
-				return new Object[]{player.toString(), personCard}; // Card has been refuted, no need to carry on
+				System.out.println(player.toString() + " refutes and shows " + person + "!");
+				return; // Card has been refuted, no need to carry on
 			}
 			if (player.getHand().contains(wepCard)) {
-				return new Object[]{player.toString(), wepCard}; // Card has been refuted, no need to carry on
+				System.out.println(player.toString() + " refutes and shows " + wep + "!");
+				return; // Card has been refuted, no need to carry on
 			}
 			if (player.getHand().contains(roomCard)) {
-				return new Object[]{player.toString(), roomCard}; // Card has been refuted, no need to carry on
+				System.out.println(player.toString() + " refutes and shows " + room + "!");
+				return; // Card has been refuted, no need to carry on
 			}
 		}
 		// Went through all players therefore cards must be in the deck
 		if (game.getDeck().contains(personCard)) {
-			return new Object[]{"Leftover Pile", personCard}; // Card has been refuted, no need to carry on
+			System.out.println(personCard + " is in the leftover pile.");
+			return; // Card has been refuted, no need to carry on
 		}
 		if (game.getDeck().contains(wepCard)) {
-			return new Object[]{"Leftover Pile", wepCard}; // Card has been refuted, no need to carry on
+			System.out.println(wepCard + " is in the leftover pile.");
+			return; // Card has been refuted, no need to carry on
 		}
 		if (game.getDeck().contains(roomCard)) {
 			System.out.println(roomCard + " is in the leftover pile.");
-			return new Object[]{"Leftover Pile", roomCard}; // Card has been refuted, no need to carry on
+			return; // Card has been refuted, no need to carry on
 		}
-		return null;	//Has checked all other players hands, deck and solution,
-						//must be in accusing player's hand
+		System.out.println("You accused a card that was in your own hand! ");	//Has checked all other players hands, deck and solution,
+																				//must be in accusing player's hand
 	}
 
 	/**
@@ -208,7 +213,7 @@ public class Client {
 					game.characterToRoom(p.getRoom(), person);
 					System.out.println("");
 					System.out.println("Sorry " + p.toString() + " that is incorrect!");
-					playerRefute(wep, room, person);
+					playerRefute(wep, room, person, p);
 					return false;
 				}
 			} else if (finalise.equalsIgnoreCase("no")) {
@@ -414,18 +419,6 @@ public class Client {
 
 	public void addPlayer(Player p){
 		players.offer(p);
-	}
-
-	public List<String> getValidWeps(){
-		return validWeps;
-	}
-
-	public List<String> getValidRooms(){
-		return validRooms;
-	}
-
-	public List<String> getValidCharacters(){
-		return validPersons;
 	}
 
 	// ************************
@@ -678,7 +671,6 @@ public class Client {
 		System.out.println("Let's begin...");
 
 		setPlayers();
-		game.setSpareTokens();
 		Queue<Player> players = game.getPlayers();
 		while (players.size() > 0 && !gameIsOver) {
 			System.out.println("");
