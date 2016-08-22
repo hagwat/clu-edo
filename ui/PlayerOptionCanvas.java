@@ -94,9 +94,10 @@ public class PlayerOptionCanvas extends JPanel {
 		txtrPlayerName.setFont(new Font("Dialog", Font.PLAIN, 26));
 		txtrPlayerName.setBackground(Color.DARK_GRAY);
 		txtrPlayerName.setEditable(false);
-		txtrPlayerName.setText(player.toString() + "'s Turn!");
-		txtrPlayerName.setBounds(72, 12, 262, 32);
+		txtrPlayerName.setText(player.toString() + "'s Turn!\n"+player.getToken().getCharacterName());
+		txtrPlayerName.setBounds(72, 12, 270, 62);
 		add(txtrPlayerName);
+
 	}
 
 	/**

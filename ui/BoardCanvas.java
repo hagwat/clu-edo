@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +23,7 @@ import game.Tile;
 import game.WeaponToken;
 import game.Tile.TileType;
 
-public class BoardCanvas extends JPanel {
+public class BoardCanvas extends JPanel implements MouseListener {
 
 	private Tile[][] tiles;
 	private List<CharacterToken> characterTokens;
@@ -170,7 +172,7 @@ public class BoardCanvas extends JPanel {
 
 		switch (tile.getType()) {
 		case INACCESSABLE:
-			return Color.MAGENTA;
+			return new Color(150,75,75);
 		case CORRIDOR:
 			return Color.YELLOW;
 		case ROOM:
@@ -202,6 +204,32 @@ public class BoardCanvas extends JPanel {
 			return new Color(170, 100 , 50);
 		}
 		return null;
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		System.out.println(x+ ", "+y);
+	}
+	
+	
+	//other MouseListener methods
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub		
+	}
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub		
+	}
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub		
+	}
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub		
 	}
 
 

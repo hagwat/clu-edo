@@ -117,23 +117,38 @@ public class ViewFrame extends JFrame implements MouseListener {
 			canvas.addMouseListener(this);
 			validate();
 		}
-		else if (action.equals("display board")) {
+		else if (action.equals("display board")) {// setup mode
+			
 			previousCanvas = canvas;
 			remove(canvas);
+			
 			canvas = new BoardCanvas(arg);
 			this.add(canvas, BorderLayout.CENTER);
-			this.add(new PlayerOptionCanvas(ctrl), BorderLayout.EAST);
+			canvas.addMouseListener(this);
+
+			optionCanvas = new PlayerOptionCanvas(ctrl);
+			this.add(optionCanvas, BorderLayout.EAST);
+			
 			pack();
 			validate();
 			repaint();
 		}
-		else if(action.equals("next turn")){
+		else if(action.equals("next turn")){// cyclic mode
+			
+			previousCanvas = canvas;
+			remove(canvas);
+			
+			canvas = new BoardCanvas(arg);
+			this.add(canvas, BorderLayout.CENTER);	
+					
 			remove(optionCanvas);
 			optionCanvas = new PlayerOptionCanvas(ctrl);
 			this.add(optionCanvas, BorderLayout.EAST);
+			
 			pack();
 			validate();
 			repaint();
+			
 		}
 	}
 
@@ -178,6 +193,9 @@ public class ViewFrame extends JFrame implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		System.out.println("heard a squeaky mouse");
+		System.out.println(e.getX()+", "+e.getY());
+		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
