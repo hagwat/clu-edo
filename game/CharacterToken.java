@@ -81,10 +81,6 @@ public class CharacterToken implements Locatable {
 	public boolean validMove(String[] moves) {
 		int x = xPos;
 		int y = yPos;
-		System.out.println("before:");
-		System.out.print("[");
-		System.out.print(xPos + ", ");
-		System.out.println(yPos + "]");
 
 		for (int i = 0; i < moves.length; i++) {
 			if (moves[i].equals("w")) {
@@ -108,15 +104,9 @@ public class CharacterToken implements Locatable {
 		}
 
 		Tile tile = board.getTile(xPos, yPos);
-		
-		// updates the position on the board
 		xPos = x;
 		yPos = y;
 
-		System.out.println("after:");
-		System.out.print("[");
-		System.out.print(xPos + ", ");
-		System.out.print(yPos + "] ");
 		tile = board.getTile(xPos, yPos);
 		if (tile.getType().equals(Tile.TileType.ROOM)) {
 			System.out.print("The " + tile.getRoom().getName());
