@@ -60,14 +60,19 @@ public class Controller {
 			return;
 		}
 		if(action.equals("next turn")){
-			view.setView(action,  new Object[]{
+			view.setView(action, null, this);
+		}
+
+		if(action.equals("next move")){
+			view.setView(action, new Object[]{
 					game.getBoard().getTiles(),
 					game.getBoard().getCharacterTokens(),
 					game.getWeapons(),
 					game.getBoard().getRooms()
 					}, this);
-			}
 		}
+
+	}
 
 	public void setNumPlayers(int i){
 		client.setNumPlayers(i);

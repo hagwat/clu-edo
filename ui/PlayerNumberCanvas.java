@@ -26,6 +26,11 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.UIManager;
 
+/**
+ * 
+ * A canvas that asks the user how many players will be playing the game
+ *
+ */
 public class PlayerNumberCanvas extends JPanel {
 
 	private Controller ctrl;
