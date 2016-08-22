@@ -1,9 +1,12 @@
 package ui;
 
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import game.Card;
@@ -11,7 +14,7 @@ import game.Player;
 import game.Room;
 
 /**
- * 
+ *
  * A custom key listener that maps shortcuts for different buttons implemented in the game
  *
  */
@@ -94,6 +97,39 @@ public class CustomKeyListener implements KeyListener {
 						canvas.endTurn();
 					}
 				}
+			}
+		}
+
+		//Shortcut for rolling
+		if(e.getKeyCode() == KeyEvent.VK_R){
+			Random r = new Random();
+			int roll = r.nextInt(6) + 1;
+			canvas.setRoll(roll);
+
+			Icon one = scaleImage("src/resources/1.jpg");
+			Icon two = scaleImage("src/resources/2.jpg");
+			Icon three = scaleImage("src/resources/3.jpg");
+			Icon four = scaleImage("src/resources/4.jpg");
+			Icon five = scaleImage("src/resources/5.jpg");
+			Icon six = scaleImage("src/resources/6.jpg");
+
+			if (roll == 1) {
+				canvas.displayRoll(one, 1);
+			}
+			if (roll == 2) {
+				canvas.displayRoll(two, 2);
+			}
+			if (roll == 3) {
+				canvas.displayRoll(three, 3);
+			}
+			if (roll == 4) {
+				canvas.displayRoll(four, 4);
+			}
+			if (roll == 5) {
+				canvas.displayRoll(five, 5);
+			}
+			if (roll == 6) {
+				canvas.displayRoll(six, 6);
 			}
 		}
 
@@ -255,6 +291,13 @@ public class CustomKeyListener implements KeyListener {
 			}
 		}
 
+	}
+
+	public ImageIcon scaleImage(String s) {
+		ImageIcon imageIcon = new ImageIcon(s);
+		Image image = imageIcon.getImage();
+		Image newimg = image.getScaledInstance(120, 160, java.awt.Image.SCALE_SMOOTH);
+		return new ImageIcon(newimg);
 	}
 
 	@Override

@@ -34,6 +34,14 @@ public class PlayerOptionCanvas extends JPanel {
 	private int roll;		//Number of moves the player has
 	private int numMoves = 0;	//Number of moves player has taken so far
 
+	//Dice roll icons
+	private Icon one = scaleImage("src/resources/1.jpg");
+	private Icon two = scaleImage("src/resources/2.jpg");
+	private Icon three = scaleImage("src/resources/3.jpg");
+	private Icon four = scaleImage("src/resources/4.jpg");
+	private Icon five = scaleImage("src/resources/5.jpg");
+	private Icon six = scaleImage("src/resources/6.jpg");
+
 	public PlayerOptionCanvas(Controller ctrl) {
 		this.ctrl = ctrl;
 		player = ctrl.getClient().getPlayers().poll();
@@ -186,6 +194,7 @@ public class PlayerOptionCanvas extends JPanel {
 				displayRoll(six, 6);
 			}
 		}
+	}
 
 		public void displayRoll(Icon icon, int i) {
 			JOptionPane.showMessageDialog(ctrl.getViewFrame(),
@@ -200,14 +209,6 @@ public class PlayerOptionCanvas extends JPanel {
 			Image newimg = image.getScaledInstance(120, 160, java.awt.Image.SCALE_SMOOTH);
 			return new ImageIcon(newimg);
 		}
-
-		Icon one = scaleImage("src/resources/1.jpg");
-		Icon two = scaleImage("src/resources/2.jpg");
-		Icon three = scaleImage("src/resources/3.jpg");
-		Icon four = scaleImage("src/resources/4.jpg");
-		Icon five = scaleImage("src/resources/5.jpg");
-		Icon six = scaleImage("src/resources/6.jpg");}
-
 
 	@Override
 	public Dimension getPreferredSize() {

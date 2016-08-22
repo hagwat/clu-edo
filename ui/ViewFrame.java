@@ -101,11 +101,12 @@ public class ViewFrame extends JFrame implements MouseListener {
 			public void actionPerformed(ActionEvent e){
 				JOptionPane.showMessageDialog(new JOptionPane(), "Key Bindings:\n"
 											+ "h - Show Hand\n"
-											+ "l - Show Leftovers"
+											+ "l - Show Leftovers\n"
+											+ "r - Roll the dice\n"
 											+ "s - Make Suggestion\n"
 											+ "Arrow Keys - Move in that direction\n"
 											+ "a - make accusation\n"
-											+ "e - end turn\n");
+											+ "e - end turn");
 
 			}
 		});
