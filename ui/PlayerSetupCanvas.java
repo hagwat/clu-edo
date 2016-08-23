@@ -23,7 +23,8 @@ import javax.swing.JButton;
 
 /**
  * 
- * A setup canvas that asks the players their name and which character token they wish to use.
+ * A setup canvas that asks the players their name and which character token
+ * they wish to use.
  *
  */
 public class PlayerSetupCanvas extends JPanel {
@@ -137,22 +138,22 @@ public class PlayerSetupCanvas extends JPanel {
 					return;
 				}
 			}
-			/*
-			 * if (!textField.getText().equals("")) {
-			 */
-			ctrl.addPlayer(i, textField.getText());
-			chosen.add(i);
-			if (playerNumber >= numPlayers) {
-				ctrl.getClient().setPlayers();
-				ctrl.handle("display board");
-				return;
+
+			if (!textField.getText().equals("")) {
+				ctrl.addPlayer(i, textField.getText());
+				chosen.add(i);
+				if (playerNumber >= numPlayers) {
+					ctrl.getClient().setPlayers();
+					ctrl.handle("display board");
+					return;
+				}
+				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Next player!");
+				ctrl.getViewFrame()
+						.setCanvas(new PlayerSetupCanvas(ctrl, previous, numPlayers, playerNumber + 1, chosen));
+
+			} else {
+				JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Name cannot be left blank!");
 			}
-			JOptionPane.showMessageDialog(ctrl.getViewFrame(), "Next player!");
-			ctrl.getViewFrame().setCanvas(new PlayerSetupCanvas(ctrl, previous, numPlayers, playerNumber + 1, chosen));
-			/*
-			 * } else { JOptionPane.showMessageDialog(ctrl.getViewFrame(),
-			 * "Name cannot be left blank!"); }
-			 */
 		}
 
 	}
@@ -190,13 +191,12 @@ public class PlayerSetupCanvas extends JPanel {
 		private int characterToken;
 		private String playerName;
 
-		public SetupActionListener(PlayerSetupCanvas j, int i, String name){
+		public SetupActionListener(PlayerSetupCanvas j, int i, String name) {
 			super();
 			this.characterToken = i;
 			this.playerName = name;
 			this.canvas = j;
 		}
-
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
