@@ -56,8 +56,6 @@ public class BoardCanvas extends JPanel {
 		paintTiles(g);
 		paintCharacters(g);
 		paintWeapons(g);
-
-		g.drawString("A rogue String has infected your assignment!", 250, 200);
 	}
 
 	public void paintWeapons(Graphics g) {

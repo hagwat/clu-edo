@@ -55,6 +55,7 @@ public class PlayerOptionCanvas extends JPanel {
 
 		JButton btnShow = new JButton("Show Cards");
 		btnShow.setFocusable(false);
+		btnShow.setToolTipText("Show your current hand. Shortcut - h");
 		btnShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String cards = "";
@@ -70,6 +71,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Suggest button
 		JButton btnSuggest = new JButton("Suggest");
 		btnSuggest.setFocusable(false);
+		btnSuggest.setToolTipText("Make a suggestion using the room you are currently in. Shortcut - s");
 		btnSuggest.addActionListener(new suggestAction());
 		btnSuggest.setBounds(216, 163, 118, 42);
 		add(btnSuggest);
@@ -77,6 +79,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Accuse button
 		JButton btnAccuse = new JButton("Accuse");
 		btnAccuse.setFocusable(false);
+		btnAccuse.setToolTipText("Make an accusation. Shortcut - a");
 		btnAccuse.addActionListener(new accuseAction());
 		btnAccuse.setBounds(147, 224, 118, 42);
 		add(btnAccuse);
@@ -84,6 +87,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Roll button
 		JButton btnRoll = new JButton("Roll");
 		btnRoll.setFocusable(false);
+		btnRoll.setToolTipText("Roll a single dice. Shortcut - r");
 		btnRoll.addActionListener(new rollAction());
 		btnRoll.setBounds(72, 100, 112, 42);
 		add(btnRoll);
@@ -91,6 +95,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//End button
 		JButton btnEnd = new JButton("End");
 		btnEnd.setFocusable(false);
+		btnEnd.setToolTipText("End your turn. Shortcut - e");
 		btnEnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int r = JOptionPane.showConfirmDialog(ctrl.getViewFrame(), "Are you sure you want to end your turn?",
@@ -107,6 +112,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Leftovers Button
 		JButton btnLeftoverButton = new JButton("Leftovers");
 		btnLeftoverButton.setFocusable(false);
+		btnLeftoverButton.setToolTipText("Show the leftover card pile. Shortcut - l");
 		btnLeftoverButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (ctrl.getGame().getDeck().size() == 0) {
@@ -136,6 +142,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Movement button - up
 		JButton btnUp = new JButton("UP");
 		btnUp.setFocusable(false);
+		btnUp.setToolTipText("Move your character up after you have rolled. Shortcut - Up arrow key");
 		btnUp.setBounds(167, 383, 79, 65);
 		btnUp.addActionListener(new moveAction("w"));
 		add(btnUp);
@@ -143,6 +150,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Movement button - down
 		JButton btnDown = new JButton("DOWN");
 		btnDown.setFocusable(false);
+		btnDown.setToolTipText("Move your character down after you have rolled. Shortcut - Down arrow key");
 		btnDown.setBounds(167, 460, 79, 65);
 		btnDown.addActionListener(new moveAction("s"));
 		add(btnDown);
@@ -150,6 +158,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Movement button - left
 		JButton btnLeft = new JButton("LEFT");
 		btnLeft.setFocusable(false);
+		btnLeft.setToolTipText("Move your character left after you have rolled. Shortcut - Left arrow key");
 		btnLeft.setBounds(76, 460, 79, 65);
 		btnLeft.addActionListener(new moveAction("a"));
 		add(btnLeft);
@@ -157,6 +166,7 @@ public class PlayerOptionCanvas extends JPanel {
 		//Movement button - right
 		JButton btnRight = new JButton("RIGHT");
 		btnRight.setFocusable(false);
+		btnRight.setToolTipText("Move your character right after you have rolled. Shortcut - Right arrow key");
 		btnRight.setBounds(258, 460, 79, 65);
 		btnRight.addActionListener(new moveAction("d"));
 		add(btnRight);
